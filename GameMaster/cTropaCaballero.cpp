@@ -1,6 +1,6 @@
 #include "cTropaCaballero.h"
 
-
+string cTropaCaballero::nombre = "CABALLERO";
 
 cTropaCaballero::cTropaCaballero()
 {

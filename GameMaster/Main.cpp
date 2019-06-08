@@ -17,6 +17,11 @@ void AgruparUnidadesEnTropas(void);
 void GeneradorDeTropasParaJugador(void);
 
 
+//para probar la lista de tropas
+cLista<cTropaCaballero> * listaTropaCaballero = new cLista<cTropaCaballero>;
+cLista<cTropaArquero> * listaTropaArquero = new cLista<cTropaArquero>;
+cLista<cTropaMago> * listaTropaMago = new cLista<cTropaMago>;
+
 int MaxUnidades = 0, caballeros = 0, magos = 0, arqueros = 0, opcion = 0, aux = 0, sobrecarga = 0, suma = 0; // variables de EleccionDeUnidades 
 
 int Tropas[10], NrTropa=0, Tcaballeros=0, Tmagos=0, Tarqueros=0; // variables de AgruparUnidadesEnTropas , reutilizo el aux, opcion y MaxUnidades
@@ -34,7 +39,13 @@ int main(void) {
 
 	AgruparUnidadesEnTropas();
 
-	
+	GeneradorDeTropasParaJugador();
+
+
+		
+	delete listaTropaArquero;
+	delete listaTropaCaballero;
+	delete listaTropaMago;
 
 	return 0;
 }
@@ -227,22 +238,47 @@ void AgruparUnidadesEnTropas(void)
 void GeneradorDeTropasParaJugador(void)
 {
 	cout << endl;
+
 	cout << "Caballeros: " << endl;
 	for (int i = 0; i < Tcaballeros; i++)
-	{
+	{   
+		cTropaCaballero * tropa = new cTropaCaballero;
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
+
+		for (int k = 0; k < Tropas[k]; k++)
+		{
+			tropa->AgregarUnidades(new cUnidadCaballero);
+
+		}
+		listaTropaCaballero->AgregarItem(tropa);
 	}
 	cout << endl;
 	cout << "Arqueros: " << endl;
 	for (int i = Tcaballeros; i < Tarqueros + Tcaballeros; i++)
 	{
+		cTropaArquero * tropa = new cTropaArquero;
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
+
+		for (int k = 0; k < Tropas[k]; k++)
+		{
+			tropa->AgregarUnidades(new cUnidadArquero);
+
+		}
+		listaTropaArquero->AgregarItem(tropa);
 	}
 	cout << endl;
 	cout << "Magos: " << endl;
 	for (int i = Tarqueros + Tcaballeros; i < Tmagos + Tcaballeros + Tarqueros; i++)
 	{
+		cTropaMago * tropa = new cTropaMago;
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
+
+		for (int k = 0; k < Tropas[k]; k++)
+		{
+			tropa->AgregarUnidades(new cUnidadMago);
+
+		}
+		listaTropaMago->AgregarItem(tropa);
 	}
 
 	system("pause");

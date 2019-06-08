@@ -1,5 +1,6 @@
 #include "cTropaMago.h"
 
+string cTropaMago::nombre = "MAGO";
 
 cTropaMago::cTropaMago()
 {

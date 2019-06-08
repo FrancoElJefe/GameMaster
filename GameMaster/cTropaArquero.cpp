@@ -1,6 +1,6 @@
 #include "cTropaArquero.h"
 
-
+string cTropaArquero::nombre = "ARQUERO";
 
 cTropaArquero::cTropaArquero()
 {
