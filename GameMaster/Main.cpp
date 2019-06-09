@@ -11,16 +11,15 @@
 #include "cUnidadArquero.h"
 //**************************
 #include "cJugador.h"
+#include "cContinente.h"
 
 void EleccionDeUnidades(void);
 void AgruparUnidadesEnTropas(void);
 void GeneradorDeTropasParaJugador(void);
+void CrearContinenteConPaises();
+void AsignarVecinos(); // esta funcion asigna los vecinos a los distintos paises
 
-
-//para probar la lista de tropas
-cLista<cTropaCaballero> * listaTropaCaballero = new cLista<cTropaCaballero>;
-cLista<cTropaArquero> * listaTropaArquero = new cLista<cTropaArquero>;
-cLista<cTropaMago> * listaTropaMago = new cLista<cTropaMago>;
+cContinente * Continente = new cContinente(16, "America");
 
 int MaxUnidades = 0, caballeros = 0, magos = 0, arqueros = 0, opcion = 0, aux = 0, sobrecarga = 0, suma = 0; // variables de EleccionDeUnidades 
 
@@ -29,23 +28,25 @@ int Tropas[10], NrTropa=0, Tcaballeros=0, Tmagos=0, Tarqueros=0; // variables de
 int main(void) {
 		
 
+	CrearContinenteConPaises();
+	AsignarVecinos();
+
+	Continente->ListarPaises();
+
+	system("Pause");
 	//EleccionDeUnidades();
 
 	//system("cls");
 
-	caballeros = 12;
-	arqueros = 18;
-	magos = 20;
+	//caballeros = 12;
+	//arqueros = 18;
+	//magos = 20;
 
-	AgruparUnidadesEnTropas();
+	//AgruparUnidadesEnTropas();
 
-	GeneradorDeTropasParaJugador();
+	//GeneradorDeTropasParaJugador();
 
-
-		
-	delete listaTropaArquero;
-	delete listaTropaCaballero;
-	delete listaTropaMago;
+	delete Continente;
 
 	return 0;
 }
@@ -242,15 +243,15 @@ void GeneradorDeTropasParaJugador(void)
 	cout << "Caballeros: " << endl;
 	for (int i = 0; i < Tcaballeros; i++)
 	{   
-		cTropaCaballero * tropa = new cTropaCaballero;
+		//cTropaCaballero * tropa = new cTropaCaballero;
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
 
 		for (int k = 0; k < Tropas[k]; k++)
 		{
-			tropa->AgregarUnidades(new cUnidadCaballero);
+			//tropa->AgregarUnidades(new cUnidadCaballero);
 
 		}
-		listaTropaCaballero->AgregarItem(tropa);
+		//listaTropaCaballero->AgregarItem(tropa);
 	}
 	cout << endl;
 	cout << "Arqueros: " << endl;
@@ -261,25 +262,70 @@ void GeneradorDeTropasParaJugador(void)
 
 		for (int k = 0; k < Tropas[k]; k++)
 		{
-			tropa->AgregarUnidades(new cUnidadArquero);
+			//tropa->AgregarUnidades(new cUnidadArquero);
 
 		}
-		listaTropaArquero->AgregarItem(tropa);
+		//listaTropaArquero->AgregarItem(tropa);
 	}
 	cout << endl;
 	cout << "Magos: " << endl;
 	for (int i = Tarqueros + Tcaballeros; i < Tmagos + Tcaballeros + Tarqueros; i++)
 	{
-		cTropaMago * tropa = new cTropaMago;
+		//cTropaMago * tropa = new cTropaMago;
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
 
 		for (int k = 0; k < Tropas[k]; k++)
 		{
-			tropa->AgregarUnidades(new cUnidadMago);
+			//tropa->AgregarUnidades(new cUnidadMago);
 
 		}
-		listaTropaMago->AgregarItem(tropa);
+		//listaTropaMago->AgregarItem(tropa);
 	}
 
 	system("pause");
+}
+
+void CrearContinenteConPaises()
+{
+	string NomPaises[16] = {"Argentina", "Chile", "Uruguay" , "Brasil", "Peru", "Colombia", "Mexico", "California", "Oregon" , "Alaska", "Yukon", "Canada", "Nueva York", "Terranova", "Labrador", "Groenlandia"};
+
+	Continente->AgregarPaises(&NomPaises[0]);
+}
+
+void AsignarVecinos()
+{
+	string Vargentina[4] = { "Chile", "Uruguay", "Brasil", "Peru" };
+	string Vchile[3] = { "Peru", "Argentina", "Groenlandia" };
+	string Vuruguay[2] = { "Argentina", "Brasil" };
+	string Vbrasil[4] = { "Argentina", "Uruguay", "Colombia", "Peru" };
+	string Vperu[4] = { "Chile", "Argentina", "Brasil", "Colombia" };
+	string Vcolombia[3] = { "Mexico", "Brasil", "Peru" };
+	string Vmexico[2] = { "California", "Colombia" };
+	string Vcalifornia[3] = { "Nueva York", "Oregon", "Mexico" };
+	string Voregon[5] = { "Yukon", "Alaska", "Canada", "Nueva York", "California" };
+	string Valaska[2] = { "Yukon", "Oregon" };
+	string Vyukon[3] = { "Alaska", "Canada", "Oregon" };
+	string Vcanada[4] = { "Terranova", "Nueva York", "Oregon", "Yukon" };
+	string Vnuevayork[4] = { "Terranova", "Canada", "Oregon", "California" };
+	string Vterranova[3] = { "Labrador", "Canada", "Nueva York" };
+	string Vlabrador[2] = { "Groenlandia", "Terranova" };
+	string Vgroenlandia[3] = { "Labrador", "Nueva York", "Chile" };
+
+	Continente->AsignarVecinos("Argentina", &Vargentina[0], 4);
+	Continente->AsignarVecinos("Chile", &Vchile[0], 3);
+	Continente->AsignarVecinos("Uruguay", &Vuruguay[0], 2);
+	Continente->AsignarVecinos("Brasil", &Vbrasil[0], 4);
+	Continente->AsignarVecinos("Peru", &Vperu[0], 4);
+	Continente->AsignarVecinos("Colombia", &Vcolombia[0], 3);
+	Continente->AsignarVecinos("Mexico", &Vmexico[0], 2);
+	Continente->AsignarVecinos("California", &Vcalifornia[0], 3);
+	Continente->AsignarVecinos("Oregon", &Voregon[0], 5);
+	Continente->AsignarVecinos("Alaska", &Valaska[0], 2);
+	Continente->AsignarVecinos("Yukon", &Vyukon[0], 3);
+	Continente->AsignarVecinos("Canada", &Vcanada[0], 4);
+	Continente->AsignarVecinos("Nueva York", &Vnuevayork[0], 4);
+	Continente->AsignarVecinos("Terranova", &Vterranova[0], 3);
+	Continente->AsignarVecinos("Labrador", &Vlabrador[0], 2);
+	Continente->AsignarVecinos("Groenlandia", &Vgroenlandia[0], 3);
+	
 }

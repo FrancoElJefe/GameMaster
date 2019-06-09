@@ -1,5 +1,5 @@
 #pragma once
-#define NMAX 50
+#define NMAX 100
 
 #include <string>
 #include <iostream>
@@ -32,6 +32,8 @@ public:
 
 
 	void Listar();
+	void ListarV();
+
 	tipodato* BuscarItem(string codigo);
 	tipodato* getItem(unsigned int pos);
 
@@ -89,6 +91,17 @@ void cLista<tipodato>::Listar()
 		cout << ") "; //imprime la posicion
 
 		vector[i]->PrintA();// imprimir
+	}
+}
+template<class tipodato>
+inline void cLista<tipodato>::ListarV()
+{
+	for (unsigned int i = 0; i < CA; i++)
+	{
+		cout << "\t";
+		
+
+		vector[i]->PrintNombre();// imprimir
 	}
 }
 /**/
