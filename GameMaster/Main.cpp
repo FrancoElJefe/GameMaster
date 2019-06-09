@@ -2,6 +2,7 @@
 #include "stdlib.h"
 #include <ostream>
 #include "cLista.h"
+#include<time.h>
 //**************************
 #include "cTropaCaballero.h"
 #include "cUnidadCaballero.h"
@@ -13,11 +14,18 @@
 #include "cJugador.h"
 #include "cContinente.h"
 
-void EleccionDeUnidades(void);
-void AgruparUnidadesEnTropas(void);
-void GeneradorDeTropasParaJugador(void);
+
 void CrearContinenteConPaises();
 void AsignarVecinos(); // esta funcion asigna los vecinos a los distintos paises
+void AsignarPaisesAJugadores();
+
+void EleccionDeUnidades(void); //el jugador elecciona 50 unidades constituedas por las tres facciones 
+void AgruparUnidadesEnTropas(void); // el jugador agrupa sus unidades en 10 tropas
+void GeneradorDeTropasParaJugador(void); // se generan las tropas y se las da al jugador
+
+
+cJugador * Jugador1 = new cJugador("Jugador 1");
+cJugador * Jugador2 = new cJugador("Jugador 2");
 
 cContinente * Continente = new cContinente(16, "America");
 
@@ -27,13 +35,15 @@ int Tropas[10], NrTropa=0, Tcaballeros=0, Tmagos=0, Tarqueros=0; // variables de
 
 int main(void) {
 		
+	srand(time(NULL));
 
-	CrearContinenteConPaises();
-	AsignarVecinos();
+	CrearContinenteConPaises(); //se le agregan los paises al continente
+	AsignarVecinos();//se le agregan los vecinos a cada pais
+	AsignarPaisesAJugadores(); // se le agregan los paises a cada jugador
 
-	Continente->ListarPaises();
 
 	system("Pause");
+
 	//EleccionDeUnidades();
 
 	//system("cls");
@@ -47,6 +57,8 @@ int main(void) {
 	//GeneradorDeTropasParaJugador();
 
 	delete Continente;
+	delete Jugador1;
+	delete Jugador2;
 
 	return 0;
 }
@@ -328,4 +340,49 @@ void AsignarVecinos()
 	Continente->AsignarVecinos("Labrador", &Vlabrador[0], 2);
 	Continente->AsignarVecinos("Groenlandia", &Vgroenlandia[0], 3);
 	
+}
+
+void AsignarPaisesAJugadores()
+{
+	int num, check=0, paisesDeJugador1[8];
+
+	for (int i = 0; i < 8; i++)
+	{
+		num = rand() % 16;
+
+		check = Jugador1->AgregarPais(Continente->BuscarPais(num));
+
+		if (check == 1)
+		{
+			i--;
+		}
+		else
+		{
+			paisesDeJugador1[i] = num;
+		}
+
+	}
+
+	check = 0;
+	
+	for (int i = 0; i < Continente->getCaLista(); i++)
+	{
+		for (int k = 0; k < (Continente->getCaLista())/2 ; k++)
+		{
+			if (i == paisesDeJugador1[k])
+			{
+				check++;
+			}
+		}
+
+		if (check == 0)
+		{
+			Jugador2->AgregarPais(Continente->BuscarPais(i));
+		}
+		else
+		{
+			check = 0;
+		}
+				
+	}
 }

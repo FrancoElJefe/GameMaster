@@ -8,7 +8,7 @@ cJugador::cJugador()
 	ListaTropaArqueros = new cLista<cTropaArquero>;
 	ListaTropaCaballeros = new cLista<cTropaCaballero>;
 	ListaTropaMagos = new cLista<cTropaMago>;
-	listaPropiaPaises = new cLista<cPais>(8);
+	listaPropiaPaises = new cLista<cPais>(9);
 }
 
 cJugador::cJugador(string nomb) : cJugador()
@@ -31,6 +31,31 @@ void cJugador::AgregarTropaMago(cTropaMago * ptr)
 	ListaTropaMagos->AgregarItem(ptr);
 }
 
+int cJugador::AgregarPais(cPais * ptr)
+{
+	cPais * pais;
+
+	for (int i = 0; i < listaPropiaPaises->getCA(); i++)
+	{
+		pais = listaPropiaPaises->getItem(i);
+
+		if (ptr->getCodigo() == pais->getCodigo())
+		{
+			return 1;
+		}
+
+	}
+
+	listaPropiaPaises->AgregarItem(ptr);
+
+	return 0;
+}
+
+
+void cJugador::listarSusPaises()
+{
+	listaPropiaPaises->Listar();
+}
 
 cJugador::~cJugador()
 {

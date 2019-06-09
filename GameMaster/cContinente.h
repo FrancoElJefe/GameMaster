@@ -19,8 +19,12 @@ public:
 	cContinente();
 	cContinente(int N, string nomb);
 
+	int getCaLista() { return listaPaises->getCA(); }
+
 	void AgregarPaises(string * ptr);
 	void AsignarVecinos(string nomb, string *ptr, int CV);
+
+	cPais * BuscarPais(int n);
 
 	void ListarPaises();
 

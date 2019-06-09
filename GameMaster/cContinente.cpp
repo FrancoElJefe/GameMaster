@@ -32,6 +32,11 @@ void cContinente::AsignarVecinos(string nomb,  string * ptr, int CV)
 	
 }
 
+cPais * cContinente::BuscarPais(int n)
+{
+	return listaPaises->getItem(n);
+}
+
 void cContinente::ListarPaises()
 {
 	listaPaises->Listar();

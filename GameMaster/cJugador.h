@@ -28,6 +28,10 @@ public:
 	void AgregarTropaCaballero(cTropaCaballero*ptr);
 	void AgregarTropaMago(cTropaMago*ptr);
 	
+	int AgregarPais(cPais *ptr);
+
+
+	void listarSusPaises();
 
 	~cJugador();
 };
