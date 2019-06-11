@@ -57,6 +57,22 @@ void cJugador::listarSusPaises()
 	listaPropiaPaises->Listar();
 }
 
+void cJugador::listarTropas()
+{
+	cout << "Tropas de Caballeros" << endl;
+
+	ListaTropaCaballeros->Listar();
+
+	cout << "Tropas de Arqueros" << endl;
+
+	ListaTropaArqueros->Listar();
+
+	cout << "Tropas de Caballeros" << endl;
+
+	ListaTropaMagos->Listar();
+
+}
+
 cJugador::~cJugador()
 {
 	delete ListaTropaArqueros;

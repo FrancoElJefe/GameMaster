@@ -41,6 +41,8 @@ int main(void) {
 	srand(time(NULL));
 
 	Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
+
+
 	
 	system("Pause");
 

@@ -22,6 +22,8 @@ public:
 	int Ataque();
 	int RecibirAtaqueTropa(int dano, string clase);
 
+	void PrintA();//funcion de prueba
+
 	~cTropaCaballero();
 };
 

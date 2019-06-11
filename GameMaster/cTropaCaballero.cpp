@@ -69,6 +69,11 @@ int cTropaCaballero::RecibirAtaqueTropa(int dano, string clase)
 	}
 }
 
+void cTropaCaballero::PrintA()
+{
+	cout << nombre << endl;
+}
+
 
 cTropaCaballero::~cTropaCaballero()
 {

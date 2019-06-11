@@ -70,6 +70,11 @@ int cTropaMago::RecibirAtaqueTropa(int dano, string clase)
 }
 
 
+void cTropaMago::PrintA()
+{
+	cout << nombre << endl;
+}
+
 cTropaMago::~cTropaMago()
 {
 	delete listaUnidades;

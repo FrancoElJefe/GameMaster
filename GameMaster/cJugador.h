@@ -32,7 +32,8 @@ public:
 
 	string getNombre() { return nombre; }
 
-	void listarSusPaises();
+	void listarSusPaises(); // funcion de prueba
+	void listarTropas(); //funcion de prueba
 
 	~cJugador();
 };

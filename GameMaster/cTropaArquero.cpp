@@ -71,6 +71,11 @@ int cTropaArquero::RecibirAtaqueTropa(int dano, string clase)
 }
 
 
+void cTropaArquero::PrintA()
+{
+	cout << nombre << endl;
+}
+
 cTropaArquero::~cTropaArquero()
 {
 	delete listaUnidades;
