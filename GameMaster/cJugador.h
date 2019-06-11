@@ -30,6 +30,7 @@ public:
 	
 	int AgregarPais(cPais *ptr);
 
+	string getNombre() { return nombre; }
 
 	void listarSusPaises();
 

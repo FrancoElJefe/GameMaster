@@ -19,9 +19,12 @@ void CrearContinenteConPaises();
 void AsignarVecinos(); // esta funcion asigna los vecinos a los distintos paises
 void AsignarPaisesAJugadores();
 
-void EleccionDeUnidades(void); //el jugador elecciona 50 unidades constituedas por las tres facciones 
+void InicializacionDeVaribales();
+void EleccionDeUnidades(cJugador * jugadorX); //el jugador elecciona 50 unidades constituedas por las tres facciones 
 void AgruparUnidadesEnTropas(void); // el jugador agrupa sus unidades en 10 tropas
-void GeneradorDeTropasParaJugador(void); // se generan las tropas y se las da al jugador
+void GeneradorDeTropasParaJugador(cJugador * jugadorX); // se generan las tropas y se las da al jugador
+
+void Inicio(void);
 
 
 cJugador * Jugador1 = new cJugador("Jugador 1");
@@ -37,24 +40,9 @@ int main(void) {
 		
 	srand(time(NULL));
 
-	CrearContinenteConPaises(); //se le agregan los paises al continente
-	AsignarVecinos();//se le agregan los vecinos a cada pais
-	AsignarPaisesAJugadores(); // se le agregan los paises a cada jugador
-
-
+	Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
+	
 	system("Pause");
-
-	//EleccionDeUnidades();
-
-	//system("cls");
-
-	//caballeros = 12;
-	//arqueros = 18;
-	//magos = 20;
-
-	//AgruparUnidadesEnTropas();
-
-	//GeneradorDeTropasParaJugador();
 
 	delete Continente;
 	delete Jugador1;
@@ -65,10 +53,11 @@ int main(void) {
 
 
 
-void EleccionDeUnidades(void)
+void EleccionDeUnidades(cJugador * jugadorX)
 {
 	do
 	{
+		cout << "-" << jugadorX->getNombre() << ": " << endl;
 		cout << "Eleccion de Unidades: (MaxUnidades 50) // Unidades ACTUALES: " << MaxUnidades << endl << endl;
 		cout << "1) 10-20 unidades si son caballeros" << endl << "2) 15 - 30 si son arqueros" << endl << "3) 20 - 40 si son magos" << endl << endl;
 		cout << "Caballeros : " << caballeros << endl;
@@ -145,16 +134,24 @@ void EleccionDeUnidades(void)
 
 		system("cls");
 
-		if (magos != 0 || arqueros != 0 || caballeros != 0)
+		if (MaxUnidades == 50)
 		{
-			system("cls");
-			cout << "Se debe tener 10 tropas, reingrese" << endl << endl;
-			NrTropa = 0;
-			system("pause");
-			system("cls");
+			if (magos == 0 || arqueros == 0 || caballeros == 0)
+			{
+				system("cls");
+				cout << "Se debe tener 10 tropas, reingrese" << endl << endl;
+				NrTropa = 0;
+				caballeros = 0;
+				arqueros = 0;
+				magos = 0;
+				MaxUnidades = 0;
+				system("pause");
+				system("cls");
+			}
 		}
+		
 
-	} while (NrTropa <= 9);
+	} while (MaxUnidades != 50);
 
 }
 
@@ -248,22 +245,21 @@ void AgruparUnidadesEnTropas(void)
 	
 }
 
-void GeneradorDeTropasParaJugador(void)
+void GeneradorDeTropasParaJugador(cJugador * jugadorX)
 {
 	cout << endl;
 
 	cout << "Caballeros: " << endl;
 	for (int i = 0; i < Tcaballeros; i++)
 	{   
-		//cTropaCaballero * tropa = new cTropaCaballero;
+		cTropaCaballero * tropa = new cTropaCaballero;
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
 
 		for (int k = 0; k < Tropas[k]; k++)
 		{
-			//tropa->AgregarUnidades(new cUnidadCaballero);
-
+			tropa->AgregarUnidades(new cUnidadCaballero);
 		}
-		//listaTropaCaballero->AgregarItem(tropa);
+		jugadorX->AgregarTropaCaballero(tropa);
 	}
 	cout << endl;
 	cout << "Arqueros: " << endl;
@@ -274,24 +270,22 @@ void GeneradorDeTropasParaJugador(void)
 
 		for (int k = 0; k < Tropas[k]; k++)
 		{
-			//tropa->AgregarUnidades(new cUnidadArquero);
-
+			tropa->AgregarUnidades(new cUnidadArquero);
 		}
-		//listaTropaArquero->AgregarItem(tropa);
+		jugadorX->AgregarTropaArquero(tropa);
 	}
 	cout << endl;
 	cout << "Magos: " << endl;
 	for (int i = Tarqueros + Tcaballeros; i < Tmagos + Tcaballeros + Tarqueros; i++)
 	{
-		//cTropaMago * tropa = new cTropaMago;
+		cTropaMago * tropa = new cTropaMago;
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
 
 		for (int k = 0; k < Tropas[k]; k++)
 		{
-			//tropa->AgregarUnidades(new cUnidadMago);
-
+			tropa->AgregarUnidades(new cUnidadMago);
 		}
-		//listaTropaMago->AgregarItem(tropa);
+		jugadorX->AgregarTropaMago(tropa);
 	}
 
 	system("pause");
@@ -384,5 +378,58 @@ void AsignarPaisesAJugadores()
 			check = 0;
 		}
 				
+	}
+}
+
+void InicializacionDeVaribales()
+{
+	MaxUnidades = 0;
+	caballeros = 0;
+	magos = 0;
+	arqueros = 0;
+	opcion = 0;
+	aux = 0;
+	sobrecarga = 0;
+	suma = 0;
+	NrTropa = 0;
+	Tcaballeros = 0;
+	Tmagos = 0;
+	Tarqueros = 0;
+}
+
+void Inicio(void)
+{
+	CrearContinenteConPaises(); //se le agregan los paises al continente
+	AsignarVecinos();//se le agregan los vecinos a cada pais
+	AsignarPaisesAJugadores(); // se le agregan los paises a cada jugador
+
+	for (int i = 0; i < 2; i++)
+	{
+		InicializacionDeVaribales();
+
+		if (i == 0)
+		{
+			EleccionDeUnidades(Jugador1);
+		}
+		else
+		{
+			EleccionDeUnidades(Jugador2);
+		}
+
+		system("cls");
+
+		AgruparUnidadesEnTropas();
+
+		if (i == 0)
+		{
+			GeneradorDeTropasParaJugador(Jugador1);
+		}
+		else
+		{
+			GeneradorDeTropasParaJugador(Jugador2);
+		}
+
+		system("cls");
+
 	}
 }
