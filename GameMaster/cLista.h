@@ -33,6 +33,9 @@ public:
 
 	void Listar();
 	void ListarV();
+	void ListarParaAtacar(string nombre);
+
+	tipodato* AtacarVecino(string nombre, int N);
 
 	tipodato* BuscarItem(string codigo);
 	tipodato* getItem(unsigned int pos);
@@ -98,11 +101,62 @@ inline void cLista<tipodato>::ListarV()
 {
 	for (unsigned int i = 0; i < CA; i++)
 	{
-		cout << "\t";
+		cout << i+1 << ") ";
 		
 
 		vector[i]->PrintNombre();// imprimir
 	}
+}
+template<class tipodato>
+inline void cLista<tipodato>::ListarParaAtacar(string nombre)
+{
+	int jugador = 0, contador = 0;
+
+	if (nombre == "Jugador 1")
+	{
+		jugador = 1;
+	}
+	else
+	{
+		jugador = 2;
+	}
+
+	for (unsigned int i = 0; i < CA; i++)
+	{
+		if ( jugador != vector[i]->getNjugador())
+		{
+			cout << contador + 1 << ") ";
+			vector[i]->PrintNombre();// imprimir
+			contador++;
+		}
+		
+	}
+
+
+}
+template<class tipodato>
+inline tipodato * cLista<tipodato>::AtacarVecino(string nombre , int N)
+{
+	int jugador = 0, contador = 0;
+
+	if (nombre == "Jugador 1")
+	{
+		jugador = 1;
+	}
+	else
+	{
+		jugador = 2;
+	}
+
+	for (unsigned int i = 0; i < CA; i++)
+	{
+		if (jugador != vector[i]->getNjugador() && contador+1 == N)
+		{
+			return vector[i];
+		}
+
+	}
+
 }
 /**/
 template<class tipodato>

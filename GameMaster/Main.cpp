@@ -24,7 +24,12 @@ void EleccionDeUnidades(cJugador * jugadorX); //el jugador elecciona 50 unidades
 void AgruparUnidadesEnTropas(void); // el jugador agrupa sus unidades en 10 tropas
 void GeneradorDeTropasParaJugador(cJugador * jugadorX); // se generan las tropas y se las da al jugador
 
+void ImprimirMapa(void);
+
+void AgregarTropasEnPais();
 void Inicio(void);
+
+void inicioPrueba(void);
 
 
 cJugador * Jugador1 = new cJugador("Jugador 1");
@@ -40,12 +45,13 @@ int main(void) {
 		
 	srand(time(NULL));
 
-	Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
+	//Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
 
-
+	inicioPrueba();
+	AgregarTropasEnPais();
+	Jugador1->AtacarPais();
+		
 	
-	system("Pause");
-
 	delete Continente;
 	delete Jugador1;
 	delete Jugador2;
@@ -69,6 +75,7 @@ void EleccionDeUnidades(cJugador * jugadorX)
 		cout << "Opcion: ";
 
 		cin >> opcion;
+
 		if (opcion == 1)
 		{
 			if (caballeros != 20)
@@ -254,43 +261,30 @@ void GeneradorDeTropasParaJugador(cJugador * jugadorX)
 	cout << "Caballeros: " << endl;
 	for (int i = 0; i < Tcaballeros; i++)
 	{   
-		cTropaCaballero * tropa = new cTropaCaballero;
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
-
-		for (int k = 0; k < Tropas[k]; k++)
-		{
-			tropa->AgregarUnidades(new cUnidadCaballero);
-		}
-		jugadorX->AgregarTropaCaballero(tropa);
+		jugadorX->AgregarTropaCaballero(new cTropaCaballero, Tropas[i]);
 	}
 	cout << endl;
 	cout << "Arqueros: " << endl;
 	for (int i = Tcaballeros; i < Tarqueros + Tcaballeros; i++)
 	{
-		cTropaArquero * tropa = new cTropaArquero;
+		
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
-
-		for (int k = 0; k < Tropas[k]; k++)
-		{
-			tropa->AgregarUnidades(new cUnidadArquero);
-		}
-		jugadorX->AgregarTropaArquero(tropa);
+		jugadorX->AgregarTropaArquero(new cTropaArquero, Tropas[i]);
 	}
 	cout << endl;
 	cout << "Magos: " << endl;
 	for (int i = Tarqueros + Tcaballeros; i < Tmagos + Tcaballeros + Tarqueros; i++)
-	{
-		cTropaMago * tropa = new cTropaMago;
+	{	
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
-
-		for (int k = 0; k < Tropas[k]; k++)
-		{
-			tropa->AgregarUnidades(new cUnidadMago);
-		}
-		jugadorX->AgregarTropaMago(tropa);
+		jugadorX->AgregarTropaMago(new cTropaMago, Tropas[i]);
 	}
 
 	system("pause");
+}
+
+void ImprimirMapa(void)
+{
 }
 
 void CrearContinenteConPaises()
@@ -381,6 +375,20 @@ void AsignarPaisesAJugadores()
 		}
 				
 	}
+
+	for (int  i = 0; i < 8; i++)
+	{
+		cPais *pais;
+		pais = Jugador1->DevolverPais(i);
+		pais->setJugador(Jugador1->getNombre());
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		cPais *pais;
+		pais = Jugador2->DevolverPais(i);
+		pais->setJugador(Jugador2->getNombre());
+	}
+
 }
 
 void InicializacionDeVaribales()
@@ -397,6 +405,12 @@ void InicializacionDeVaribales()
 	Tcaballeros = 0;
 	Tmagos = 0;
 	Tarqueros = 0;
+}
+
+void AgregarTropasEnPais()
+{
+	//Jugador1->setTropaEnPais();
+	Jugador2->setTropaEnPais();
 }
 
 void Inicio(void)
@@ -434,4 +448,70 @@ void Inicio(void)
 		system("cls");
 
 	}
+}
+
+void inicioPrueba(void)
+{
+	CrearContinenteConPaises(); //se le agregan los paises al continente
+	AsignarVecinos();//se le agregan los vecinos a cada pais
+	AsignarPaisesAJugadores(); // se le agregan los paises a cada jugador
+	InicializacionDeVaribales();
+
+	caballeros = 20;
+	arqueros = 10;
+	magos = 20;
+	Tcaballeros = 4;
+	Tarqueros = 3;
+	Tmagos = 3;
+
+	for (int i = 0; i < Tcaballeros; i++)
+	{
+		Tropas[i] = 5;
+	}
+	for (int i = 4; i < Tcaballeros+Tarqueros; i++)
+	{
+		Tropas[i] = 5;
+	}
+	for (int i = 7; i < Tcaballeros + Tarqueros+Tmagos; i++)
+	{
+		if (i == 7)
+		{
+			Tropas[i] = 15;
+		}
+		else
+		{
+			Tropas[i] = 5;
+		}
+		
+	}
+	
+	GeneradorDeTropasParaJugador(Jugador1);
+
+	system("cls");
+
+	caballeros = 10;
+	arqueros = 20;
+	magos = 20;
+	Tcaballeros = 2;
+	Tarqueros = 4;
+	Tmagos = 4;
+
+	for (int i = 0; i < Tcaballeros; i++)
+	{
+		Tropas[i] = 10;
+	}
+	for (int i = Tcaballeros; i < Tcaballeros + Tarqueros; i++)
+	{
+		Tropas[i] = 5;
+	}
+	for (int i = Tcaballeros + Tarqueros; i < Tcaballeros + Tarqueros + Tmagos; i++)
+	{
+		
+		Tropas[i] = 5;
+		
+	}
+
+	GeneradorDeTropasParaJugador(Jugador2);
+
+	system("cls");
 }

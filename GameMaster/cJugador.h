@@ -24,9 +24,13 @@ public:
 	cJugador();
 	cJugador(string nomb);
 
-	void AgregarTropaArquero(cTropaArquero*ptr);
-	void AgregarTropaCaballero(cTropaCaballero*ptr);
-	void AgregarTropaMago(cTropaMago*ptr);
+	void AgregarTropaArquero(cTropaArquero*ptr, int n);
+	void AgregarTropaCaballero(cTropaCaballero*ptr, int n);
+	void AgregarTropaMago(cTropaMago*ptr, int n);
+	cPais *DevolverPais(int p);
+	void setTropaEnPais(void);
+
+	void AtacarPais();
 	
 	int AgregarPais(cPais *ptr);
 

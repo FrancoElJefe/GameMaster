@@ -18,7 +18,7 @@ class cTropaArquero
 public:
 	cTropaArquero();
 
-	void AgregarUnidades(cUnidadArquero*ptr);
+	void AgregarUnidades(int n);
 	int Ataque();
 	int RecibirAtaqueTropa(int dano, string clase);
 

@@ -7,11 +7,13 @@ cTropaArquero::cTropaArquero()
 	listaUnidades = new cLista<cUnidadArquero>;
 }
 
-void cTropaArquero::AgregarUnidades(cUnidadArquero * ptr)
+void cTropaArquero::AgregarUnidades(int n)
 {
-	listaUnidades->AgregarItem(ptr);
+	for (int k = 0; k < n; k++)
+	{
+		listaUnidades->AgregarItem(new cUnidadArquero);
+	}
 }
-
 int cTropaArquero::Ataque()
 {
 	int ATtotal=0;
@@ -73,7 +75,7 @@ int cTropaArquero::RecibirAtaqueTropa(int dano, string clase)
 
 void cTropaArquero::PrintA()
 {
-	cout << nombre << endl;
+	cout << nombre << ": " << listaUnidades->getCA() << " unidades" << endl;
 }
 
 cTropaArquero::~cTropaArquero()

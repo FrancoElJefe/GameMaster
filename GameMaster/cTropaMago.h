@@ -18,7 +18,7 @@ class cTropaMago
 public:
 	cTropaMago();
 
-	void AgregarUnidades(cUnidadMago*ptr);
+	void AgregarUnidades(int n);
 	int Ataque();
 	int RecibirAtaqueTropa(int dano, string clase);
 

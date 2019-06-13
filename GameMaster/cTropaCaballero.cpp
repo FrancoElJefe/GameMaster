@@ -7,9 +7,13 @@ cTropaCaballero::cTropaCaballero()
 	listaUnidades = new cLista<cUnidadCaballero>;
 }
 
-void cTropaCaballero::AgregarUnidades(cUnidadCaballero * ptr)
+void cTropaCaballero::AgregarUnidades(int N)
 {
-	listaUnidades->AgregarItem(ptr);
+	for (int k = 0; k < N; k++)
+	{
+		listaUnidades->AgregarItem(new cUnidadCaballero);
+	}
+	
 }
 
 int cTropaCaballero::Ataque()
@@ -71,7 +75,7 @@ int cTropaCaballero::RecibirAtaqueTropa(int dano, string clase)
 
 void cTropaCaballero::PrintA()
 {
-	cout << nombre << endl;
+	cout << nombre << ": " << listaUnidades->getCA() << " unidades" << endl;
 }
 
 

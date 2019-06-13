@@ -7,9 +7,12 @@ cTropaMago::cTropaMago()
 	listaUnidades = new cLista<cUnidadMago>;
 }
 
-void cTropaMago::AgregarUnidades(cUnidadMago * ptr)
+void cTropaMago::AgregarUnidades(int n)
 {
-	listaUnidades->AgregarItem(ptr); //se agregan unidades a la tropa
+	for (int k = 0; k < n; k++)
+	{
+		listaUnidades->AgregarItem(new cUnidadMago);
+	}
 }
 
 int cTropaMago::Ataque()
@@ -72,7 +75,7 @@ int cTropaMago::RecibirAtaqueTropa(int dano, string clase)
 
 void cTropaMago::PrintA()
 {
-	cout << nombre << endl;
+	cout << nombre << ": " << listaUnidades->getCA() << " unidades" << endl;
 }
 
 cTropaMago::~cTropaMago()

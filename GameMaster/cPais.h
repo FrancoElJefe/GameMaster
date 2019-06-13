@@ -15,6 +15,7 @@ using namespace std;
 class cPais
 {
 	const string nombre;
+	int jugador;
 	cLista<cTropaCaballero> * ListaTropasCaballeros;
 	cLista<cTropaArquero> * ListaTropasArquero;
 	cLista<cTropaMago> * ListaTropasMago;
@@ -32,11 +33,16 @@ public:
 
 	void AgregarVecinos(cPais * ptr);
 
+	void setJugador(string jug);
 
+	void AtacarOtroPais(string nomb);
+
+	int getNjugador() { return jugador; }
 	const string getCodigo() { return nombre; }
 
 
 	void PrintA(); // mostrar nombre de paises
+	void PrintTropas();//funcion de prueba
 	void PrintNombre();
 
 	~cPais();
