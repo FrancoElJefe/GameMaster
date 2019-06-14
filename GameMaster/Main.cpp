@@ -48,9 +48,20 @@ int main(void) {
 	//Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
 
 	inicioPrueba();
-	AgregarTropasEnPais();
-	Jugador1->AtacarPais();
+	//AgregarTropasEnPais();
 		
+	string pais;
+
+	for (int i = 0; i < 3; i++)
+	{
+		pais = Jugador1->AtacarPais();
+		if (pais != "0")
+		{
+			Jugador2->quitarPais(pais);
+			Jugador1->AgregarPais(Continente->BuscarPais(pais));
+		}
+	}
+	
 	
 	delete Continente;
 	delete Jugador1;
@@ -376,18 +387,6 @@ void AsignarPaisesAJugadores()
 				
 	}
 
-	for (int  i = 0; i < 8; i++)
-	{
-		cPais *pais;
-		pais = Jugador1->DevolverPais(i);
-		pais->setJugador(Jugador1->getNombre());
-	}
-	for (int i = 0; i < 8; i++)
-	{
-		cPais *pais;
-		pais = Jugador2->DevolverPais(i);
-		pais->setJugador(Jugador2->getNombre());
-	}
 
 }
 
@@ -486,6 +485,7 @@ void inicioPrueba(void)
 	}
 	
 	GeneradorDeTropasParaJugador(Jugador1);
+	Jugador1->setTropasEnPaisesPrueba(Tcaballeros, Tarqueros, Tmagos);
 
 	system("cls");
 
@@ -512,6 +512,11 @@ void inicioPrueba(void)
 	}
 
 	GeneradorDeTropasParaJugador(Jugador2);
+	Jugador2->setTropasEnPaisesPrueba(Tcaballeros, Tarqueros, Tmagos);
 
 	system("cls");
+
+
+
+
 }

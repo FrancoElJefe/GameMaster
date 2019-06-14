@@ -37,6 +37,13 @@ cPais * cContinente::BuscarPais(int n)
 	return listaPaises->getItem(n);
 }
 
+cPais * cContinente::BuscarPais(string codigo)
+{
+	return listaPaises->BuscarItem(codigo);
+}
+
+
+
 void cContinente::ListarPaises()
 {
 	listaPaises->Listar();

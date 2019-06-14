@@ -49,8 +49,6 @@ void cJugador::setTropaEnPais(void)
 	Tropas = ListaTropaArqueros->getCA() + ListaTropaCaballeros->getCA() + ListaTropaMagos->getCA();	
 	do
 	{
-
-		
 		cout << "\t\tDISTRIBUYE LAS TROPAS EN TUS PAISES" << endl << endl;
 		cout << "---------" << endl;
 		cout << nombre << endl;
@@ -129,19 +127,52 @@ void cJugador::setTropaEnPais(void)
 
 }
 
-void cJugador::AtacarPais()
+void cJugador::quitarPais(string pais)
+{
+	listaPropiaPaises->Quitar(pais);
+}
+
+string cJugador::AtacarPais()
 {
 	unsigned int opcion = 0;
+	string resultado;
 	cPais * pais;
+	unsigned int check = 0;
+	do
+	{
+	system("cls");
 
+	cout << "---------" << endl;
+	cout << nombre << endl;
+	cout << "---------" << endl << endl;
+	
 	listaPropiaPaises->ListarV();
 
-	cout << "Seleccione el pais con el que queres atacar" << endl;
+	cout << "Selecciona el pais con el que queres atacar: "<< endl;
 	cout << "Pais: ";
 	cin >> opcion;
 
 	pais = listaPropiaPaises->getItem(opcion-1);
-	pais->AtacarOtroPais(nombre);
+	
+	check = pais->getCantidadDeTropas();
+	if (check < 2)
+		{
+		cout << "Reingrese opcion, se debe atacar con un pais que tenga mas de una tropa." << endl;
+		system("pause");
+		}
+	} while (check<2);
+
+	resultado = pais->AtacarOtroPais(nombre);
+
+	if (resultado != "0")
+	{
+
+		return(resultado);
+	}
+	else
+	{
+		return("0");
+	}
 
 	   
 }
@@ -160,6 +191,8 @@ int cJugador::AgregarPais(cPais * ptr)
 		}
 
 	}
+
+	ptr->setJugador(nombre);
 
 	listaPropiaPaises->AgregarItem(ptr);
 
@@ -187,6 +220,46 @@ void cJugador::listarTropas()
 	ListaTropaMagos->Listar();
 
 }
+
+void cJugador::setTropasEnPaisesPrueba(int caballeros, int arqueros, int magos)
+{
+	cPais * pais;
+	int cont = 0;
+
+	for (int i = 0; i < 10; i++)
+	{
+
+		pais = listaPropiaPaises->getItem(cont);
+
+		if (caballeros != 0)
+		{
+			pais->AgregarTropaCaballero(ListaTropaCaballeros->getItem(0));
+			ListaTropaCaballeros->QuitarenPos(0);
+			caballeros--;
+		}
+		else if (arqueros != 0)
+		{
+			pais->AgregarTropaArquero(ListaTropaArqueros->getItem(0));
+			ListaTropaArqueros->QuitarenPos(0);
+			arqueros--;
+		}
+		else if (magos != 0)
+		{
+			pais->AgregarTropaMago(ListaTropaMagos->getItem(0));
+			ListaTropaMagos->QuitarenPos(0);
+			magos--;
+		}
+
+		cont++;
+
+		if (cont > 7)
+		{
+			cont = 0;
+		}
+
+	}
+}
+
 
 cJugador::~cJugador()
 {

@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include <string>
+#include <conio.h>
 #include <iostream>
 #include <ostream>
 #include "cLista.h"
@@ -19,11 +20,13 @@ class cPais
 	cLista<cTropaCaballero> * ListaTropasCaballeros;
 	cLista<cTropaArquero> * ListaTropasArquero;
 	cLista<cTropaMago> * ListaTropasMago;
+	static cLista<cPais> * listaPaises;
+	
 
-	//static cLista<cPais> * listaPaises;
 	cLista<cPais> * vecinos;
 
 public:
+	
 	cPais();
 	cPais(string nomb);
 
@@ -35,7 +38,8 @@ public:
 
 	void setJugador(string jug);
 
-	void AtacarOtroPais(string nomb);
+	string AtacarOtroPais(string nomb); //Yo Ataco
+	int Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtacante);  //Recibo Ataque
 
 	int getNjugador() { return jugador; }
 	const string getCodigo() { return nombre; }
@@ -43,8 +47,13 @@ public:
 
 	void PrintA(); // mostrar nombre de paises
 	void PrintTropas();//funcion de prueba
-	void PrintNombre();
+	void printTodos();//funcion de prueba
 
+	int getCantidadDeTropas() { return (ListaTropasArquero->getCA() + ListaTropasCaballeros->getCA() + ListaTropasMago->getCA());}
+	void PrintNombre();
+	void PrintTropasCaballero();
+	void PrintTropasArquero();
+	void PrintTropasMago();
 	~cPais();
 };
 

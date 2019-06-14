@@ -29,8 +29,9 @@ public:
 	void AgregarTropaMago(cTropaMago*ptr, int n);
 	cPais *DevolverPais(int p);
 	void setTropaEnPais(void);
+	void quitarPais(string pais);
 
-	void AtacarPais();
+	string AtacarPais();
 	
 	int AgregarPais(cPais *ptr);
 
@@ -38,6 +39,7 @@ public:
 
 	void listarSusPaises(); // funcion de prueba
 	void listarTropas(); //funcion de prueba
+	void setTropasEnPaisesPrueba(int caballeros, int arqueros, int magos);//funcion de prueba
 
 	~cJugador();
 };

@@ -34,7 +34,7 @@ int cTropaCaballero::Ataque()
 int cTropaCaballero::RecibirAtaqueTropa(int dano, string clase)
 {
 	cUnidadCaballero * unidad;
-	int aux = 0;
+	int aux = 0, TropasOriginales = 0;
 
 	listaUnidades->OrdenarPorHp(); //ordena de menor a mayor dependiendo de su HP
 
@@ -47,6 +47,8 @@ int cTropaCaballero::RecibirAtaqueTropa(int dano, string clase)
 		dano = dano + (25 * dano) / 100;
 	}
 
+	TropasOriginales = listaUnidades->getCA();
+
 	for (int i = 0; i < listaUnidades->getCA(); i++)
 	{
 		unidad = listaUnidades->getItem(i);
@@ -55,7 +57,9 @@ int cTropaCaballero::RecibirAtaqueTropa(int dano, string clase)
 		if (aux < 0)
 		{
 			listaUnidades->Eliminar(i);
+			i--;
 			aux = aux * (-1);
+			dano = aux;
 		}
 		else
 		{
@@ -69,7 +73,9 @@ int cTropaCaballero::RecibirAtaqueTropa(int dano, string clase)
 	}
 	else
 	{
+		cout << "se eliminaron " << TropasOriginales - listaUnidades->getCA() << endl;
 		return(1);
+		
 	}
 }
 

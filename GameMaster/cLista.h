@@ -102,9 +102,9 @@ inline void cLista<tipodato>::ListarV()
 	for (unsigned int i = 0; i < CA; i++)
 	{
 		cout << i+1 << ") ";
-		
 
 		vector[i]->PrintNombre();// imprimir
+		vector[i]->PrintTropas();
 	}
 }
 template<class tipodato>
@@ -150,9 +150,14 @@ inline tipodato * cLista<tipodato>::AtacarVecino(string nombre , int N)
 
 	for (unsigned int i = 0; i < CA; i++)
 	{
-		if (jugador != vector[i]->getNjugador() && contador+1 == N)
+		if (jugador != vector[i]->getNjugador())
 		{
-			return vector[i];
+			if (contador == N - 1)
+			{
+				return vector[i];
+			}
+			contador++;
+			
 		}
 
 	}

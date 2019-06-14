@@ -25,6 +25,7 @@ public:
 	void AsignarVecinos(string nomb, string *ptr, int CV);
 
 	cPais * BuscarPais(int n);
+	cPais * BuscarPais(string codigo);
 
 	void ListarPaises();
 
