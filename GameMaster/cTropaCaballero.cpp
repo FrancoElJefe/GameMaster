@@ -73,7 +73,9 @@ int cTropaCaballero::RecibirAtaqueTropa(int dano, string clase)
 	}
 	else
 	{
-		cout << "se eliminaron " << TropasOriginales - listaUnidades->getCA() << endl;
+		cout << endl << "\t--------------------------" << endl;
+		cout << "\tse eliminaron " << TropasOriginales - listaUnidades->getCA() << " caballeros"<< endl;
+		cout << "\t--------------------------" << endl << endl;
 		return(1);
 		
 	}

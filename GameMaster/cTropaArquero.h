@@ -19,10 +19,10 @@ public:
 	cTropaArquero();
 
 	void AgregarUnidades(int n);
+
 	int Ataque();
 	int RecibirAtaqueTropa(int dano, string clase);
-
-
+	
 	void PrintA();//funcion de prueba
 
 	~cTropaArquero();

@@ -33,12 +33,12 @@ void cJugador::AgregarTropaMago(cTropaMago * ptr, int n)
 	ptr->AgregarUnidades(n);
 	ListaTropaMagos->AgregarItem(ptr);
 }
-
+/*
 cPais * cJugador::DevolverPais(int p)
 {
 	return listaPropiaPaises->getItem(p);
 }
-
+*/
 void cJugador::setTropaEnPais(void)
 {
 	unsigned int opc = 0;
@@ -134,10 +134,10 @@ void cJugador::quitarPais(string pais)
 
 string cJugador::AtacarPais()
 {
-	unsigned int opcion = 0;
+	unsigned int opcion = 0,check = 0;
 	string resultado;
 	cPais * pais;
-	unsigned int check = 0;
+
 	do
 	{
 	system("cls");
@@ -155,11 +155,12 @@ string cJugador::AtacarPais()
 	pais = listaPropiaPaises->getItem(opcion-1);
 	
 	check = pais->getCantidadDeTropas();
-	if (check < 2)
+		if (check < 2)
 		{
-		cout << "Reingrese opcion, se debe atacar con un pais que tenga mas de una tropa." << endl;
+		cout << endl << "Reingrese opcion, se debe atacar con un pais que tenga mas de una tropa." << endl;
 		system("pause");
 		}
+
 	} while (check<2);
 
 	resultado = pais->AtacarOtroPais(nombre);

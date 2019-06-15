@@ -47,7 +47,11 @@ int main(void) {
 
 	//Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
 
-	inicioPrueba();
+	inicioPrueba(); //se crean los paises en continente y luego se le asignana a cada jugador automaticamente, luego se crean tropas y se distribuyen en cada pais
+					//es una funcion de prueba para poder probar los ataques, puede ser que con los paises que podes atacar no tengan vecino, si pasa eso lo volves a correr
+					//por ahora te dejamos una prueba de ataque del jugador 1 hacia el jugador 2 divertite.(no intentes crashearlo porque lo vas a lograr ajajaja)
+
+
 	//AgregarTropasEnPais();
 		
 	string pais;

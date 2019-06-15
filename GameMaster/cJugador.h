@@ -27,13 +27,14 @@ public:
 	void AgregarTropaArquero(cTropaArquero*ptr, int n);
 	void AgregarTropaCaballero(cTropaCaballero*ptr, int n);
 	void AgregarTropaMago(cTropaMago*ptr, int n);
-	cPais *DevolverPais(int p);
 	void setTropaEnPais(void);
-	void quitarPais(string pais);
 
+	//cPais *DevolverPais(int p);
+	
 	string AtacarPais();
 	
 	int AgregarPais(cPais *ptr);
+	void quitarPais(string pais);
 
 	string getNombre() { return nombre; }
 

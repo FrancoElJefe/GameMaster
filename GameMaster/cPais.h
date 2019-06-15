@@ -21,8 +21,6 @@ class cPais
 	cLista<cTropaArquero> * ListaTropasArquero;
 	cLista<cTropaMago> * ListaTropasMago;
 	static cLista<cPais> * listaPaises;
-	
-
 	cLista<cPais> * vecinos;
 
 public:
