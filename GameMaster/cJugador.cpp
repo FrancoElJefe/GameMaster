@@ -141,7 +141,6 @@ string cJugador::AtacarPais()
 
 	do
 	{
-	system("cls");
 
 	cout << "---------" << endl;
 	cout << nombre << endl;
@@ -166,6 +165,14 @@ string cJugador::AtacarPais()
 			cout << endl << "Reingrese opcion, se debe atacar con un pais que tenga mas de una tropa." << endl;
 			system("pause");
 		}
+		else
+		{
+			system("cls");
+		}
+	}
+	else
+	{
+		system("cls");
 	}
 	
 

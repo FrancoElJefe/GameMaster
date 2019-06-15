@@ -58,6 +58,8 @@ int main(void) {
 
 	for (int i = 0; i < 3; i++)
 	{
+		system("cls");
+		ImprimirMapa();
 		pais = Jugador1->AtacarPais();
 		if (pais == "atras")
 		{
@@ -67,6 +69,7 @@ int main(void) {
 			Jugador2->quitarPais(pais);
 			Jugador1->AgregarPais(Continente->BuscarPais(pais));
 		}
+		
 	}
 	
 	
@@ -298,11 +301,83 @@ void GeneradorDeTropasParaJugador(cJugador * jugadorX)
 		jugadorX->AgregarTropaMago(new cTropaMago, Tropas[i]);
 	}
 
-	system("pause");
+	//system("pause");
 }
 
 void ImprimirMapa(void)
 {
+	cPais * pais = NULL;
+	int Npais[16];
+
+	for (int i = 0; i < 16; i++)
+	{
+		pais = Continente->BuscarPais(i);
+		Npais[i] = pais->getNjugador();
+	}
+	cout << "\t\t	                                                                                _________________" << endl;
+	cout << "\t\t	                           ____________                                        |                 |" << endl;
+	cout << "\t\t	                      ____/            |                                       |                 |" << endl;
+	cout << "\t\t	 ____________________/    |            |                                       |                 |" << endl;
+	cout << "\t\t	|            /            | CANADA(" << Npais[11] << ")  |              ___________              |  GROENLANDIA(" << Npais[15] << ") |" << endl;
+	cout << "\t\t	| ALASKA(" << Npais[9] << ") /  YUKON(" << Npais[10] << ")   |            |             |           |             |                 |" << endl;
+	cout << "\t\t\t|__________/______________|____________|______       |LABRADOR(" << Npais[14] << ")|-------------|                 |" << endl;
+	cout << "\t\t	|                         |                   |______|___________|             |_________________|" << endl;
+	cout << "\t\t	|                          |                                    |                  /" << endl;
+	cout << "\t\t	|                           |__         TERRANOVA(" << Npais[13] << ")            |                 /" << endl;
+	cout << "\t\t	 |          OREGON(" << Npais[8] << ")          |________________________________|                /" << endl;
+	cout << "\t\t	  |                               |__                           |               /" << endl;
+	cout << "\t\t	   |                                 |__    NUEVA YORK(" << Npais[12] << ")       /--------------/" << endl;
+	cout << "\t\t	    |___________________________________|______________________/" << endl;
+	cout << "\t\t	     |                                                        /" << endl;
+	cout << "\t\t	      |                CALIFORNIA(" << Npais[7] << ")                         /" << endl;
+	cout << "\t\t	       |____________________________________________________/" << endl;
+	cout << "\t\t	                         |_                                /" << endl;
+	cout << "\t\t	                           |__                            /" << endl;
+	cout << "\t\t	                              |___                       /" << endl;
+	cout << "\t\t	                                  |       MEXICO(" << Npais[6] << ")     |" << endl;
+	cout << "\t\t	                                   | ___                | " << endl;
+	cout << "\t\t	                                        |___            | " << endl;
+	cout << "\t\t	                                            |           |" << endl;
+	cout << "\t\t	                                             |__        |" << endl;
+	cout << "\t\t	                                                |__     | " << endl;
+	cout << "\t\t	                                                   |___ |" << endl;
+	cout << "\t\t	                                                       ||__________________________________________" << endl;
+	cout << "\t\t	                                                       /                 |                         |_" << endl;
+	cout << "\t\t	                                                      /                  |                           |_" << endl;
+	cout << "\t\t	                                                      |    COLOMBIA(" << Npais[5] << ")   |                             |_" << endl;
+	cout << "\t\t	                                                      |__________________|                               |_" << endl;
+	cout << "\t\t	                                                      |                   |_                               |_" << endl;
+	cout << "\t\t	                                                      |                     |_        BRASIL(" << Npais[3] << ")              |" << endl;
+	cout << "\t\t	                                                      |                       |_                            /" << endl;
+	cout << "\t\t	                                                      |        PERU(" << Npais[4] << ")          |                          /" << endl;
+	cout << "\t\t	                                                      |                         |                         /" << endl;
+	cout << "\t\t	                                                      |_________________________|________________________/" << endl;
+	cout << "\t\t	                                                      |            |                    |               /" << endl;
+	cout << "\t\t	                                                      |            /                    |              /" << endl;
+	cout << "\t\t	                                                      |           |                     | URUGUAY(" << Npais[2] << ")  |" << endl;
+	cout << "\t\t	                                                      |           |                     |            /" << endl;
+	cout << "\t\t	                                                      |   (" << Npais[1] << ")      |                    |           /" << endl;
+	cout << "\t\t	                                                      |    C      /                      |_________|" << endl;
+	cout << "\t\t	                                                      |    H      |                            |" << endl<<endl;
+	cout << "------------------------------------------------------------------------------|    I      |                            |" << endl<<endl;
+	cout << "\t\t	                                                      |    L      |    ARGENTINA("<<Npais[0]<<")          _/" << endl;
+	cout << "\t\t	                                                      |    E      /                         /" << endl;
+	cout << "\t\t	                                                      |          /                       /" << endl;
+	cout << "\t\t	                                                       |        /                      /" << endl;
+	cout << "\t\t	                                                        |      /                     /" << endl;
+	cout << "\t\t	                                                        |      |                   /" << endl;
+	cout << "\t\t	                                                        |      |                 /" << endl;
+	cout << "\t\t	                                                        |      |               /" << endl;
+	cout << "\t\t	                                                        |      |             /" << endl;
+	cout << "\t\t	                                                        |      |           /" << endl;
+	cout << "\t\t	                                                         |      |         /" << endl;
+	cout << "\t\t	                                                          |     |       /" << endl;
+	cout << "\t\t	                                                           |    |     /" << endl;
+	cout << "\t\t	                                                            |   |   /" << endl;
+	cout << "\t\t	                                                              |_|_/" << endl;
+
+	cout << endl;
+
 }
 
 void CrearContinenteConPaises()
