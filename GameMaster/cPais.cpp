@@ -97,7 +97,12 @@ string cPais::AtacarOtroPais(string nomb)
 			
 			cout << "Paises limitrofes para atacar: " << endl << endl;
 			cVecinos = vecinos->ListarParaAtacar(nomb);
-
+			if (cVecinos == 0)
+			{
+				cout << "***No tiene paises vecinos enemigos***" << endl << endl;
+				system("Pause");
+				return("atras");
+			}
 			cout << endl << "si quiere ir para atras presione 0 (cero), de lo contrario toque cualquier tecla:";
 			cin >> atras;
 			if (atras == "0")
