@@ -14,6 +14,11 @@ cClases::cClases(int hp, int at):cClases()
 	AT = at;
 }
 
+void cClases::setHp(int hp)
+{
+	HP = hp;
+}
+
 
 cClases::~cClases()
 {

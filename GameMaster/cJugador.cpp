@@ -134,9 +134,10 @@ void cJugador::quitarPais(string pais)
 
 string cJugador::AtacarPais()
 {
-	unsigned int opcion = 0,check = 0;
+	int opcion = 0,check = 0;
+	string opcion2;
 	string resultado;
-	cPais * pais;
+	cPais * pais=NULL;
 
 	do
 	{
@@ -150,16 +151,23 @@ string cJugador::AtacarPais()
 
 	cout << "Selecciona el pais con el que queres atacar: "<< endl;
 	cout << "Pais: ";
+	cin.clear();
 	cin >> opcion;
-
-	pais = listaPropiaPaises->getItem(opcion-1);
+	if (opcion == 0)
+	getchar();
 	
-	check = pais->getCantidadDeTropas();
+	if (opcion-1 <= listaPropiaPaises->getCA() && opcion != 0)
+	{
+		pais = listaPropiaPaises->getItem(opcion - 1);
+
+		check = pais->getCantidadDeTropas();
 		if (check < 2)
 		{
-		cout << endl << "Reingrese opcion, se debe atacar con un pais que tenga mas de una tropa." << endl;
-		system("pause");
+			cout << endl << "Reingrese opcion, se debe atacar con un pais que tenga mas de una tropa." << endl;
+			system("pause");
 		}
+	}
+	
 
 	} while (check<2);
 
@@ -170,7 +178,10 @@ string cJugador::AtacarPais()
 
 		return(resultado);
 	}
-	else
+	else if (resultado == "atras")
+	{
+		return("atras");
+	}else
 	{
 		return("0");
 	}

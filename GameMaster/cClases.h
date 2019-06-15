@@ -16,6 +16,8 @@ public:
 	cClases();
 	cClases(int hp, int at);
 
+	void setHp(int hp);
+
 	virtual int Ataque() = 0;
 	virtual int RecibirAtaque(int Dano) = 0;
 	

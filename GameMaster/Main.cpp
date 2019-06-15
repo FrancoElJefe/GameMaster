@@ -59,7 +59,10 @@ int main(void) {
 	for (int i = 0; i < 3; i++)
 	{
 		pais = Jugador1->AtacarPais();
-		if (pais != "0")
+		if (pais == "atras")
+		{
+			i--;
+		}else if (pais != "0")
 		{
 			Jugador2->quitarPais(pais);
 			Jugador1->AgregarPais(Continente->BuscarPais(pais));

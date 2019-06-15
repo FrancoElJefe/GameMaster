@@ -53,7 +53,7 @@ int cTropaMago::RecibirAtaqueTropa(int dano, string clase)
 		unidad = listaUnidades->getItem(i);
 		aux = unidad->RecibirAtaque(dano); //si le devuelve un numero negativo quiere decir que mato a la unidad 
 										   //por lo cual se debe eliminar de la lista de tropa a la unidad
-		if (aux < 0)
+		if (aux <= 0)
 		{
 			listaUnidades->Eliminar(i);
 			i--;

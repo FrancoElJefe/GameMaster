@@ -33,7 +33,7 @@ public:
 
 	void Listar();
 	void ListarV();
-	void ListarParaAtacar(string nombre);
+	int ListarParaAtacar(string nombre);
 
 	tipodato* AtacarVecino(string nombre, int N);
 
@@ -108,7 +108,7 @@ inline void cLista<tipodato>::ListarV()
 	}
 }
 template<class tipodato>
-inline void cLista<tipodato>::ListarParaAtacar(string nombre)
+inline int cLista<tipodato>::ListarParaAtacar(string nombre)
 {
 	int jugador = 0, contador = 0;
 
@@ -131,6 +131,8 @@ inline void cLista<tipodato>::ListarParaAtacar(string nombre)
 		}
 		
 	}
+
+	return contador;
 
 
 }
@@ -284,13 +286,14 @@ template<class tipodato>
 
 inline void cLista<tipodato>::OrdenarPorHp() //ordena del menor a mayor
 {
+	tipodato * aux;
+
 	for (int i = 0; i < CA; i++)
 	{
 		for (int k = 0; k < CA - 1; k++)
 		{
 			if (vector[k]->getHP() > vector[k+1]->getHP())
-			{
-				tipodato * aux;
+			{				
 				aux = vector[k];
 				vector[k] = vector[k + 1];
 				vector[k + 1] = aux;

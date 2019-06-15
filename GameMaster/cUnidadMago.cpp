@@ -21,6 +21,8 @@ int cUnidadMago::RecibirAtaque(int Dano)
 
 	HP = cClases::getHP();
 
+	cClases::setHp(HP - Dano);
+
 	return (HP - Dano);
 }
 

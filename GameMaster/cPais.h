@@ -41,13 +41,15 @@ public:
 
 	int getNjugador() { return jugador; }
 	const string getCodigo() { return nombre; }
-
+	int getCantidadDeTropas() { return (ListaTropasArquero->getCA() + ListaTropasCaballeros->getCA() + ListaTropasMago->getCA()); }
+	int getCantTarquro() { return ListaTropasArquero->getCA(); }
+	int getCantTcaballero() { return ListaTropasCaballeros->getCA(); }
+	int getCantTMago() { return ListaTropasMago->getCA(); }
 
 	void PrintA(); // mostrar nombre de paises
 	void PrintTropas();//funcion de prueba
 	void printTodos();//funcion de prueba
-
-	int getCantidadDeTropas() { return (ListaTropasArquero->getCA() + ListaTropasCaballeros->getCA() + ListaTropasMago->getCA());}
+		
 	void PrintNombre();
 	void PrintTropasCaballero();
 	void PrintTropasArquero();
