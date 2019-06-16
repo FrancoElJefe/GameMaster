@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <iostream>
 #include <ostream>
+#include <windows.h>
 #include "cLista.h"
 #include "cTropaCaballero.h"
 #include "cTropaArquero.h"
@@ -22,6 +23,7 @@ class cPais
 	cLista<cTropaMago> * ListaTropasMago;
 	static cLista<cPais> * listaPaises;
 	cLista<cPais> * vecinos;
+	static HANDLE consoleHandle;
 
 public:
 	

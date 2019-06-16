@@ -1,5 +1,7 @@
 #include "cTropaArquero.h"
 
+HANDLE cTropaArquero::consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+
 string cTropaArquero::nombre = "ARQUERO";
 
 cTropaArquero::cTropaArquero()
@@ -71,9 +73,11 @@ int cTropaArquero::RecibirAtaqueTropa(int dano, string clase)
 	}
 	else
 	{
+		SetConsoleTextAttribute(consoleHandle, 14);
 		cout << endl << "\t------------------------" << endl;
 		cout << "\tse eliminaron " << TropasOriginales - listaUnidades->getCA() << " arqueros"<< endl;
 		cout << "\t------------------------" << endl << endl;
+		SetConsoleTextAttribute(consoleHandle, 7);
 		return(1);
 	}
 
@@ -82,7 +86,13 @@ int cTropaArquero::RecibirAtaqueTropa(int dano, string clase)
 
 void cTropaArquero::PrintA()
 {
-	cout << nombre << ": " << listaUnidades->getCA() << " unidades" << endl;
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_GREEN);
+	cout << nombre;
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << ": ";
+	SetConsoleTextAttribute(consoleHandle, 6);
+	cout << listaUnidades->getCA() << " unidades" << endl;
+	SetConsoleTextAttribute(consoleHandle, 7);
 }
 
 cTropaArquero::~cTropaArquero()

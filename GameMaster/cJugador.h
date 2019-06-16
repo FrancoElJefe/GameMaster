@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <ostream>
+#include <windows.h>
 #include "cLista.h"
 #include "cTropaArquero.h"
 #include "cTropaCaballero.h"
@@ -19,6 +20,7 @@ class cJugador
 	cLista<cTropaCaballero> * ListaTropaCaballeros;
 	cLista<cTropaMago> * ListaTropaMagos;
 	cLista<cPais> * listaPropiaPaises;
+	static HANDLE consoleHandle;
 
 public:
 	cJugador();

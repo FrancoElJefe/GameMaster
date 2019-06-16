@@ -1,5 +1,7 @@
 #include "cTropaMago.h"
 
+HANDLE cTropaMago::consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+
 string cTropaMago::nombre = "MAGO";
 
 cTropaMago::cTropaMago()
@@ -72,9 +74,11 @@ int cTropaMago::RecibirAtaqueTropa(int dano, string clase)
 	}
 	else
 	{
+		SetConsoleTextAttribute(consoleHandle, 14);
 		cout << endl << "\t---------------------" << endl;
 		cout << "\tse eliminaron " << TropasOriginales - listaUnidades->getCA() << " magos" << endl;
 		cout << "\t---------------------" << endl << endl;
+		SetConsoleTextAttribute(consoleHandle, 7);
 		return(1);
 	}
 }
@@ -82,7 +86,13 @@ int cTropaMago::RecibirAtaqueTropa(int dano, string clase)
 
 void cTropaMago::PrintA()
 {
-	cout << nombre << ": " << listaUnidades->getCA() << " unidades" << endl;
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_RED);
+	cout << nombre;
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << ": ";
+	SetConsoleTextAttribute(consoleHandle, 6); 
+	cout << listaUnidades->getCA() << " unidades" << endl; 
+	SetConsoleTextAttribute(consoleHandle, 7);
 }
 
 cTropaMago::~cTropaMago()

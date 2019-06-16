@@ -3,6 +3,7 @@
 #include "stdlib.h"
 #include <string>
 #include <iostream>
+#include <windows.h>
 #include <ostream>
 #include "cUnidadArquero.h"
 #include "cLista.h"
@@ -14,6 +15,7 @@ class cTropaArquero
 	int ATtropa;
 	cLista<cUnidadArquero> * listaUnidades;
 	static string nombre;
+	static HANDLE consoleHandle;
 
 public:
 	cTropaArquero();

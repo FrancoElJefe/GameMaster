@@ -1,6 +1,6 @@
 #include "cJugador.h"
 
-
+HANDLE cJugador::consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
 cJugador::cJugador()
 {
@@ -146,6 +146,7 @@ string cJugador::AtacarPais()
 	cout << nombre << endl;
 	cout << "---------" << endl << endl;
 	
+	
 	listaPropiaPaises->ListarV();
 
 	cout << "Selecciona el pais con el que queres atacar: "<< endl;
@@ -155,15 +156,20 @@ string cJugador::AtacarPais()
 	if (opcion == 0)
 	getchar();
 	
-	if (opcion-1 <= listaPropiaPaises->getCA() && opcion != 0)
+	if (opcion-1 < listaPropiaPaises->getCA() && opcion != 0)
 	{
 		pais = listaPropiaPaises->getItem(opcion - 1);
 
 		check = pais->getCantidadDeTropas();
 		if (check < 2)
 		{
-			cout << endl << "Reingrese opcion, se debe atacar con un pais que tenga mas de una tropa." << endl;
+			SetConsoleTextAttribute(consoleHandle, FSCTL_GET_INTEGRITY_INFORMATION);
+			cout << endl << "Reingrese opcion, se debe atacar con un pais que tenga mas de una tropa.";
+			SetConsoleTextAttribute(consoleHandle, 7);
+			cout << endl;
+
 			system("pause");
+			system("cls");
 		}
 	}
 	else

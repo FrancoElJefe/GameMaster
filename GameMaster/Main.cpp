@@ -31,6 +31,8 @@ void Inicio(void);
 
 void inicioPrueba(void);
 
+void ocultarCursor();
+
 
 cJugador * Jugador1 = new cJugador("Jugador 1");
 cJugador * Jugador2 = new cJugador("Jugador 2");
@@ -51,9 +53,10 @@ int main(void) {
 					//es una funcion de prueba para poder probar los ataques, puede ser que con los paises que podes atacar no tengan vecino, si pasa eso lo volves a correr
 					//por ahora te dejamos una prueba de ataque del jugador 1 hacia el jugador 2 divertite.(no intentes crashearlo porque lo vas a lograr ajajaja)
 
+	ocultarCursor();
+	
 
 	//AgregarTropasEnPais();
-		
 	string pais;
 
 	for (int i = 0; i < 3; i++)
@@ -601,4 +604,26 @@ void inicioPrueba(void)
 
 
 
+}
+
+void ocultarCursor()
+{
+	/*
+	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO info;
+	info.dwSize = 100;
+	info.bVisible = FALSE;
+	SetConsoleCursorInfo(consoleHandle, &info);
+	
+	//CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
+	//GetConsoleScreenBufferInfo(consoleHandle, ConsoleInfo);
+	//WORD OriginalColors = ConsoleInfo->wAttributes;
+	//SetConsoleTextAttribute(consoleHandle, 5);
+	*/
+	//EVENT_SYSTEM_FOREGROUND -- celeste
+	//FSCTL_GET_INTEGRITY_INFORMATION -- se usa para textos que requierean atencion
+	//5 -- purpura
+	//6 -- naranja 
+	//4 -- rojo 
+	//14 -- descolorado
 }

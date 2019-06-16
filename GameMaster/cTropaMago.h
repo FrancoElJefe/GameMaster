@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <ostream>
+#include <windows.h>
 #include "cUnidadMago.h"
 #include "cLista.h"
 
@@ -14,6 +15,7 @@ class cTropaMago
 	int ATtropa;
 	cLista<cUnidadMago> * listaUnidades;
 	static string nombre;
+	static HANDLE consoleHandle;
 
 public:
 	cTropaMago();

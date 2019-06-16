@@ -1,6 +1,7 @@
 #include "cPais.h"
 
 cLista<cPais> *cPais::listaPaises = new cLista<cPais>(16);
+HANDLE cPais::consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
 cPais::cPais()
 {
@@ -52,7 +53,8 @@ void cPais::setJugador(string jug)
 string cPais::AtacarOtroPais(string nomb)
 {
 	int opcion = 0, OpcionTropaTuya = 0, fin = 0, sinTROPA = 0, sinTROPAmia = 0, Otropas = 0, estado = 0, i = 1, cVecinos = 0;
-	string salir, clase_slc, clase_tuya, atras;
+	string salir, clase_slc, clase_tuya;
+	char atras;
 	cPais * PaisParaAtacar = NULL;
 	cTropaCaballero * miTropaC;
 	cTropaArquero *miTropaA;
@@ -63,6 +65,7 @@ string cPais::AtacarOtroPais(string nomb)
 
 	do
 	{
+		SetConsoleTextAttribute(consoleHandle, 5);
 		if (jugador == 1)
 		{
 			cout << "----------------------------------------------" << endl;
@@ -89,8 +92,8 @@ string cPais::AtacarOtroPais(string nomb)
 			}
 			cout << "----------------------------------------------" << endl << endl;
 		}
-
-
+		SetConsoleTextAttribute(consoleHandle, 7);
+		
 		switch (estado)
 		{
 		case 0:
@@ -99,13 +102,20 @@ string cPais::AtacarOtroPais(string nomb)
 			cVecinos = vecinos->ListarParaAtacar(nomb);
 			if (cVecinos == 0)
 			{
+				SetConsoleTextAttribute(consoleHandle, FSCTL_GET_INTEGRITY_INFORMATION);
 				cout << "***No tiene paises vecinos enemigos***" << endl << endl;
+				SetConsoleTextAttribute(consoleHandle, 7);
+
 				system("Pause");
 				return("atras");
 			}
-			cout << endl << "si quiere ir para atras presione 0 (cero), de lo contrario toque cualquier tecla:";
-			cin >> atras;
-			if (atras == "0")
+			
+			cout << endl << "si quiere ir para atras presione retroceso <-, de lo contrario pulse cualquier tecla";
+			atras = _getch();
+			if (atras == '\0')
+			atras = _getch();
+
+			if (atras == '\b')
 			{
 				return("atras");
 			}else
@@ -133,8 +143,12 @@ string cPais::AtacarOtroPais(string nomb)
 			PaisParaAtacar->PrintTropas(); 
 
 			cout << "si desea continuar presione enter, de lo contrario pulse cualquier tecla";
+			atras = _getch();
+			if (atras == '\0')
+			atras = _getch();
 
-			if (_getch() != 13)
+			
+			if (atras != 13)
 			{
 				estado = 0;
 				system("cls");
@@ -479,10 +493,11 @@ string cPais::AtacarOtroPais(string nomb)
 
 	if (fin == 1)// ganaste el pais
 	{	
-		
+		SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
 		cout << endl << "******************************************";
 		cout << endl << "Enhorabuena, ganaste el pais " << PaisParaAtacar->getCodigo() << endl;
 		cout << "******************************************" << endl << endl;
+		SetConsoleTextAttribute(consoleHandle, 7);
 
 		cout << "Debes pasarle una tropa:" << endl << endl;
 		if (ListaTropasCaballeros->getCA() != 0)
@@ -499,11 +514,11 @@ string cPais::AtacarOtroPais(string nomb)
 		{
 			PrintTropasMago();
 		}
-
+		
 		cout << endl << "Escriba la clase: ";
 		cin >> clase_tuya;
-
-		if ((clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero")) //si atacas con caballeros
+		
+		if ((clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero") && ListaTropasCaballeros->getCA() != 0) //si atacas con caballeros
 		{
 			cout << endl << "Con cual tropa quiere pasar: ";
 			cin >> OpcionTropaTuya;
@@ -513,8 +528,10 @@ string cPais::AtacarOtroPais(string nomb)
 			PaisParaAtacar->AgregarTropaCaballero(miTropaC);
 			ListaTropasCaballeros->QuitarenPos(OpcionTropaTuya - 1);
 
+			return(PaisParaAtacar->getCodigo());
+
 		}
-		else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero") //si atacas con arqueros
+		else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero" && ListaTropasArquero->getCA() != 0) //si atacas con arqueros
 		{
 			cout << endl << "Con cual tropa quiere atacar: ";
 			cin >> OpcionTropaTuya;
@@ -523,8 +540,10 @@ string cPais::AtacarOtroPais(string nomb)
 
 			PaisParaAtacar->AgregarTropaArquero(miTropaA);
 			ListaTropasArquero->QuitarenPos(OpcionTropaTuya - 1);
+
+			return(PaisParaAtacar->getCodigo());
 		}
-		else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago") //si atacas con magos
+		else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago" && ListaTropasMago->getCA() != 0) //si atacas con magos
 		{
 
 			cout << endl << "Con cual tropa quiere atacar: ";
@@ -535,9 +554,11 @@ string cPais::AtacarOtroPais(string nomb)
 			PaisParaAtacar->AgregarTropaMago(miTropaM);
 
 			ListaTropasMago->QuitarenPos(OpcionTropaTuya - 1);
+
+			return(PaisParaAtacar->getCodigo());
 		}
 
-		return(PaisParaAtacar->getCodigo());
+		
 	}
 	else
 	{
