@@ -21,7 +21,7 @@ void AsignarPaisesAJugadores();
 
 void InicializacionDeVaribales();
 void EleccionDeUnidades(cJugador * jugadorX); //el jugador elecciona 50 unidades constituedas por las tres facciones 
-void AgruparUnidadesEnTropas(void); // el jugador agrupa sus unidades en 10 tropas
+void AgruparUnidadesEnTropas(cJugador * jugadorX); // el jugador agrupa sus unidades en 10 tropas
 void GeneradorDeTropasParaJugador(cJugador * jugadorX); // se generan las tropas y se las da al jugador
 
 void ImprimirMapa(void);
@@ -33,6 +33,7 @@ void inicioPrueba(void);
 
 void ocultarCursor();
 
+HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
 cJugador * Jugador1 = new cJugador("Jugador 1");
 cJugador * Jugador2 = new cJugador("Jugador 2");
@@ -41,7 +42,7 @@ cContinente * Continente = new cContinente(16, "America");
 
 int MaxUnidades = 0, caballeros = 0, magos = 0, arqueros = 0, opcion = 0, aux = 0, sobrecarga = 0, suma = 0; // variables de EleccionDeUnidades 
 
-int Tropas[10], NrTropa=0, Tcaballeros=0, Tmagos=0, Tarqueros=0; // variables de AgruparUnidadesEnTropas , reutilizo el aux, opcion y MaxUnidades
+int TropasJugador1[10],TropasJugador2[10], NrTropa=0, Tcaballeros=0, Tmagos=0, Tarqueros=0; // variables de AgruparUnidadesEnTropas , reutilizo el aux, opcion y MaxUnidades
 
 int main(void) {
 		
@@ -52,11 +53,7 @@ int main(void) {
 	inicioPrueba(); //se crean los paises en continente y luego se le asignana a cada jugador automaticamente, luego se crean tropas y se distribuyen en cada pais
 					//es una funcion de prueba para poder probar los ataques, puede ser que con los paises que podes atacar no tengan vecino, si pasa eso lo volves a correr
 					//por ahora te dejamos una prueba de ataque del jugador 1 hacia el jugador 2 divertite.(no intentes crashearlo porque lo vas a lograr ajajaja)
-
-	ocultarCursor();
 	
-
-	//AgregarTropasEnPais();
 	string pais;
 
 	for (int i = 0; i < 3; i++)
@@ -87,9 +84,12 @@ int main(void) {
 
 void EleccionDeUnidades(cJugador * jugadorX)
 {
+	InicializacionDeVaribales();
 	do
 	{
-		cout << "-" << jugadorX->getNombre() << ": " << endl;
+		cout << "---------" << endl;
+		cout << jugadorX->getNombre() << endl;
+		cout << "---------" << endl << endl;
 		cout << "Eleccion de Unidades: (MaxUnidades 50) // Unidades ACTUALES: " << MaxUnidades << endl << endl;
 		cout << "1) 10-20 unidades si son caballeros" << endl << "2) 15 - 30 si son arqueros" << endl << "3) 20 - 40 si son magos" << endl << endl;
 		cout << "Caballeros : " << caballeros << endl;
@@ -186,14 +186,18 @@ void EleccionDeUnidades(cJugador * jugadorX)
 
 	} while (MaxUnidades != 50);
 
+	system("cls");
+
 }
 
-void AgruparUnidadesEnTropas(void)
+void AgruparUnidadesEnTropas(cJugador * jugadorX)
 {
+	int check=0,numero=0, Tropas[10];
+
 	MaxUnidades = caballeros;
 	aux = arqueros;
 	opcion = magos;
-
+	   
 	do
 	{
 		caballeros = MaxUnidades;
@@ -202,8 +206,12 @@ void AgruparUnidadesEnTropas(void)
 
 		for (int i = 0; i < 10; i++)
 		{
-
+			
 			cout << "Armado de las tropas: " << endl << endl;
+
+			cout << "---------" << endl;
+			cout << jugadorX->getNombre() << endl;
+			cout << "---------" << endl << endl;
 
 			cout << "Caballeros : " << caballeros << endl;
 			cout << "Arqueros : " << arqueros << endl;
@@ -215,8 +223,15 @@ void AgruparUnidadesEnTropas(void)
 				{
 					cout << "Caballeros: " << endl;
 					cout << "Tropa Nr " << i + 1 << ":";
-					cin >> Tropas[i];
-	
+					cin >> numero;
+					if (numero == 0) {
+						getchar();
+					}
+					else
+					{
+						Tropas[i] = numero;
+					}
+
 					if (caballeros - Tropas[i] < 0)Tropas[i] = -1;
 					
 				} while (Tropas[i] <= 0);
@@ -230,7 +245,14 @@ void AgruparUnidadesEnTropas(void)
 				{
 					cout << "Arqueros: " << endl;
 					cout << "Tropa Nr " << i + 1 << ":";
-					cin >> Tropas[NrTropa];
+					cin >> numero;
+					if (numero == 0) {
+						getchar();
+					}
+					else
+					{
+						Tropas[i] = numero;
+					}
 
 					if (arqueros - Tropas[i] < 0)Tropas[i] = -1;
 
@@ -245,7 +267,14 @@ void AgruparUnidadesEnTropas(void)
 				{
 					cout << "Magos: " << endl;
 					cout << "Tropa Nr " << i + 1 << ":";
-					cin >> Tropas[i];
+					cin >> numero;
+					if (numero == 0) {
+						getchar();
+					}
+					else
+					{
+						Tropas[i] = numero;
+					}
 
 					if (magos - Tropas[i] < 0) {
 						Tropas[i] = -1;
@@ -257,19 +286,44 @@ void AgruparUnidadesEnTropas(void)
 				magos = magos - Tropas[i];
 			}
 
+			check = check + Tropas[i];
 			system("cls");
 
 		}//FOR
+		
 
-		if (NrTropa < 9)
+		if (check != 50)
 		{
-			system("cls");
-			cout << "Se debe tener 10 tropas, reingrese estas "<< NrTropa << endl << endl;
+			cout << endl << endl;
+			SetConsoleTextAttribute(consoleHandle,FSCTL_GET_INTEGRITY_INFORMATION);
+			cout << "Se debe tener 10 tropas, reingrese"; 
+			SetConsoleTextAttribute(consoleHandle, 7);
+			cout << endl << endl;
+			check = 0;
+			Tcaballeros = 0;
+			Tarqueros = 0;
+			NrTropa = 0;
+			Tmagos = 0;
 			system("pause");
 			system("cls");
 		}
 
-	} while (NrTropa < 9);
+	} while (check != 50);
+
+	if (jugadorX->getNombre() == "Jugador 1")
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			TropasJugador1[i] = Tropas[i];
+		}
+	}
+	else
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			TropasJugador2[i] = Tropas[i];
+		}
+	}
 
 	system("cls");
 
@@ -280,7 +334,24 @@ void AgruparUnidadesEnTropas(void)
 
 void GeneradorDeTropasParaJugador(cJugador * jugadorX)
 {
+	int Tropas[10];
 	cout << endl;
+
+	if (jugadorX->getNombre() == "Jugador 1")
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			Tropas[i] = TropasJugador1[i];
+		}
+	}
+	else
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			Tropas[i] = TropasJugador2[i];
+		}
+	}
+	
 
 	cout << "Caballeros: " << endl;
 	for (int i = 0; i < Tcaballeros; i++)
@@ -303,8 +374,8 @@ void GeneradorDeTropasParaJugador(cJugador * jugadorX)
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
 		jugadorX->AgregarTropaMago(new cTropaMago, Tropas[i]);
 	}
-
-	//system("pause");
+	system("Pause");
+	system("cls");
 }
 
 void ImprimirMapa(void)
@@ -493,7 +564,7 @@ void InicializacionDeVaribales()
 
 void AgregarTropasEnPais()
 {
-	//Jugador1->setTropaEnPais();
+	Jugador1->setTropaEnPais();
 	Jugador2->setTropaEnPais();
 }
 
@@ -503,39 +574,23 @@ void Inicio(void)
 	AsignarVecinos();//se le agregan los vecinos a cada pais
 	AsignarPaisesAJugadores(); // se le agregan los paises a cada jugador
 
-	for (int i = 0; i < 2; i++)
-	{
-		InicializacionDeVaribales();
+	
+	EleccionDeUnidades(Jugador1); //el jugador 1 elige las unidades de caballeros, arqueros y magos
+	AgruparUnidadesEnTropas(Jugador1); //el jugador 1 agrupa, a gusto, las unidades en 10 tropas
+	GeneradorDeTropasParaJugador(Jugador1);//se arman las tropas en el jugador 1
+			   
+	EleccionDeUnidades(Jugador2); //el jugador 1 elige las unidades de caballeros, arqueros y magos
+	AgruparUnidadesEnTropas(Jugador2); //el jugador 1 agrupa, a gusto, las unidades en 10 tropas
+	GeneradorDeTropasParaJugador(Jugador2); //se arman las tropas en el jugador 1
+		
+	AgregarTropasEnPais(); //ubican las tropas donde quiere cada jugador
 
-		if (i == 0)
-		{
-			EleccionDeUnidades(Jugador1);
-		}
-		else
-		{
-			EleccionDeUnidades(Jugador2);
-		}
-
-		system("cls");
-
-		AgruparUnidadesEnTropas();
-
-		if (i == 0)
-		{
-			GeneradorDeTropasParaJugador(Jugador1);
-		}
-		else
-		{
-			GeneradorDeTropasParaJugador(Jugador2);
-		}
-
-		system("cls");
-
-	}
+	
 }
 
 void inicioPrueba(void)
 {
+	int Tropas[10];
 	CrearContinenteConPaises(); //se le agregan los paises al continente
 	AsignarVecinos();//se le agregan los vecinos a cada pais
 	AsignarPaisesAJugadores(); // se le agregan los paises a cada jugador
@@ -550,21 +605,21 @@ void inicioPrueba(void)
 
 	for (int i = 0; i < Tcaballeros; i++)
 	{
-		Tropas[i] = 5;
+		TropasJugador1[i] = 5;
 	}
 	for (int i = 4; i < Tcaballeros+Tarqueros; i++)
 	{
-		Tropas[i] = 5;
+		TropasJugador1[i] = 5;
 	}
 	for (int i = 7; i < Tcaballeros + Tarqueros+Tmagos; i++)
 	{
 		if (i == 7)
 		{
-			Tropas[i] = 15;
+			TropasJugador1[i] = 15;
 		}
 		else
 		{
-			Tropas[i] = 5;
+			TropasJugador1[i] = 5;
 		}
 		
 	}
@@ -583,16 +638,16 @@ void inicioPrueba(void)
 
 	for (int i = 0; i < Tcaballeros; i++)
 	{
-		Tropas[i] = 10;
+		TropasJugador2[i] = 10;
 	}
 	for (int i = Tcaballeros; i < Tcaballeros + Tarqueros; i++)
 	{
-		Tropas[i] = 5;
+		TropasJugador2[i] = 5;
 	}
 	for (int i = Tcaballeros + Tarqueros; i < Tcaballeros + Tarqueros + Tmagos; i++)
 	{
 		
-		Tropas[i] = 5;
+		TropasJugador2[i] = 5;
 		
 	}
 
