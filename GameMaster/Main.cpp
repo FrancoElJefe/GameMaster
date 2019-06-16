@@ -54,7 +54,7 @@ int main(void) {
 					//es una funcion de prueba para poder probar los ataques, puede ser que con los paises que podes atacar no tengan vecino, si pasa eso lo volves a correr
 					//por ahora te dejamos una prueba de ataque del jugador 1 hacia el jugador 2 divertite.(no intentes crashearlo porque lo vas a lograr ajajaja)
 	
-	string pais;
+	string pais; //HOLA IMBECIL
 
 	for (int i = 0; i < 3; i++)
 	{
