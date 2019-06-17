@@ -55,7 +55,7 @@ void cPais::setJugador(string jug)
 
 string cPais::AtacarOtroPais(string nomb)
 {
-	int opcion = 0, OpcionTropaTuya = 0, fin = 0, sinTROPA = 0, sinTROPAmia = 0, Otropas = 0, estado = 0, i = 1, cVecinos = 0;
+	int opcion = 0, OpcionTropaTuya = 0, fin = 0, sinTROPA = 0, sinTROPAmia = 0, Otropas = 0, estado = 0, i = 1, cVecinos = 0, eliminar = 0;
 	string salir, clase_slc, clase_tuya;
 	char atras;
 	cPais * PaisParaAtacar = NULL;
@@ -68,39 +68,14 @@ string cPais::AtacarOtroPais(string nomb)
 
 	do
 	{
-		SetConsoleTextAttribute(consoleHandle, 5);
-		if (jugador == 1)
-		{
-			cout << "----------------------------------------------" << endl;
-			cout << "    Jugador 1" << " atacando con "<< nombre;
-			if (estado > 1)
-			{
-				cout << " a " << PaisParaAtacar->getCodigo() << endl;
-			}
-			else {
-				cout << endl;
-			}
-			cout << "----------------------------------------------" << endl << endl;
-		}
-		else
-		{
-			cout << "----------------------------------------------" << endl;
-			cout << "    Jugador 2" << " atacando con " << nombre;
-			if (estado > 1)
-			{
-				cout << " a " << PaisParaAtacar->getCodigo() << endl;
-			}
-			else {
-				cout << endl;
-			}
-			cout << "----------------------------------------------" << endl << endl;
-		}
-		SetConsoleTextAttribute(consoleHandle, 7);
+		
 		
 		switch (estado)
 		{
 		case PLimitrofes:
-			
+
+			titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
+
 			cout << "Paises limitrofes para atacar: " << endl << endl;
 			cVecinos = vecinos->ListarParaAtacar(nomb);
 			if (cVecinos == 0)
@@ -138,6 +113,7 @@ string cPais::AtacarOtroPais(string nomb)
 
 		case EPaisParaAtacar:
 
+			titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
 
 			PaisParaAtacar = vecinos->AtacarVecino(nomb, opcion);
 
@@ -164,6 +140,8 @@ string cPais::AtacarOtroPais(string nomb)
 			break;
 
 		case EdeMiTropas:
+
+			titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
 
 			cout << "Tropas Disponibles en "<< nombre<<" para Realizar el ataque:" << endl << endl; //mostras las tropas disponibles en el pais con el que atacas
 			PrintTropas();
@@ -228,6 +206,8 @@ string cPais::AtacarOtroPais(string nomb)
 			
 		case ETropaEnemiga:
 
+			    titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
+
 				PaisParaAtacar->PrintTropas();
 
 				cout << endl << "Elija la clase la cual quiere atacar:";
@@ -235,28 +215,26 @@ string cPais::AtacarOtroPais(string nomb)
 
 				if (clase_slc == "CABALLERO" || clase_slc == "Caballero" || clase_slc == "caballero" && PaisParaAtacar->getCantTcaballero() != 0) // **********atacas a los caballeros enemigos*********
 				{
-
+					cout << endl;
 					PaisParaAtacar->PrintTropasCaballero();
-
-					if (sinTROPA == 0)
-					{
-						cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
-						cin >> Otropas;
-						if (Otropas == 0) getchar();
-
-					}
-					else if (sinTROPA == 1)
-					{
-						cout << endl << "Elija la tropa que quiere atacar:" << Otropas;
-					}
-
+				
+					cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
+					cin >> Otropas;
+					if (Otropas == 0) getchar();
 
 					if (Otropas - 1 < PaisParaAtacar->getCantTcaballero() && Otropas != 0)
 					{
 						if (clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero")
 						{
 							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaC->Ataque(), clase_slc, clase_tuya);
-							estado = ConquistasteElPais;
+							if (fin == 0)
+							{
+								eliminar = PaisParaAtacar->ContrataqueDeCaballeros(NULL, miTropaC, NULL, Otropas - 1); // contraataque de los caballeros
+								if (eliminar == 1)
+								{
+									ListaTropasCaballeros->Eliminar(OpcionTropaTuya - 1);
+								}
+							}
 						}
 						else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero")
 						{
@@ -271,33 +249,35 @@ string cPais::AtacarOtroPais(string nomb)
 								SetConsoleTextAttribute(consoleHandle, 7);
 								fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque() + miTropaA->Ataque()*0.50, "CABALLERO", "ARQUERO");
 							}
-							estado = ConquistasteElPais;
-						}						
+
+							if (fin == 0)
+							{
+								eliminar = PaisParaAtacar->ContrataqueDeCaballeros(miTropaA, NULL, NULL, Otropas - 1); // contraataque de los caballeros
+								if (eliminar == 1)
+								{
+									ListaTropasCaballeros->Eliminar(OpcionTropaTuya - 1);
+								}
+							}
+
+						}
+						estado = ConquistasteElPais;
 						system("pause");
 					}
 					else
 					{
-						sinTROPA = 1;
 						system("cls");
 					}
 
 				}
 				else if (clase_slc == "ARQUERO" || clase_slc == "Arquero" || clase_slc == "arquero" && PaisParaAtacar->getCantTarquro() != 0)// **********atacas a los arqueros enemigos*********
 				{
+					cout << endl;
 					PaisParaAtacar->PrintTropasArquero();
-
-					if (sinTROPA == 0)
-					{
-						cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
-						cin >> Otropas;
-						if (Otropas == 0) getchar();
-
-					}
-					else if (sinTROPA == 1)
-					{
-						cout << endl << "Elija la tropa que quiere atacar:" << Otropas;
-					}
-
+					
+					cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
+					cin >> Otropas;
+					if (Otropas == 0) getchar();
+					
 
 					if (Otropas - 1 < PaisParaAtacar->getCantTarquro() && Otropas != 0)
 					{
@@ -326,7 +306,6 @@ string cPais::AtacarOtroPais(string nomb)
 					}					
 					else
 					{
-						sinTROPA = 1;
 						system("cls");
 					}
 
@@ -336,17 +315,9 @@ string cPais::AtacarOtroPais(string nomb)
 					cout << endl;
 					PaisParaAtacar->PrintTropasMago();
 
-					if (sinTROPA == 0)
-					{
-						cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
-						cin >> Otropas;
-						if (Otropas == 0) getchar();
-
-					}
-					else if (sinTROPA == 1)
-					{
-						cout << endl << "Elija la tropa que quiere atacar:" << Otropas;
-					}
+					cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
+					cin >> Otropas;
+					if (Otropas == 0) getchar();
 
 					if (Otropas - 1 < PaisParaAtacar->getCantTMago() && Otropas != 0)
 					{
@@ -376,52 +347,46 @@ string cPais::AtacarOtroPais(string nomb)
 					}
 					else
 					{
-						sinTROPA = 1;
 						system("cls");
 					}
 
+				}
+				else
+				{
+				system("cls");
 				}
 						
 			break;
 
 			case MagoContraArquero:
-
+				
 				if (PaisParaAtacar->getCantTarquro() != 0)
 				{
+					titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
+
 					for (int i = 0; i < PaisParaAtacar->getCantTarquro(); i++)
 					{
 						fin = PaisParaAtacar->Atacado(i, miTropaM->Ataque(), "ARQUERO", clase_tuya);
 					}
 					system("Pause");
-					system("cls");
+					
 				}
 				else
 				{
 					system("cls");
 				}
 						
-				estado = MagoContraCaballero;
-
-				break;
-
-			case MagoContraCaballero:
-
-				if (PaisParaAtacar->getCantTcaballero() != 0)
-				{
-					for (int i = 0; i < PaisParaAtacar->getCantTcaballero(); i++)
-					{
-						fin = PaisParaAtacar->Atacado(i, miTropaM->Ataque(), "CABALLERO", clase_tuya);
-					}
-					system("Pause");
-					system("cls");
-				}
-								
 				estado = MagoContraMago;
 
 				break;
 
 			case MagoContraMago:
 
+				if (PaisParaAtacar->getCantTarquro() == 0)
+				{
+					titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
+				}
+				
 				if (PaisParaAtacar->getCantTMago() != 0)
 				{
 					for (int i = 0; i < PaisParaAtacar->getCantTMago(); i++)
@@ -431,6 +396,37 @@ string cPais::AtacarOtroPais(string nomb)
 					system("pause");
 				}
 
+				estado = MagoContraCaballero;
+
+				break;
+
+			case MagoContraCaballero:
+
+				if (PaisParaAtacar->getCantTMago() == 0)
+				{
+					titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
+				}
+
+
+				if (PaisParaAtacar->getCantTcaballero() != 0)
+				{
+					for (int i = 0; i < PaisParaAtacar->getCantTcaballero(); i++)
+					{
+						fin = PaisParaAtacar->Atacado(i, miTropaM->Ataque(), "CABALLERO", clase_tuya);
+						if (fin == 0)
+						{
+							eliminar = PaisParaAtacar->ContrataqueDeCaballeros(NULL, NULL, miTropaM, i); // contraataque de los caballeros
+							if (eliminar == 1)
+							{
+								ListaTropasCaballeros->Eliminar(OpcionTropaTuya - 1);
+								i = PaisParaAtacar->getCantTcaballero();
+							}
+														
+						}
+					}
+					system("Pause");
+				}
+
 				estado = ConquistasteElPais;
 
 				break;
@@ -438,9 +434,12 @@ string cPais::AtacarOtroPais(string nomb)
 			case ConquistasteElPais:
 				
 				system("cls");
+		
 
 				if (fin == 1)// ganaste el pais
 				{
+					titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
+
 					SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
 					cout << endl << "******************************************";
 					cout << endl << "Enhorabuena, ganaste el pais " << PaisParaAtacar->getCodigo() << endl;
@@ -553,15 +552,14 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 			ListaTropasCaballeros->Eliminar(ntropa);
 
 			if (ListaTropasCaballeros->getCA() == 0 && ListaTropasArquero->getCA() == 0 && ListaTropasMago->getCA() == 0)
-			{
-				
+			{				
 				return (1);
-
 			}
 		
 		}
 		else
 		{
+			//se viene el contrataque
 			return (0);
 		}
 		
@@ -609,9 +607,7 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 			ListaTropasMago->Eliminar(ntropa);
 			if (ListaTropasCaballeros->getCA() == 0 && ListaTropasArquero->getCA() == 0 && ListaTropasMago->getCA() == 0)
 			{
-
 				return (1);
-
 			}
 			else
 			{
@@ -626,6 +622,44 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 
 	
 	
+}
+
+int cPais::ContrataqueDeCaballeros(cTropaArquero * TropaEnemigaA = NULL, cTropaCaballero * TropaEnemigaC = NULL, cTropaMago * TropaEnemigaM = NULL, int Ntropa = 0)
+{
+	int Eliminar = 0;
+	cTropaCaballero * miTropa = NULL;
+
+	miTropa = ListaTropasCaballeros->getItem(Ntropa);
+
+	if (TropaEnemigaA != NULL)
+	{
+		cout << endl << "\t-----------ContraAtaque---------------" << endl;
+		cout << "\tTu Tropa " << Ntropa + 1 << ": ";
+		Eliminar = TropaEnemigaA->RecibirAtaqueTropa(miTropa->Ataque() + miTropa->Ataque()*0.25, "CABALLERO");
+		
+	}
+	else if (TropaEnemigaC != NULL)
+	{
+		cout << endl << "\t-----------ContraAtaque---------------" << endl;
+		cout << "\tTu Tropa " << Ntropa + 1 << ": ";
+		Eliminar = TropaEnemigaC->RecibirAtaqueTropa(miTropa->Ataque()+ miTropa->Ataque()*0.25, "CABALLERO");
+	}
+	else if (TropaEnemigaM != NULL)
+	{
+		cout << endl << "\t-----------ContraAtaque---------------" << endl;
+		cout << "\tTu Tropa " << Ntropa + 1 << ": ";
+		Eliminar = TropaEnemigaM->RecibirAtaqueTropa(miTropa->Ataque() + miTropa->Ataque()*0.25, "CABALLERO");
+	}
+
+	if (Eliminar == 0)
+	{
+		return (1); //le mataron las tropas en el contra ataque;
+	}
+	else
+	{
+		return(0);
+	}
+
 }
 
 void cPais::PrintA()
@@ -692,3 +726,38 @@ cPais::~cPais()
 	delete ListaTropasMago;
 }
 
+
+
+void cPais::titulo(cPais * paisParaATACAR, int estado, string nombre, int jugador, HANDLE consoleHandle) {
+
+	SetConsoleTextAttribute(consoleHandle, 5);
+	if (jugador == 1)
+	{
+		cout << "----------------------------------------------" << endl;
+		cout << "    Jugador 1" << " atacando con " << nombre;
+		if (estado > 1)
+		{
+			cout << " a " << paisParaATACAR->getCodigo() << endl;
+		}
+		else {
+			cout << endl;
+		}
+		cout << "----------------------------------------------" << endl << endl;
+	}
+	else
+	{
+		cout << "----------------------------------------------" << endl;
+		cout << "    Jugador 2" << " atacando con " << nombre;
+		if (estado > 1)
+		{
+			cout << " a " << paisParaATACAR->getCodigo() << endl;
+		}
+		else {
+			cout << endl;
+		}
+		cout << "----------------------------------------------" << endl << endl;
+	}
+	SetConsoleTextAttribute(consoleHandle, 7);
+
+
+}

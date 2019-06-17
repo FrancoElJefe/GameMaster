@@ -41,6 +41,7 @@ public:
 
 	string AtacarOtroPais(string nomb); //Yo Ataco
 	int Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtacante);  //Recibo Ataque
+	int ContrataqueDeCaballeros(cTropaArquero* TropaEnemigaA, cTropaCaballero * TropaEnemigaC, cTropaMago * TropaEnemigaM, int Ntropa);
 
 	int getNjugador() { return jugador; }
 	const string getCodigo() { return nombre; }
@@ -57,6 +58,7 @@ public:
 	void PrintTropasCaballero();
 	void PrintTropasArquero();
 	void PrintTropasMago();
+	void titulo(cPais * paisParaATACAR, int estado, string nombre, int jugador, HANDLE consoleHandle);
 	~cPais();
 };
 
