@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <iostream>
 #include <ostream>
+#include <time.h>
 #include <windows.h>
 #include "cLista.h"
 #include "cTropaCaballero.h"

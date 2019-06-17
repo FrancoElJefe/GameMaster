@@ -3,6 +3,8 @@
 cLista<cPais> *cPais::listaPaises = new cLista<cPais>(16);
 HANDLE cPais::consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
+typedef enum MyEnum {PLimitrofes=0, EPaisParaAtacar, EdeMiTropas, ETropaEnemiga, MagoContraArquero, MagoContraCaballero, MagoContraMago, ConquistasteElPais};
+
 cPais::cPais()
 {
 	jugador = 0;
@@ -16,6 +18,7 @@ cPais::cPais(string nomb) : nombre(nomb)
 	ListaTropasMago = new cLista<cTropaMago>;
 	jugador = 0;
 	listaPaises->AgregarItem(this);
+	srand(time(NULL));//inicializo los numeros random
 }
 
 void cPais::AgregarTropaCaballero(cTropaCaballero * ptr)
@@ -56,9 +59,9 @@ string cPais::AtacarOtroPais(string nomb)
 	string salir, clase_slc, clase_tuya;
 	char atras;
 	cPais * PaisParaAtacar = NULL;
-	cTropaCaballero * miTropaC;
-	cTropaArquero *miTropaA;
-	cTropaMago * miTropaM;
+	cTropaCaballero * miTropaC = NULL;
+	cTropaArquero *miTropaA= NULL;
+	cTropaMago * miTropaM = NULL;
 
 	system("cls");
 	getchar();
@@ -96,7 +99,7 @@ string cPais::AtacarOtroPais(string nomb)
 		
 		switch (estado)
 		{
-		case 0:
+		case PLimitrofes:
 			
 			cout << "Paises limitrofes para atacar: " << endl << endl;
 			cVecinos = vecinos->ListarParaAtacar(nomb);
@@ -133,7 +136,7 @@ string cPais::AtacarOtroPais(string nomb)
 			system("cls");
 			break;
 
-		case 1:
+		case EPaisParaAtacar:
 
 
 			PaisParaAtacar = vecinos->AtacarVecino(nomb, opcion);
@@ -160,325 +163,360 @@ string cPais::AtacarOtroPais(string nomb)
 			}
 			break;
 
-		case 2:
+		case EdeMiTropas:
 
-			PaisParaAtacar->PrintTropas();
+			cout << "Tropas Disponibles en "<< nombre<<" para Realizar el ataque:" << endl << endl; //mostras las tropas disponibles en el pais con el que atacas
+			PrintTropas();
+
+			cout << "Elija la clase: "; //seleccionar clase con la que atacas
+			cin.clear();
+			cin >> clase_tuya;
+
+			if (clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero" && ListaTropasCaballeros->getCA() != 0) //si atacas con caballeros
+			{
+				cout << endl << "Con cual tropa quiere atacar: ";
+				cin >> OpcionTropaTuya;
+				if (OpcionTropaTuya == 0)
+					getchar();
+
+				if (OpcionTropaTuya - 1 < ListaTropasCaballeros->getCA() && OpcionTropaTuya != 0)
+				{
+					miTropaC = ListaTropasCaballeros->getItem(OpcionTropaTuya - 1);
+					estado = ETropaEnemiga;
+					
+				}
+				
+
+			}
+			else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero" && ListaTropasArquero->getCA() != 0) //si atacas con arqueros
+			{
+				cout << endl << "Con cual tropa quiere atacar: ";
+				cin >> OpcionTropaTuya;
+				if (OpcionTropaTuya == 0)
+					getchar();
+
+				if (OpcionTropaTuya - 1 < ListaTropasArquero->getCA() && OpcionTropaTuya != 0)
+				{
+					miTropaA = ListaTropasArquero->getItem(OpcionTropaTuya - 1);
+					estado = ETropaEnemiga;
+				}
+				
+			}
+			else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago" && ListaTropasMago->getCA() != 0) //si atacas con magos es un ataque en zona
+			{
+
+				cout << endl << "Con cual tropa quiere atacar: ";
+				cin >> OpcionTropaTuya;
+				if (OpcionTropaTuya == 0) getchar();
+
+				if (OpcionTropaTuya - 1 < ListaTropasMago->getCA() && OpcionTropaTuya != 0)
+				{
+					miTropaM = ListaTropasMago->getItem(OpcionTropaTuya - 1);
+
+					cout << endl << "Se atacaran a las siguientes tropas en " << PaisParaAtacar->getCodigo() << ":" << endl << endl;
+					PaisParaAtacar->PrintTropas();
+					cout << endl;
+					system("pause");
+					estado = MagoContraArquero;
+				}
+				
+			}
 			
-			cout << endl << "Elija la clase la cual quiere atacar:";
-			cin >> clase_slc;
-
-			estado = 3;
-	
 			system("cls");
 
 			break;
 			
-		case 3:
+		case ETropaEnemiga:
 
-						
-			if (clase_slc == "CABALLERO" || clase_slc == "Caballero" || clase_slc == "caballero" && PaisParaAtacar->getCantTcaballero() != 0) // **********atacas a los caballeros enemigos*********
-			{
+				PaisParaAtacar->PrintTropas();
 
-				PaisParaAtacar->PrintTropasCaballero();
+				cout << endl << "Elija la clase la cual quiere atacar:";
+				cin >> clase_slc;
 
-				if (sinTROPA == 0)
+				if (clase_slc == "CABALLERO" || clase_slc == "Caballero" || clase_slc == "caballero" && PaisParaAtacar->getCantTcaballero() != 0) // **********atacas a los caballeros enemigos*********
 				{
-					cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
-					cin >> Otropas;
-					if (Otropas == 0) getchar();
-		
+
+					PaisParaAtacar->PrintTropasCaballero();
+
+					if (sinTROPA == 0)
+					{
+						cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
+						cin >> Otropas;
+						if (Otropas == 0) getchar();
+
+					}
+					else if (sinTROPA == 1)
+					{
+						cout << endl << "Elija la tropa que quiere atacar:" << Otropas;
+					}
+
+
+					if (Otropas - 1 < PaisParaAtacar->getCantTcaballero() && Otropas != 0)
+					{
+						if (clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero")
+						{
+							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaC->Ataque(), clase_slc, clase_tuya);
+							estado = ConquistasteElPais;
+						}
+						else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero")
+						{
+							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque(), clase_slc, clase_tuya);
+							//tiro un ranndom de 0 a 10 si el numero es 2 u 8 la tropa puede atacar otra vez con un 50% de aumento de dano 
+							int num = rand() % 21;
+
+							if (num % 2 == 0 && fin != 1)
+							{
+								SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
+								cout << endl << "*****Los Arqueros efectuan un segundo ataque potenciado al 50%!!!*****" << endl;
+								SetConsoleTextAttribute(consoleHandle, 7);
+								fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque() + miTropaA->Ataque()*0.50, "CABALLERO", "ARQUERO");
+							}
+							estado = ConquistasteElPais;
+						}						
+						system("pause");
+					}
+					else
+					{
+						sinTROPA = 1;
+						system("cls");
+					}
+
+				}
+				else if (clase_slc == "ARQUERO" || clase_slc == "Arquero" || clase_slc == "arquero" && PaisParaAtacar->getCantTarquro() != 0)// **********atacas a los arqueros enemigos*********
+				{
+					PaisParaAtacar->PrintTropasArquero();
+
+					if (sinTROPA == 0)
+					{
+						cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
+						cin >> Otropas;
+						if (Otropas == 0) getchar();
+
+					}
+					else if (sinTROPA == 1)
+					{
+						cout << endl << "Elija la tropa que quiere atacar:" << Otropas;
+					}
+
+
+					if (Otropas - 1 < PaisParaAtacar->getCantTarquro() && Otropas != 0)
+					{
+						if (clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero")
+						{
+							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaC->Ataque(), clase_slc, clase_tuya);
+							estado = ConquistasteElPais;
+						}
+						else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero")
+						{
+							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque(), clase_slc, clase_tuya);
+
+							//tiro un ranndom de 0 a 10 si el numero es 2 u 8 la tropa puede atacar otra vez con un 50% de aumento de dano 
+							int num = rand() % 21;
+
+							if (num % 2 == 0 && fin != 1)
+							{
+								SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
+								cout << endl << "*****Los Arqueros efectuan un segundo ataque potenciado al 50%!!!*****" << endl;
+								SetConsoleTextAttribute(consoleHandle, 7);
+								fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque() + miTropaA->Ataque()*0.50, "ARQUERO", "ARQUERO");
+							}
+							estado = ConquistasteElPais;
+						}
+						system("pause");
+					}					
+					else
+					{
+						sinTROPA = 1;
+						system("cls");
+					}
+
+				}
+				else if (clase_slc == "MAGO" || clase_slc == "Mago" || clase_slc == "mago" && PaisParaAtacar->getCantTMago() != 0) // **********atacas a los magos enemigos*********
+				{
+					cout << endl;
+					PaisParaAtacar->PrintTropasMago();
+
+					if (sinTROPA == 0)
+					{
+						cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
+						cin >> Otropas;
+						if (Otropas == 0) getchar();
+
+					}
+					else if (sinTROPA == 1)
+					{
+						cout << endl << "Elija la tropa que quiere atacar:" << Otropas;
+					}
+
+					if (Otropas - 1 < PaisParaAtacar->getCantTMago() && Otropas != 0)
+					{
+						if (clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero")
+						{
+							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaC->Ataque(), clase_slc, clase_tuya);
+							estado = ConquistasteElPais;
+						}
+						else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero")
+						{
+							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque(), clase_slc, clase_tuya);
+
+							//tiro un ranndom de 0 a 10 si el numero es 2 u 8 la tropa puede atacar otra vez con un 50% de aumento de dano 
+							int num = rand() % 21;
+
+							if (num % 2 == 0 && fin != 1)
+							{
+								SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
+								cout << endl << "*****Los Arqueros efectuan un segundo ataque potenciado al 50%!!!*****" << endl;
+								SetConsoleTextAttribute(consoleHandle, 7);
+								fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque() + miTropaA->Ataque()*0.50, "MAGO", "ARQUERO");
+							}
+
+							estado = ConquistasteElPais;
+						}
+						system("pause");
+					}
+					else
+					{
+						sinTROPA = 1;
+						system("cls");
+					}
+
+				}
+						
+			break;
+
+			case MagoContraArquero:
+
+				if (PaisParaAtacar->getCantTarquro() != 0)
+				{
+					for (int i = 0; i < PaisParaAtacar->getCantTarquro(); i++)
+					{
+						fin = PaisParaAtacar->Atacado(i, miTropaM->Ataque(), "ARQUERO", clase_tuya);
+					}
+					system("Pause");
+					system("cls");
 				}
 				else
 				{
-					cout << endl << "Elija la tropa que quiere atacar:" << Otropas;
+					system("cls");
+				}
+						
+				estado = MagoContraCaballero;
+
+				break;
+
+			case MagoContraCaballero:
+
+				if (PaisParaAtacar->getCantTcaballero() != 0)
+				{
+					for (int i = 0; i < PaisParaAtacar->getCantTcaballero(); i++)
+					{
+						fin = PaisParaAtacar->Atacado(i, miTropaM->Ataque(), "CABALLERO", clase_tuya);
+					}
+					system("Pause");
+					system("cls");
+				}
+								
+				estado = MagoContraMago;
+
+				break;
+
+			case MagoContraMago:
+
+				if (PaisParaAtacar->getCantTMago() != 0)
+				{
+					for (int i = 0; i < PaisParaAtacar->getCantTMago(); i++)
+					{
+						fin = PaisParaAtacar->Atacado(i, miTropaM->Ataque(), "MAGO", clase_tuya);
+					}
+					system("pause");
 				}
 
-				if (Otropas - 1 < PaisParaAtacar->getCantTcaballero() && Otropas != 0)
-				{
+				estado = ConquistasteElPais;
+
+				break;
+
+			case ConquistasteElPais:
 				
-					cout << endl << "Tropas Disponibles Para Realizar ataque:" << endl << endl; //mostras las tropas disponibles en el pais con el que atacas
-					PrintTropas();
+				system("cls");
 
-					cout << "Elija la clase: "; //seleccionar clase con la que atacas
-					cin.clear();
+				if (fin == 1)// ganaste el pais
+				{
+					SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
+					cout << endl << "******************************************";
+					cout << endl << "Enhorabuena, ganaste el pais " << PaisParaAtacar->getCodigo() << endl;
+					cout << "******************************************" << endl << endl;
+					SetConsoleTextAttribute(consoleHandle, 7);
+
+					cout << "Debes pasarle una tropa:" << endl << endl;
+					if (ListaTropasCaballeros->getCA() != 0)
+					{
+						PrintTropasCaballero();
+					}
+
+					if (ListaTropasArquero->getCA() != 0)
+					{
+						PrintTropasArquero();
+					}
+
+					if (ListaTropasMago->getCA() != 0)
+					{
+						PrintTropasMago();
+					}
+
+					cout << endl << "Escriba la clase: ";
 					cin >> clase_tuya;
 
-					if (clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero" && ListaTropasCaballeros->getCA() != 0) //si atacas con caballeros
+					if ((clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero") && ListaTropasCaballeros->getCA() != 0)
 					{
-						cout << endl << "Con cual tropa quiere atacar: ";
+						cout << endl << "Con cual tropa quiere pasar: ";
 						cin >> OpcionTropaTuya;
-						if (OpcionTropaTuya == 0)
-						getchar();
-												
-						if (OpcionTropaTuya-1 < ListaTropasCaballeros->getCA() && OpcionTropaTuya != 0)
-						{
+
 						miTropaC = ListaTropasCaballeros->getItem(OpcionTropaTuya - 1);
+						PaisParaAtacar->AgregarTropaCaballero(miTropaC);
+						ListaTropasCaballeros->QuitarenPos(OpcionTropaTuya - 1);
 
-						fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaC->Ataque(), "CABALLERO", "CABALLERO");
-						i = 0;
-						}
-						else
-						{
-							sinTROPA = 1;
-							system("cls");
-						}
-					
+						system("pause");
+
+						return(PaisParaAtacar->getCodigo());
+
 					}
-					else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero" && ListaTropasArquero->getCA() != 0) //si atacas con arqueros
+					else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero" && ListaTropasArquero->getCA() != 0)
 					{
 						cout << endl << "Con cual tropa quiere atacar: ";
 						cin >> OpcionTropaTuya;
-						if (OpcionTropaTuya == 0)
-						getchar();
-						
-						if (OpcionTropaTuya-1 < ListaTropasArquero->getCA() && OpcionTropaTuya != 0)
-						{
+
 						miTropaA = ListaTropasArquero->getItem(OpcionTropaTuya - 1);
+						PaisParaAtacar->AgregarTropaArquero(miTropaA);
+						ListaTropasArquero->QuitarenPos(OpcionTropaTuya - 1);
 
-						fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque(), "CABALLERO", "ARQUERO");
-						i = 0;
-						}
-						else
-						{
-							sinTROPA = 1;
-							system("cls");
-						}
+						system("pause");
 
+						return(PaisParaAtacar->getCodigo());
 					}
-					else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago" && ListaTropasMago->getCA() != 0) //si atacas con magos
+					else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago" && ListaTropasMago->getCA() != 0)
 					{
 
 						cout << endl << "Con cual tropa quiere atacar: ";
 						cin >> OpcionTropaTuya;
-						if (OpcionTropaTuya == 0) getchar();
 
-						if (OpcionTropaTuya-1 < ListaTropasMago->getCA() && OpcionTropaTuya != 0)
-						{
 						miTropaM = ListaTropasMago->getItem(OpcionTropaTuya - 1);
-						fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaM->Ataque(), "CABALLERO", "MAGO");
-						i = 0;
-						}
-						else
-						{
-							sinTROPA = 1;
-							system("cls");
-						}
-					}
-					else
-					{
-						sinTROPA = 1;
-						system("cls");
+						PaisParaAtacar->AgregarTropaMago(miTropaM);
+						ListaTropasMago->QuitarenPos(OpcionTropaTuya - 1);
+
+						system("pause");
+
+						return(PaisParaAtacar->getCodigo());
 					}
 
 
 				}
 				else
 				{
-					system("cls");
-				}
-			
-			}
-			else if (clase_slc == "ARQUERO" || clase_slc == "Arquero" || clase_slc == "arquero" && PaisParaAtacar->getCantTarquro() != 0)// **********atacas a los arqueros enemigos*********
-			{
-				PaisParaAtacar->PrintTropasArquero();
-
-				if (sinTROPA == 0)
-				{
-					cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
-					cin.clear();
-					cin >> Otropas;
-					if (Otropas == 0) getchar();
-
-				}
-				else
-				{
-					cout << endl << "Elija la tropa que quiere atacar:" << Otropas;
+					return("0");
 				}
 
 
-				if (Otropas - 1 < PaisParaAtacar->getCantTarquro() && Otropas != 0)
-				{
-					
-					cout << endl << "Tropas Disponibles Para Realizar ataque:" << endl << endl; //mostras las tropas disponibles en el pais con el que atacas
-					PrintTropas();
 
-					cout << "Elija la clase: "; //seleccionar clase con la que atacas
-					cin.clear();
-					cin >> clase_tuya;
-
-					if (clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero" && ListaTropasCaballeros->getCA() != 0) //si atacas con caballeros
-					{
-						cout << endl << "Con cual tropa quiere atacar: ";
-						cin >> OpcionTropaTuya;
-						if (OpcionTropaTuya == 0)
-							getchar();
-
-						if (OpcionTropaTuya-1 < ListaTropasCaballeros->getCA() && OpcionTropaTuya != 0)
-						{
-							miTropaC = ListaTropasCaballeros->getItem(OpcionTropaTuya - 1);
-
-							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaC->Ataque(), "ARQUERO", "CABALLERO");
-							i = 0;
-						}
-						else
-						{
-							sinTROPA = 1;
-							system("cls");
-						}
-					}
-					else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero" && ListaTropasArquero->getCA() != 0) //si atacas con arqueros
-					{
-						cout << endl << "Con cual tropa quiere atacar: ";
-						cin >> OpcionTropaTuya;
-						getchar();
-
-						if (OpcionTropaTuya-1 < ListaTropasArquero->getCA() && OpcionTropaTuya != 0)
-						{
-							miTropaA = ListaTropasArquero->getItem(OpcionTropaTuya - 1);
-
-							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque(), "ARQUERO", "ARQUERO");
-							i = 0;
-						}
-						else
-						{
-							sinTROPA = 1;
-							system("cls");
-						}
-					}
-					else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago" && ListaTropasMago->getCA() != 0) //si atacas con magos
-					{
-
-						cout << endl << "Con cual tropa quiere atacar: ";
-						cin >> OpcionTropaTuya;
-						if (OpcionTropaTuya == 0) getchar();
-
-						if (OpcionTropaTuya-1 < ListaTropasMago->getCA() && OpcionTropaTuya != 0)
-						{
-							miTropaM = ListaTropasMago->getItem(OpcionTropaTuya - 1);
-							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaM->Ataque(), "ARQUERO", "MAGO");
-							i = 0;
-						}
-						else
-						{
-							sinTROPA = 1;
-							system("cls");
-						}
-					}
-					else
-					{
-						sinTROPA = 1;
-						system("cls");
-					}
-
-				}
-				else
-				{
-					system("cls");
-				}
-							   				
-			}
-			else if (clase_slc == "MAGO" || clase_slc == "Mago" || clase_slc == "mago" && PaisParaAtacar->getCantTMago() != 0) // **********atacas a los magos enemigos*********
-			{
-				PaisParaAtacar->PrintTropasMago();
-
-				if (sinTROPA == 0)
-				{
-					cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
-					cin >> Otropas;
-					if (Otropas == 0) getchar();
-									
-				}
-				else
-				{
-					cout << endl << "Elija la tropa que quiere atacar:" << Otropas;
-				}
-
-				if (Otropas - 1 < PaisParaAtacar->getCantTMago() && Otropas != 0)
-				{
-					cout << endl << "Tropas Disponibles Para Realizar ataque:" << endl << endl; //mostras las tropas disponibles en el pais con el que atacas
-					PrintTropas();
-
-					cout << "Elija la clase: "; //seleccionar clase con la que atacas
-					cin >> clase_tuya;
-
-					if (clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero" && ListaTropasCaballeros->getCA() != 0) //si atacas con caballeros
-					{
-						cout << endl << "Con cual tropa quiere atacar: ";
-						cin >> OpcionTropaTuya;
-						if (OpcionTropaTuya == 0)
-							getchar();
-
-						if (OpcionTropaTuya-1 < ListaTropasCaballeros->getCA() && OpcionTropaTuya != 0)
-						{
-							miTropaC = ListaTropasCaballeros->getItem(OpcionTropaTuya - 1);
-
-							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaC->Ataque(), "MAGO", "CABALLERO");
-							i = 0;
-						}
-						else
-						{
-							sinTROPA = 1;
-							system("cls");
-						}
-					}
-					else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero" && ListaTropasArquero->getCA() != 0) //si atacas con arqueros
-					{
-						cout << endl << "Con cual tropa quiere atacar: ";
-						cin >> OpcionTropaTuya;
-						getchar();
-
-						if (OpcionTropaTuya-1 < ListaTropasArquero->getCA() && OpcionTropaTuya != 0)
-						{
-							miTropaA = ListaTropasArquero->getItem(OpcionTropaTuya - 1);
-
-							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaA->Ataque(), "MAGO", "ARQUERO");
-							i = 0;
-						}
-						else
-						{
-							sinTROPA = 1;
-							system("cls");
-						}
-					}
-					else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago" && ListaTropasMago->getCA() != 0) //si atacas con magos
-					{
-
-						cout << endl << "Con cual tropa quiere atacar: ";
-						cin >> OpcionTropaTuya;
-						if (OpcionTropaTuya == 0) getchar();
-
-						if (OpcionTropaTuya-1 < ListaTropasMago->getCA() && OpcionTropaTuya != 0)
-						{
-							miTropaM = ListaTropasMago->getItem(OpcionTropaTuya - 1);
-							fin = PaisParaAtacar->Atacado(Otropas - 1, miTropaM->Ataque(), "MAGO", "MAGO");
-							i = 0;
-						}
-						else
-						{
-							sinTROPA = 1;
-							system("cls");
-						}
-					}
-					else
-					{
-						sinTROPA = 1;
-						system("cls");
-					}
-
-
-				}
-				else
-				{
-					system("cls");
-				}
-			
-
-			}else
-			{
-			estado = 2;
-			system("cls");
-			}
-		
 			break;
 
 		default:
@@ -489,82 +527,7 @@ string cPais::AtacarOtroPais(string nomb)
 	} while (i != 0);
 
 
-	system("pause");
-
-	if (fin == 1)// ganaste el pais
-	{	
-		SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
-		cout << endl << "******************************************";
-		cout << endl << "Enhorabuena, ganaste el pais " << PaisParaAtacar->getCodigo() << endl;
-		cout << "******************************************" << endl << endl;
-		SetConsoleTextAttribute(consoleHandle, 7);
-
-		cout << "Debes pasarle una tropa:" << endl << endl;
-		if (ListaTropasCaballeros->getCA() != 0)
-		{
-			PrintTropasCaballero();
-		}
-
-		if (ListaTropasArquero->getCA() != 0)
-		{
-			PrintTropasArquero();
-		}
-
-		if (ListaTropasMago->getCA() != 0)
-		{
-			PrintTropasMago();
-		}
-		
-		cout << endl << "Escriba la clase: ";
-		cin >> clase_tuya;
-		
-		if ((clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero") && ListaTropasCaballeros->getCA() != 0) //si atacas con caballeros
-		{
-			cout << endl << "Con cual tropa quiere pasar: ";
-			cin >> OpcionTropaTuya;
-
-			miTropaC = ListaTropasCaballeros->getItem(OpcionTropaTuya - 1);
-
-			PaisParaAtacar->AgregarTropaCaballero(miTropaC);
-			ListaTropasCaballeros->QuitarenPos(OpcionTropaTuya - 1);
-
-			return(PaisParaAtacar->getCodigo());
-
-		}
-		else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero" && ListaTropasArquero->getCA() != 0) //si atacas con arqueros
-		{
-			cout << endl << "Con cual tropa quiere atacar: ";
-			cin >> OpcionTropaTuya;
-
-			miTropaA = ListaTropasArquero->getItem(OpcionTropaTuya - 1);
-
-			PaisParaAtacar->AgregarTropaArquero(miTropaA);
-			ListaTropasArquero->QuitarenPos(OpcionTropaTuya - 1);
-
-			return(PaisParaAtacar->getCodigo());
-		}
-		else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago" && ListaTropasMago->getCA() != 0) //si atacas con magos
-		{
-
-			cout << endl << "Con cual tropa quiere atacar: ";
-			cin >> OpcionTropaTuya;
-
-			miTropaM = ListaTropasMago->getItem(OpcionTropaTuya - 1);
-
-			PaisParaAtacar->AgregarTropaMago(miTropaM);
-
-			ListaTropasMago->QuitarenPos(OpcionTropaTuya - 1);
-
-			return(PaisParaAtacar->getCodigo());
-		}
-
-		
-	}
-	else
-	{
-		return("0");
-	}
-
+	
 	
 
 }
@@ -576,15 +539,18 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 	cTropaMago * tropaMago;
 	int eliminar=1;
 
-	if (claseTAtacada == "CABALLERO")
+
+	if (claseTAtacada == "CABALLERO" || claseTAtacada == "Caballero" || claseTAtacada == "caballero")
 	{
+	
 		tropaCaballero = ListaTropasCaballeros->getItem(ntropa);
+		cout << endl << "\t--------------------------------------" << endl;
+		cout << "\tTropa " << ntropa + 1 << ": ";
 		eliminar = tropaCaballero->RecibirAtaqueTropa(dano, claseTAtacante);
 
 		if (eliminar == 0)
 		{
 			ListaTropasCaballeros->Eliminar(ntropa);
-			cout << endl << "---------Tropa Eliminada------" << endl << endl;
 
 			if (ListaTropasCaballeros->getCA() == 0 && ListaTropasArquero->getCA() == 0 && ListaTropasMago->getCA() == 0)
 			{
@@ -601,15 +567,16 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 		
 
 	}
-	else if (claseTAtacada == "ARQUERO")
+	else if (claseTAtacada == "ARQUERO" || claseTAtacada == "Arquero" || claseTAtacada == "arquero")
 	{
 		tropaArquero = ListaTropasArquero->getItem(ntropa);
+		cout << endl << "\t--------------------------------------" << endl;
+		cout << "\tTropa " << ntropa +1<< ": ";
 		eliminar = tropaArquero->RecibirAtaqueTropa(dano, claseTAtacante);
 
 		if (eliminar == 0)
 		{
 			ListaTropasArquero->Eliminar(ntropa);
-			cout << endl << "---------Tropa Eliminada------" << endl;
 			if (ListaTropasCaballeros->getCA() == 0 && ListaTropasArquero->getCA() == 0 && ListaTropasMago->getCA() == 0)
 			{
 
@@ -629,15 +596,17 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 
 		
 	}
-	else if (claseTAtacada == "MAGO") 
+	else if (claseTAtacada == "MAGO" || claseTAtacada == "Mago" || claseTAtacada == "mago") // los magos atacan a todas las tropas de la clase 
 	{
-		tropaMago = ListaTropasMago->getItem(ntropa);
+	
+		tropaMago = ListaTropasMago->getItem(ntropa);\
+		cout << endl << "\t--------------------------------------" << endl;
+		cout << "\tTropa " << ntropa+1 << ": ";
 		eliminar = tropaMago->RecibirAtaqueTropa(dano, claseTAtacante);
 
 		if (eliminar == 0)
 		{
 			ListaTropasMago->Eliminar(ntropa);
-			cout << endl << "---------Tropa Eliminada------" << endl;
 			if (ListaTropasCaballeros->getCA() == 0 && ListaTropasArquero->getCA() == 0 && ListaTropasMago->getCA() == 0)
 			{
 

@@ -54,7 +54,7 @@ int main(void) {
 					//es una funcion de prueba para poder probar los ataques, puede ser que con los paises que podes atacar no tengan vecino, si pasa eso lo volves a correr
 					//por ahora te dejamos una prueba de ataque del jugador 1 hacia el jugador 2 divertite.(no intentes crashearlo porque lo vas a lograr ajajaja)
 	
-	string pais; //HOLA IMBECIL
+	string pais;
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -607,20 +607,17 @@ void inicioPrueba(void)
 	{
 		TropasJugador1[i] = 5;
 	}
-	for (int i = 4; i < Tcaballeros+Tarqueros; i++)
+	for (int i = Tcaballeros; i < Tcaballeros + arqueros; i++)
 	{
-		TropasJugador1[i] = 5;
-	}
-	for (int i = 7; i < Tcaballeros + Tarqueros+Tmagos; i++)
-	{
-		if (i == 7)
-		{
-			TropasJugador1[i] = 15;
-		}
-		else
-		{
+		
 			TropasJugador1[i] = 5;
-		}
+		
+		
+	}
+	for (int i = Tcaballeros + arqueros; i < Tcaballeros + Tmagos + Tarqueros; i++)
+	{
+	
+		TropasJugador1[i] = 5;
 		
 	}
 	

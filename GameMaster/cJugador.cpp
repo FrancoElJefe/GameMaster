@@ -8,7 +8,7 @@ cJugador::cJugador()
 	ListaTropaArqueros = new cLista<cTropaArquero>;
 	ListaTropaCaballeros = new cLista<cTropaCaballero>;
 	ListaTropaMagos = new cLista<cTropaMago>;
-	listaPropiaPaises = new cLista<cPais>(9);
+	listaPropiaPaises = new cLista<cPais>(16);
 }
 
 cJugador::cJugador(string nomb) : cJugador()
@@ -257,7 +257,7 @@ void cJugador::setTropasEnPaisesPrueba(int caballeros, int arqueros, int magos)
 			pais->AgregarTropaCaballero(ListaTropaCaballeros->getItem(0));
 			ListaTropaCaballeros->QuitarenPos(0);
 			caballeros--;
-		}
+		}		
 		else if (arqueros != 0)
 		{
 			pais->AgregarTropaArquero(ListaTropaArqueros->getItem(0));
