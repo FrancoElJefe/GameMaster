@@ -413,12 +413,12 @@ string cPais::AtacarOtroPais(string nomb)
 					for (int i = 0; i < PaisParaAtacar->getCantTcaballero(); i++)
 					{
 						fin = PaisParaAtacar->Atacado(i, miTropaM->Ataque(), "CABALLERO", clase_tuya);
-						if (fin == 0)
+						if (eliminar == 0)
 						{
 							eliminar = PaisParaAtacar->ContrataqueDeCaballeros(NULL, NULL, miTropaM, i); // contraataque de los caballeros
 							if (eliminar == 1)
 							{
-								ListaTropasCaballeros->Eliminar(OpcionTropaTuya - 1);
+								ListaTropasMago->Eliminar(OpcionTropaTuya - 1);
 								i = PaisParaAtacar->getCantTcaballero();
 							}
 														

@@ -257,19 +257,20 @@ void cJugador::setTropasEnPaisesPrueba(int caballeros, int arqueros, int magos)
 			pais->AgregarTropaCaballero(ListaTropaCaballeros->getItem(0));
 			ListaTropaCaballeros->QuitarenPos(0);
 			caballeros--;
-		}		
-		else if (magos != 0)
-		{
-			pais->AgregarTropaMago(ListaTropaMagos->getItem(0));
-			ListaTropaMagos->QuitarenPos(0);
-			magos--;
-		}
+		}	
 		else if (arqueros != 0)
 		{
 			pais->AgregarTropaArquero(ListaTropaArqueros->getItem(0));
 			ListaTropaArqueros->QuitarenPos(0);
 			arqueros--;
 		}
+		else if (magos != 0)
+		{
+			pais->AgregarTropaMago(ListaTropaMagos->getItem(0));
+			ListaTropaMagos->QuitarenPos(0);
+			magos--;
+		}
+		
 	
 
 		cont++;
