@@ -109,8 +109,10 @@ void EleccionDeUnidades(cJugador * jugadorX)
 		cout << "Magos : " << magos << endl << endl;
 		
 		cout << "Opcion: ";
-
+		cin.clear();
 		cin >> opcion;
+		if (opcion == 0)
+			getchar();
 
 		if (opcion == 1)
 		{
@@ -126,6 +128,8 @@ void EleccionDeUnidades(cJugador * jugadorX)
 					suma = suma + aux;
 					sobrecarga = MaxUnidades + suma - aux;
 					if (sobrecarga > 50)suma = 30;
+
+					
 				} while (suma > 20 );
 				MaxUnidades = MaxUnidades + suma - aux;
 				caballeros = caballeros + suma - aux;
@@ -184,7 +188,19 @@ void EleccionDeUnidades(cJugador * jugadorX)
 			if (magos == 0 || arqueros == 0 || caballeros == 0)
 			{
 				system("cls");
-				cout << "Se debe tener 10 tropas, reingrese" << endl << endl;
+				cout << "Se debe tener unidades de las tres clases, Reingrese." << endl << endl;
+				NrTropa = 0;
+				caballeros = 0;
+				arqueros = 0;
+				magos = 0;
+				MaxUnidades = 0;
+				system("pause");
+				system("cls");
+			}
+			else if (magos < 20 || arqueros < 15 || caballeros < 10)
+			{
+				system("cls");
+				cout << "Se debe tener por lo menos:" << endl << "-10 unidades de caballeros" << endl << "-15 unidades de arqueros" << endl << "-20 unidades de mago" << endl << "Reingrese" << endl << endl;
 				NrTropa = 0;
 				caballeros = 0;
 				arqueros = 0;
