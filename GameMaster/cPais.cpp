@@ -242,7 +242,7 @@ string cPais::AtacarOtroPais(string nomb)
 							//tiro un ranndom de 0 a 10 si el numero es 2 u 8 la tropa puede atacar otra vez con un 50% de aumento de dano 
 							int num = rand() % 21;
 
-							if (num % 2 == 0 && fin != 1)
+							if (num % 2 == 0 && fin == 0)
 							{
 								SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
 								cout << endl << "*****Los Arqueros efectuan un segundo ataque potenciado al 50%!!!*****" << endl;
@@ -293,7 +293,7 @@ string cPais::AtacarOtroPais(string nomb)
 							//tiro un ranndom de 0 a 10 si el numero es 2 u 8 la tropa puede atacar otra vez con un 50% de aumento de dano 
 							int num = rand() % 21;
 
-							if (num % 2 == 0 && fin != 1)
+							if (num % 2 == 0 && fin == 0)
 							{
 								SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
 								cout << endl << "*****Los Arqueros efectuan un segundo ataque potenciado al 50%!!!*****" << endl;
@@ -333,7 +333,7 @@ string cPais::AtacarOtroPais(string nomb)
 							//tiro un ranndom de 0 a 10 si el numero es 2 u 8 la tropa puede atacar otra vez con un 50% de aumento de dano 
 							int num = rand() % 21;
 
-							if (num % 2 == 0 && fin != 1)
+							if (num % 2 == 0 && fin == 0)
 							{
 								SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
 								cout << endl << "*****Los Arqueros efectuan un segundo ataque potenciado al 50%!!!*****" << endl;
@@ -413,7 +413,8 @@ string cPais::AtacarOtroPais(string nomb)
 					for (int i = 0; i < PaisParaAtacar->getCantTcaballero(); i++)
 					{
 						fin = PaisParaAtacar->Atacado(i, miTropaM->Ataque(), "CABALLERO", clase_tuya);
-						if (eliminar == 0)
+
+						if (fin == 0)
 						{
 							eliminar = PaisParaAtacar->ContrataqueDeCaballeros(NULL, NULL, miTropaM, i); // contraataque de los caballeros
 							if (eliminar == 1)
@@ -436,9 +437,11 @@ string cPais::AtacarOtroPais(string nomb)
 				system("cls");
 		
 
-				if (fin == 1)// ganaste el pais
+				if (fin == 2)// ganaste el pais
 				{
-					titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
+					ImprimirMapa();
+
+					//titulo(PaisParaAtacar, estado, nombre, jugador, consoleHandle);
 
 					SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
 					cout << endl << "******************************************";
@@ -467,7 +470,7 @@ string cPais::AtacarOtroPais(string nomb)
 
 					if ((clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero") && ListaTropasCaballeros->getCA() != 0)
 					{
-						cout << endl << "Con cual tropa quiere pasar: ";
+						cout << endl << "Cual tropa desea pasar: ";
 						cin >> OpcionTropaTuya;
 
 						miTropaC = ListaTropasCaballeros->getItem(OpcionTropaTuya - 1);
@@ -481,7 +484,7 @@ string cPais::AtacarOtroPais(string nomb)
 					}
 					else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero" && ListaTropasArquero->getCA() != 0)
 					{
-						cout << endl << "Con cual tropa quiere atacar: ";
+						cout << endl << "Cual tropa desea pasar: ";
 						cin >> OpcionTropaTuya;
 
 						miTropaA = ListaTropasArquero->getItem(OpcionTropaTuya - 1);
@@ -495,7 +498,7 @@ string cPais::AtacarOtroPais(string nomb)
 					else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago" && ListaTropasMago->getCA() != 0)
 					{
 
-						cout << endl << "Con cual tropa quiere atacar: ";
+						cout << endl << "Cual tropa desea pasar: ";
 						cin >> OpcionTropaTuya;
 
 						miTropaM = ListaTropasMago->getItem(OpcionTropaTuya - 1);
@@ -543,6 +546,7 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 	{
 	
 		tropaCaballero = ListaTropasCaballeros->getItem(ntropa);
+		SetConsoleTextAttribute(consoleHandle, 14);
 		cout << endl << "\t--------------------------------------" << endl;
 		cout << "\tTropa " << ntropa + 1 << ": ";
 		eliminar = tropaCaballero->RecibirAtaqueTropa(dano, claseTAtacante);
@@ -553,7 +557,12 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 
 			if (ListaTropasCaballeros->getCA() == 0 && ListaTropasArquero->getCA() == 0 && ListaTropasMago->getCA() == 0)
 			{				
-				return (1);
+				return (2);
+			}
+
+			if (ListaTropasCaballeros->getCA() == 0)
+			{
+				return(1);
 			}
 		
 		}
@@ -568,6 +577,7 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 	else if (claseTAtacada == "ARQUERO" || claseTAtacada == "Arquero" || claseTAtacada == "arquero")
 	{
 		tropaArquero = ListaTropasArquero->getItem(ntropa);
+		SetConsoleTextAttribute(consoleHandle, 14);
 		cout << endl << "\t--------------------------------------" << endl;
 		cout << "\tTropa " << ntropa +1<< ": ";
 		eliminar = tropaArquero->RecibirAtaqueTropa(dano, claseTAtacante);
@@ -577,13 +587,12 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 			ListaTropasArquero->Eliminar(ntropa);
 			if (ListaTropasCaballeros->getCA() == 0 && ListaTropasArquero->getCA() == 0 && ListaTropasMago->getCA() == 0)
 			{
-
-				return (1);
-
+				return (2);
 			}
-			else
+
+			if (ListaTropasArquero->getCA() == 0)
 			{
-				return (0);
+				return(1);
 			}
 			
 		}
@@ -597,7 +606,8 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 	else if (claseTAtacada == "MAGO" || claseTAtacada == "Mago" || claseTAtacada == "mago") // los magos atacan a todas las tropas de la clase 
 	{
 	
-		tropaMago = ListaTropasMago->getItem(ntropa);\
+		tropaMago = ListaTropasMago->getItem(ntropa);
+		SetConsoleTextAttribute(consoleHandle, 14);
 		cout << endl << "\t--------------------------------------" << endl;
 		cout << "\tTropa " << ntropa+1 << ": ";
 		eliminar = tropaMago->RecibirAtaqueTropa(dano, claseTAtacante);
@@ -605,13 +615,15 @@ int cPais::Atacado(int ntropa, int dano, string claseTAtacada, string claseTAtac
 		if (eliminar == 0)
 		{
 			ListaTropasMago->Eliminar(ntropa);
+
 			if (ListaTropasCaballeros->getCA() == 0 && ListaTropasArquero->getCA() == 0 && ListaTropasMago->getCA() == 0)
 			{
-				return (1);
+				return (2);
 			}
-			else
+
+			if (ListaTropasMago->getCA() == 0)
 			{
-				return (0);
+				return(1);
 			}
 		}
 		else
@@ -630,6 +642,8 @@ int cPais::ContrataqueDeCaballeros(cTropaArquero * TropaEnemigaA = NULL, cTropaC
 	cTropaCaballero * miTropa = NULL;
 
 	miTropa = ListaTropasCaballeros->getItem(Ntropa);
+
+	SetConsoleTextAttribute(consoleHandle, 14);
 
 	if (TropaEnemigaA != NULL)
 	{
@@ -673,21 +687,18 @@ void cPais::PrintTropas()
 {
 	if (ListaTropasCaballeros->getCA() != 0)
 	{
-		cout << "\t";
 		ListaTropasCaballeros->Listar();
 		cout << endl;
 	}
 
 	if (ListaTropasArquero->getCA() != 0)
 	{
-		cout << "\t";
 		ListaTropasArquero->Listar();
 		cout << endl;
 	}
 	
 	if (ListaTropasMago->getCA() != 0)
 	{
-		cout << "\t";
 		ListaTropasMago->Listar();
 		cout << endl;
 	}
@@ -698,6 +709,84 @@ void cPais::PrintTropas()
 void cPais::printTodos()
 {
 	listaPaises->Listar();
+}
+
+void cPais::ImprimirMapa(void)
+{
+	cPais * pais = NULL;
+	int Npais[16];
+
+	for (int i = 0; i < 16; i++)
+	{
+		pais = listaPaises->getItem(i);
+		Npais[i] = pais->getNjugador();
+	}
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << "\t\t	                                                                                _________________" << endl;
+	cout << "\t\t	                           ____________                                        |                 |" << endl;
+	cout << "\t\t	                      ____/            |                                       |                 |" << endl;
+	cout << "\t\t	 ____________________/    |            |                                       |                 |" << endl;
+	cout << "\t\t	|            /            | CANADA(" << Npais[11] << ")  |              ___________              |  GROENLANDIA(" << Npais[15] << ") |" << endl;
+	cout << "\t\t	| ALASKA(" << Npais[9] << ") /  YUKON(" << Npais[10] << ")   |            |             |           |             |                 |" << endl;
+	cout << "\t\t\t|__________/______________|____________|______       |LABRADOR(" << Npais[14] << ")|-------------|                 |" << endl;
+	cout << "\t\t	|                         |                   |______|___________|             |_________________|" << endl;
+	cout << "\t\t	|                          |                                    |                  /" << endl;
+	cout << "\t\t	|                           |__         TERRANOVA(" << Npais[13] << ")            |                 /" << endl;
+	cout << "\t\t	 |          OREGON(" << Npais[8] << ")          |________________________________|                /" << endl;
+	cout << "\t\t	  |                               |__                           |               /" << endl;
+	cout << "\t\t	   |                                 |__    NUEVA YORK(" << Npais[12] << ")       /--------------/" << endl;
+	cout << "\t\t	    |___________________________________|______________________/" << endl;
+	cout << "\t\t	     |                                                        /" << endl;
+	cout << "\t\t	      |                CALIFORNIA(" << Npais[7] << ")                         /" << endl;
+	cout << "\t\t	       |____________________________________________________/" << endl;
+	cout << "\t\t	                         |_                                /" << endl;
+	cout << "\t\t	                           |__                            /" << endl;
+	cout << "\t\t	                              |___                       /" << endl;
+	cout << "\t\t	                                  |       MEXICO(" << Npais[6] << ")     |" << endl;
+	cout << "\t\t	                                   | ___                | " << endl;
+	cout << "\t\t	                                        |___            | " << endl;
+	cout << "\t\t	                                            |           |" << endl;
+	cout << "\t\t	                                             |__        |" << endl;
+	cout << "\t\t	                                                |__     | " << endl;
+	cout << "\t\t	                                                   |___ |" << endl;
+	cout << "\t\t	                                                       ||__________________________________________" << endl;
+	cout << "\t\t	                                                       /                 |                         |_" << endl;
+	cout << "\t\t	                                                      /                  |                           |_" << endl;
+	cout << "\t\t	                                                      |    COLOMBIA(" << Npais[5] << ")   |                             |_" << endl;
+	cout << "\t\t	                                                      |__________________|                               |_" << endl;
+	cout << "\t\t	                                                      |                   |_                               |_" << endl;
+	cout << "\t\t	                                                      |                     |_        BRASIL(" << Npais[3] << ")              |" << endl;
+	cout << "\t\t	                                                      |                       |_                            /" << endl;
+	cout << "\t\t	                                                      |        PERU(" << Npais[4] << ")          |                          /" << endl;
+	cout << "\t\t	                                                      |                         |                         /" << endl;
+	cout << "\t\t	                                                      |_________________________|________________________/" << endl;
+	cout << "\t\t	                                                      |            |                    |               /" << endl;
+	cout << "\t\t	                                                      |            /                    |              /" << endl;
+	cout << "\t\t	                                                      |           |                     | URUGUAY(" << Npais[2] << ")  |" << endl;
+	cout << "\t\t	                                                      |           |                     |            /" << endl;
+	cout << "\t\t	                                                      |   (" << Npais[1] << ")      |                    |           /" << endl;
+	cout << "\t\t	                                                      |    C      /                      |_________|" << endl;
+	cout << "\t\t	                                                      |    H      |                            |" << endl << endl;
+	cout << "------------------------------------------------------------------------------|    I      |                            |" << endl << endl;
+	cout << "\t\t	                                                      |    L      |    ARGENTINA(" << Npais[0] << ")          _/" << endl;
+	cout << "\t\t	                                                      |    E      /                         /" << endl;
+	cout << "\t\t	                                                      |          /                       /" << endl;
+	cout << "\t\t	                                                       |        /                      /" << endl;
+	cout << "\t\t	                                                        |      /                     /" << endl;
+	cout << "\t\t	                                                        |      |                   /" << endl;
+	cout << "\t\t	                                                        |      |                 /" << endl;
+	cout << "\t\t	                                                        |      |               /" << endl;
+	cout << "\t\t	                                                        |      |             /" << endl;
+	cout << "\t\t	                                                        |      |           /" << endl;
+	cout << "\t\t	                                                         |      |         /" << endl;
+	cout << "\t\t	                                                          |     |       /" << endl;
+	cout << "\t\t	                                                           |    |     /" << endl;
+	cout << "\t\t	                                                            |   |   /" << endl;
+	cout << "\t\t	                                                              |_|_/" << endl;
+
+	cout << endl;
+	SetConsoleTextAttribute(consoleHandle, 7);
+	
 }
 
 void cPais::PrintNombre()
@@ -730,6 +819,7 @@ cPais::~cPais()
 
 void cPais::titulo(cPais * paisParaATACAR, int estado, string nombre, int jugador, HANDLE consoleHandle) {
 
+	SetConsoleTextAttribute(consoleHandle, 7);
 	SetConsoleTextAttribute(consoleHandle, 5);
 	if (jugador == 1)
 	{

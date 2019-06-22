@@ -36,9 +36,10 @@ public:
 	string AtacarPais();
 	
 	int AgregarPais(cPais *ptr);
-	void quitarPais(string pais);
+	cPais* quitarPais(string pais);
 
 	string getNombre() { return nombre; }
+	int getNumeroDePaises() { return listaPropiaPaises->getCA(); }
 
 	void listarSusPaises(); // funcion de prueba
 	void listarTropas(); //funcion de prueba

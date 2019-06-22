@@ -69,14 +69,12 @@ int cTropaArquero::RecibirAtaqueTropa(int dano, string clase)
 
 	if (listaUnidades->getCA() == 0) //si la cantidad de unidades en la lista es 0 quiere decir que se mato a la tropa, 
 	{								 //jpor lo cual se retorna un 0 para indicar que se debe eliminar la tropa, de lo contrario se retorna un 1
-		SetConsoleTextAttribute(consoleHandle, 14);
 		cout << "Tropa de arqueros Eliminada" << endl;
 		cout << "\t--------------------------------------" << endl << endl;
 		return(0);
 	}
 	else
 	{
-		SetConsoleTextAttribute(consoleHandle, 14);
 		cout << "se eliminaron " << TropasOriginales - listaUnidades->getCA() << " arqueros"<< endl;
 		cout << "\t--------------------------------------" << endl << endl;
 		SetConsoleTextAttribute(consoleHandle, 7);

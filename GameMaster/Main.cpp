@@ -21,15 +21,20 @@ void AsignarPaisesAJugadores();
 
 void InicializacionDeVaribales();
 void EleccionDeUnidades(cJugador * jugadorX); //el jugador elecciona 50 unidades constituedas por las tres facciones 
-void AgruparUnidadesEnTropas(cJugador * jugadorX); // el jugador agrupa sus unidades en 10 tropas
-void GeneradorDeTropasParaJugador(cJugador * jugadorX); // se generan las tropas y se las da al jugador
+void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros, int Tmagos); // el jugador agrupa sus unidades en 10 tropas
+void GeneradorDeTropasParaJugador(cJugador * jugadorX, int Tcaballeros, int Tarqueros, int Tmagos); // se generan las tropas y se las da al jugador
 
 void ImprimirMapa(void);
 
 void AgregarTropasEnPais();
 void Inicio(void);
+void ModoDeJuego(void);
 
 void inicioPrueba(void);
+
+void ataque();
+void cambio_de_ronda();
+void Resultados();
 
 void ocultarCursor();
 
@@ -40,37 +45,44 @@ cJugador * Jugador2 = new cJugador("Jugador 2");
 
 cContinente * Continente = new cContinente(16, "America");
 
+int Turnos = 0, Rondas = 0, IteradorDeRondas = 0;
+
 int MaxUnidades = 0, caballeros = 0, magos = 0, arqueros = 0, opcion = 0, aux = 0, sobrecarga = 0, suma = 0; // variables de EleccionDeUnidades 
 
-int TropasJugador1[10],TropasJugador2[10], NrTropa=0, Tcaballeros=0, Tmagos=0, Tarqueros=0; // variables de AgruparUnidadesEnTropas , reutilizo el aux, opcion y MaxUnidades
+int TropasJugador1[10],TropasJugador2[10], NrTropa=0, Tcaballeros1=0, Tmagos1=0, Tarqueros1=0, Tcaballeros2 = 0, Tmagos2 = 0, Tarqueros2 = 0; // variables de AgruparUnidadesEnTropas , reutilizo el aux, opcion y MaxUnidades
 
 int main(void) {
 		
 	srand(time(NULL));
 
-	//Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
+	Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
 
-	inicioPrueba(); //se crean los paises en continente y luego se le asignana a cada jugador automaticamente, luego se crean tropas y se distribuyen en cada pais
-					//es una funcion de prueba para poder probar los ataques, puede ser que con los paises que podes atacar no tengan vecino, si pasa eso lo volves a correr
-					//por ahora te dejamos una prueba de ataque del jugador 1 hacia el jugador 2 divertite.(no intentes crashearlo porque lo vas a lograr ajajaja)
-	
-	string pais;
+	//inicioPrueba(); //se crean los paises en continente y luego se le asignana a cada jugador automaticamente, luego se crean tropas y se distribuyen en cada pais
+					//es una funcion de prueba para poder probar los ataques, puede ser que con los paises que podes atacar no tengan vecino
 
-	for (int i = 0; i < 3; i++)
+	do
 	{
-		system("cls");
-		ImprimirMapa();
-		pais = Jugador1->AtacarPais();
-		if (pais == "atras")
+
+		ataque();
+
+		if (IteradorDeRondas == 1)
 		{
-			i--;
-		}else if (pais != "0")
-		{
-			Jugador2->quitarPais(pais);
-			Jugador1->AgregarPais(Continente->BuscarPais(pais));
+			Rondas--;
+			if (Rondas == 0)
+			{
+				Turnos = 1;
+			}
 		}
+
+		cambio_de_ronda();
 		
-	}
+
+	} while (Turnos != 1);
+		
+
+	Resultados();
+	
+
 	
 	
 	delete Continente;
@@ -190,7 +202,7 @@ void EleccionDeUnidades(cJugador * jugadorX)
 
 }
 
-void AgruparUnidadesEnTropas(cJugador * jugadorX)
+void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros, int Tmagos)
 {
 	int check=0,numero=0, Tropas[10];
 
@@ -312,6 +324,10 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX)
 
 	if (jugadorX->getNombre() == "Jugador 1")
 	{
+		Tcaballeros1 = Tcaballeros;
+		Tarqueros1 = Tarqueros;
+		Tmagos1 = Tmagos;
+
 		for (int i = 0; i < 10; i++)
 		{
 			TropasJugador1[i] = Tropas[i];
@@ -319,6 +335,9 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX)
 	}
 	else
 	{
+		Tcaballeros2 = Tcaballeros;
+		Tarqueros2 = Tarqueros;
+		Tmagos2 = Tmagos;
 		for (int i = 0; i < 10; i++)
 		{
 			TropasJugador2[i] = Tropas[i];
@@ -332,7 +351,7 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX)
 	
 }
 
-void GeneradorDeTropasParaJugador(cJugador * jugadorX)
+void GeneradorDeTropasParaJugador(cJugador * jugadorX, int Tcaballeros, int Tarqueros, int Tmagos)
 {
 	int Tropas[10];
 	cout << endl;
@@ -557,9 +576,7 @@ void InicializacionDeVaribales()
 	sobrecarga = 0;
 	suma = 0;
 	NrTropa = 0;
-	Tcaballeros = 0;
-	Tmagos = 0;
-	Tarqueros = 0;
+	
 }
 
 void AgregarTropasEnPais()
@@ -574,22 +591,75 @@ void Inicio(void)
 	AsignarVecinos();//se le agregan los vecinos a cada pais
 	AsignarPaisesAJugadores(); // se le agregan los paises a cada jugador
 
+	ModoDeJuego();//se elige jugar por rondas o hasta conquistar el continente
 	
 	EleccionDeUnidades(Jugador1); //el jugador 1 elige las unidades de caballeros, arqueros y magos
-	AgruparUnidadesEnTropas(Jugador1); //el jugador 1 agrupa, a gusto, las unidades en 10 tropas
-	GeneradorDeTropasParaJugador(Jugador1);//se arman las tropas en el jugador 1
+	AgruparUnidadesEnTropas(Jugador1,Tcaballeros1,Tarqueros1,Tmagos1); //el jugador 1 agrupa, a gusto, las unidades en 10 tropas
+	GeneradorDeTropasParaJugador(Jugador1, Tcaballeros1, Tarqueros1, Tmagos1);//se arman las tropas en el jugador 1
 			   
 	EleccionDeUnidades(Jugador2); //el jugador 1 elige las unidades de caballeros, arqueros y magos
-	AgruparUnidadesEnTropas(Jugador2); //el jugador 1 agrupa, a gusto, las unidades en 10 tropas
-	GeneradorDeTropasParaJugador(Jugador2); //se arman las tropas en el jugador 1
+	AgruparUnidadesEnTropas(Jugador2, Tcaballeros2, Tarqueros2, Tmagos2); //el jugador 1 agrupa, a gusto, las unidades en 10 tropas
+	GeneradorDeTropasParaJugador(Jugador2, Tcaballeros2, Tarqueros2, Tmagos2); //se arman las tropas en el jugador 1
 		
 	AgregarTropasEnPais(); //ubican las tropas donde quiere cada jugador
 
 	
 }
 
+void ModoDeJuego(void)
+{
+	string opcion;
+	int check = 0;
+
+	do
+	{
+		system("cls");
+		if (check == 0)
+		{
+			cout << "Si quiere jugar a cierto numero de rondas escriba RONDAS, de lo contrario, si quiere jugar hasta conquistar el continente escriba COMBATE A MUERTE" << endl<< endl;
+			cout << ": ";
+			cin >> opcion;
+		}
+		else
+		{
+			cout << "Si quiere jugar a cierto numero de rondas escriba RONDAS, de lo contrario, si quiere jugar hasta conquistar el continente escriba CONQUISTAR" << endl<< endl;
+			cout << ": " << opcion << endl;
+		}
+
+
+		if (opcion == "conquistar" || opcion == "CONQUISTAR")
+		{
+			IteradorDeRondas = 0;
+			Rondas = 1;
+		}
+		else if (opcion == "rondas" || opcion == "RONDAS")
+		{
+			cout << "ingrese la cantidad de rondas: ";
+			cin.clear();
+			cin >> Rondas;
+			if (Rondas == 0)
+			{
+				getchar();
+				Rondas = 0;
+				check = 1;
+			}
+			else if (Rondas != 0 && Rondas >0)
+			{
+				IteradorDeRondas = 1;
+			}
+		}
+
+	} while (Rondas == 0);
+
+	system("cls");
+}
+
 void inicioPrueba(void)
 {
+	
+	ModoDeJuego();
+	
+
 	int Tropas[10];
 	CrearContinenteConPaises(); //se le agregan los paises al continente
 	AsignarVecinos();//se le agregan los vecinos a cada pais
@@ -599,9 +669,14 @@ void inicioPrueba(void)
 	caballeros = 20;
 	arqueros = 10;
 	magos = 20;
-	Tcaballeros = 4;
-	Tarqueros = 3;
-	Tmagos = 3;
+	int Tcaballeros = 4;
+	int Tarqueros = 3;
+	int Tmagos = 3;
+
+	Tcaballeros1 = Tcaballeros;
+	Tarqueros1 = Tarqueros;
+	Tmagos1 = Tmagos;
+
 
 	for (int i = 0; i < Tcaballeros; i++)
 	{
@@ -621,7 +696,7 @@ void inicioPrueba(void)
 		
 	}
 	
-	GeneradorDeTropasParaJugador(Jugador1);
+	GeneradorDeTropasParaJugador(Jugador1,Tcaballeros,Tarqueros,Tmagos);
 	Jugador1->setTropasEnPaisesPrueba(Tcaballeros, Tarqueros, Tmagos);
 
 	system("cls");
@@ -632,6 +707,10 @@ void inicioPrueba(void)
 	Tcaballeros = 2;
 	Tarqueros = 4;
 	Tmagos = 4;
+
+	Tcaballeros2 = Tcaballeros;
+	Tarqueros2 = Tarqueros;
+	Tmagos2 = Tmagos;
 
 	for (int i = 0; i < Tcaballeros; i++)
 	{
@@ -648,7 +727,7 @@ void inicioPrueba(void)
 		
 	}
 
-	GeneradorDeTropasParaJugador(Jugador2);
+	GeneradorDeTropasParaJugador(Jugador2, Tcaballeros, Tarqueros, Tmagos);
 	Jugador2->setTropasEnPaisesPrueba(Tcaballeros, Tarqueros, Tmagos);
 
 	system("cls");
@@ -656,6 +735,169 @@ void inicioPrueba(void)
 
 
 
+}
+
+void ataque()
+{
+
+	string pais;
+
+	
+	for (int i = 0; i < 3; i++)
+	{
+		system("cls");
+		ImprimirMapa();
+		pais = Jugador1->AtacarPais();
+		if (pais == "atras")
+		{
+			i--;
+		}
+		else if (pais != "0")
+		{
+			Jugador1->AgregarPais(Jugador2->quitarPais(pais));
+		}
+
+	}
+
+	pais = "0";
+
+	for (int i = 0; i < 3; i++)
+	{
+		system("cls");
+		ImprimirMapa();
+		pais = Jugador2->AtacarPais();
+		if (pais == "atras")
+		{
+			i--;
+		}
+		else if (pais != "0")
+		{
+			Jugador2->AgregarPais(Jugador1->quitarPais(pais));
+		}
+
+	}
+
+	
+
+	
+
+}
+
+void cambio_de_ronda()
+{
+
+	int NPaises = 0, N=0;
+
+	NPaises = Jugador1->getNumeroDePaises();
+
+	if (NPaises != 0)
+	{
+
+		if (NPaises != 16)
+		{
+			for (int i = 0; i < NPaises / 2; i++)
+			{
+				N = rand() % 3;
+
+				if (N == 0) //caballero
+				{
+					Jugador1->AgregarTropaCaballero(new cTropaCaballero, TropasJugador1[rand() % Tcaballeros1]);
+				}
+				else if (N == 1)//arquero
+				{
+					Jugador1->AgregarTropaArquero(new cTropaArquero, TropasJugador1[Tcaballeros1 + rand() % (Tarqueros1)]);
+				}
+				else if (N == 2)//mago
+				{
+					Jugador1->AgregarTropaMago(new cTropaMago, TropasJugador1[(Tcaballeros1 + Tarqueros1) + rand() % (Tmagos1)]);
+				}
+
+			}
+
+			NPaises = Jugador2->getNumeroDePaises();
+
+			for (int i = 0; i < NPaises / 2; i++)
+			{
+				N = rand() % 3;
+
+				if (N == 0) //caballero
+				{
+					Jugador2->AgregarTropaCaballero(new cTropaCaballero, TropasJugador2[rand() % Tcaballeros2 + 1]);
+				}
+				else if (N == 1)//arquero
+				{
+					Jugador2->AgregarTropaArquero(new cTropaArquero, TropasJugador2[Tcaballeros2 + rand() % (Tarqueros2 + 1)]);
+				}
+				else if (N == 2)//mago
+				{
+					Jugador2->AgregarTropaMago(new cTropaMago, TropasJugador2[(Tcaballeros2 + Tarqueros2) + rand() % (Tmagos2 + 1)]);
+				}
+
+			}
+
+			AgregarTropasEnPais();
+		}
+		else
+		{
+			Turnos = 1;
+		}
+		
+	}
+	else
+	{
+		Turnos = 1;
+	}
+	
+	
+	
+}
+
+void Resultados()
+{
+	system("cls");
+
+	if (IteradorDeRondas == 1)
+	{
+		if (Jugador1->getNumeroDePaises() > Jugador2->getNumeroDePaises())
+		{
+			cout << "*********************************" << endl;
+			cout << "El Jugador 1 gano, Felicitaciones" << endl;
+			cout << "*********************************" << endl;
+		}
+		else if (Jugador1->getNumeroDePaises() > Jugador2->getNumeroDePaises())
+		{
+			cout << "*********************************" << endl;
+			cout << "El Jugador 2 gano, Felicitaciones" << endl;
+			cout << "**********************************" << endl;
+		}
+		else
+		{
+			cout << "***************************************************" << endl;
+			cout << "Se determino que el jugador 1 y jugador 2 empataron" << endl;
+			cout << "***************************************************" << endl;
+		}
+
+	}
+	else
+	{
+		if (Jugador1->getNumeroDePaises() == 16)
+		{
+			cout << "**********************************************" << endl;
+			cout << "El Jugador 1 conquisto America, Felicitaciones" << endl;
+			cout << "**********************************************" << endl;
+			
+		}
+		else
+		{
+			cout << "**********************************************" << endl;
+			cout << "El Jugador 2 conquisto America, Felicitaciones" << endl;
+			cout << "**********************************************" << endl;
+		}
+
+	}
+
+
+	system("Pause");
 }
 
 void ocultarCursor()

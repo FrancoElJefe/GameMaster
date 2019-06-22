@@ -54,6 +54,7 @@ public:
 	void PrintTropas();//funcion de prueba
 	void printTodos();//funcion de prueba
 		
+	void ImprimirMapa(void);
 	void PrintNombre();
 	void PrintTropasCaballero();
 	void PrintTropasArquero();

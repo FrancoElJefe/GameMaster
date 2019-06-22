@@ -90,7 +90,7 @@ void cLista<tipodato>::Listar()
 
 	for (unsigned int i = 0; i < CA; i++)
 	{
-		cout << i + 1;
+		cout << "\t" << i + 1;
 		cout << ") "; //imprime la posicion
 
 		vector[i]->PrintA();// imprimir
@@ -212,7 +212,7 @@ tipodato* cLista<tipodato>::QuitarenPos(unsigned int pos) {
 
 	tipodato *aux = vector[pos];
 
-	for (unsigned int i = 0; i < CA - 1; i++)
+	for (unsigned int i = pos; i < CA-1; i++)
 	{
 		vector[i] = vector[i + 1];
 	}

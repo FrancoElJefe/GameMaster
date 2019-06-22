@@ -42,83 +42,164 @@ cPais * cJugador::DevolverPais(int p)
 void cJugador::setTropaEnPais(void)
 {
 	unsigned int opc = 0;
-	int opc3=0, Tropas;
+	int opc3=0, Tropas,check=0;
 	string opc2;
 	cPais * pais;
+
+	
 
 	Tropas = ListaTropaArqueros->getCA() + ListaTropaCaballeros->getCA() + ListaTropaMagos->getCA();	
 	do
 	{
+		system("cls");
 		cout << "\t\tDISTRIBUYE LAS TROPAS EN TUS PAISES" << endl << endl;
 		cout << "---------" << endl;
 		cout << nombre << endl;
 		cout << "---------" << endl << endl;
+		
+		cout << "Tropas: "<< endl;
+		ListaTropaCaballeros->Listar();
+		cout << endl;
+		ListaTropaArqueros->Listar();
+		cout << endl;
+		ListaTropaMagos->Listar();
+		cout << endl;
+
+
 		listaPropiaPaises->ListarV();
 		cout << endl;
 		cout << "Seleccione el Pais que quiera agregar: ";
+		cin.clear();
 		cin >> opc;
 
-		if (opc <= listaPropiaPaises->getCA()) {
-
-			pais = listaPropiaPaises->getItem(opc - 1);
+		if (opc == 0)
+		{
+			getchar();
 			opc = 0;
-			do
-			{
-				system("cls");
-				ListaTropaCaballeros->Listar();
-				cout << endl;
-				ListaTropaArqueros->Listar();
-				cout << endl;
-				ListaTropaMagos->Listar();
-				cout << endl;
-				cout << "Escriba la clase de tropa que desee: ";
-				cin >> opc2;
+		}
+		else
+		{
+			if (opc <= listaPropiaPaises->getCA()) {
 
-				if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero" || opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero" || opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago")
+				pais = listaPropiaPaises->getItem(opc - 1);
+				do
 				{
-					opc = 1;
-				}
-
-			} while (opc != 1);
-
-			if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero")
-			{
-				ListaTropaCaballeros->Listar();
-				cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
-				cin >> opc3;
-				pais->AgregarTropaCaballero(ListaTropaCaballeros->getItem(opc3 - 1));
-				ListaTropaCaballeros->QuitarenPos(opc3 - 1);
-			}
-			else
-			{
-
-				if (opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero")
-				{
+					system("cls");
+					ListaTropaCaballeros->Listar();
+					cout << endl;
 					ListaTropaArqueros->Listar();
-					cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
-					cin >> opc3;
-					pais->AgregarTropaArquero(ListaTropaArqueros->getItem(opc3 - 1));
-					ListaTropaArqueros->QuitarenPos(opc3 - 1);
-				}
-				else
-				{
-					if (opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago")
+					cout << endl;
+					ListaTropaMagos->Listar();
+					cout << endl;
+					if (check == 0)
 					{
-						ListaTropaMagos->Listar();
-						cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
-						cin >> opc3;
-						pais->AgregarTropaMago(ListaTropaMagos->getItem(opc3 - 1));
-						ListaTropaMagos->QuitarenPos(opc3 - 1);
+						cout << "Escriba la clase de tropa que desee: ";
+						cin.clear();
+						cin >> opc2;
 					}
-				}
-			}
+					else
+					{
+						cout << "Escriba la clase de tropa que desee: " << opc2 << endl;
+					}
+					
 
-			cout << endl;
-			cout << pais->getCodigo();
-			cout << endl;
-			pais->PrintTropas();
-			system("pause");
-			Tropas--;
+					if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero" || opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero" || opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago")
+					{
+
+						if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero")
+						{
+							ListaTropaCaballeros->Listar();
+							cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
+							cin.clear();
+							cin >> opc3;
+							if (opc3 == 0)
+							{
+								getchar();
+								opc3 = 0;
+							}
+
+							if (opc3 != 0 && opc3 > 0 && opc3-1 < ListaTropaCaballeros->getCA())
+							{
+								pais->AgregarTropaCaballero(ListaTropaCaballeros->getItem(opc3 - 1));
+								ListaTropaCaballeros->QuitarenPos(opc3 - 1);
+								opc = 1;
+							}
+							else
+							{
+								check = 1;
+							}
+														
+						}
+						else
+						{
+
+							if (opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero")
+							{
+								ListaTropaArqueros->Listar();
+								cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
+								cin.clear();
+								cin >> opc3;
+								if (opc3 == 0)
+								{
+									getchar();
+									opc3 = 0;
+								}
+
+								if (opc3 != 0 && opc3 > 0 && opc3-1 < ListaTropaArqueros->getCA())
+								{
+									pais->AgregarTropaArquero(ListaTropaArqueros->getItem(opc3 - 1));
+									ListaTropaArqueros->QuitarenPos(opc3 - 1);
+									opc = 1;
+								}
+								else
+								{
+									check = 1;
+								}
+								
+							}
+							else
+							{
+								if (opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago")
+								{
+									ListaTropaMagos->Listar();
+									cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
+									cin.clear();
+									cin >> opc3;
+									if (opc3 == 0)
+									{
+										getchar();
+										opc3 = 0;
+									}
+
+									if (opc3 != 0 && opc3 > 0 && opc3-1 < ListaTropaMagos->getCA())
+									{
+										pais->AgregarTropaMago(ListaTropaMagos->getItem(opc3 - 1));
+										ListaTropaMagos->QuitarenPos(opc3 - 1);
+										opc = 1;
+									}
+									else
+									{
+										check = 1;
+									}
+									
+								}
+							}
+						}
+						
+					}
+
+				} while (opc != 1);
+
+				check = 0;
+				opc = 0;
+
+				cout << endl;
+				cout << pais->getCodigo();
+				cout << endl;
+				pais->PrintTropas();
+				system("pause");
+				Tropas--;
+			}
 		}
 
 		system("cls");
@@ -127,9 +208,9 @@ void cJugador::setTropaEnPais(void)
 
 }
 
-void cJugador::quitarPais(string pais)
+cPais* cJugador::quitarPais(string pais)
 {
-	listaPropiaPaises->Quitar(pais);
+	return listaPropiaPaises->Quitar(pais);
 }
 
 string cJugador::AtacarPais()
@@ -149,14 +230,18 @@ string cJugador::AtacarPais()
 	
 	listaPropiaPaises->ListarV();
 
-	cout << "Selecciona el pais con el que queres atacar: "<< endl;
+	cout << "Selecciona el pais con el que queres atacar, si quiere pasar presiona un numero mayor a la cantidad de paises que tiene"<< endl;
 	cout << "Pais: ";
 	cin.clear();
 	cin >> opcion;
 	if (opcion == 0)
 	getchar();
-	
-	if (opcion-1 < listaPropiaPaises->getCA() && opcion != 0)
+
+	if (opcion > listaPropiaPaises->getCA())
+	{
+		return("0");
+
+	}else if (opcion-1 < listaPropiaPaises->getCA() && opcion != 0)
 	{
 		pais = listaPropiaPaises->getItem(opcion - 1);
 
