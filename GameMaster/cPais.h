@@ -61,6 +61,7 @@ public:
 	void PrintTropasMago();
 	void titulo(cPais * paisParaATACAR, int estado, string nombre, int jugador, HANDLE consoleHandle);
 	~cPais();
+	//friend cJugador;
 };
 
 /*

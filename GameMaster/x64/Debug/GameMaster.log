@@ -1,0 +1,26 @@
+﻿  cContinente.cpp
+  cJugador.cpp
+c:\users\leanc\desktop\gamemaster\gamemaster\cjugador.cpp(84): warning C4018: '<=': signed/unsigned mismatch
+c:\users\leanc\desktop\gamemaster\gamemaster\cjugador.cpp(253): warning C4305: 'argument': truncation from 'int' to 'WORD'
+c:\users\leanc\desktop\gamemaster\gamemaster\cjugador.cpp(253): warning C4309: 'argument': truncation of constant value
+  cPais.cpp
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(6): warning C4091: 'typedef ': ignored on left of 'MyEnum' when no variable is declared
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(83): warning C4305: 'argument': truncation from 'int' to 'WORD'
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(83): warning C4309: 'argument': truncation of constant value
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(250): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(301): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(341): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(652): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(659): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(665): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Main.cpp
+c:\users\leanc\desktop\gamemaster\gamemaster\main.cpp(56): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\leanc\desktop\gamemaster\gamemaster\main.cpp(342): warning C4305: 'argument': truncation from 'int' to 'WORD'
+c:\users\leanc\desktop\gamemaster\gamemaster\main.cpp(342): warning C4309: 'argument': truncation of constant value
+c:\users\leanc\desktop\gamemaster\gamemaster\main.cpp(695): warning C4101: 'Tropas': unreferenced local variable
+  Generating Code...
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(637): warning C4715: 'cPais::Atacado': not all control paths return a value
+c:\users\leanc\desktop\gamemaster\gamemaster\cpais.cpp(535): warning C4715: 'cPais::AtacarOtroPais': not all control paths return a value
+c:\users\leanc\desktop\gamemaster\gamemaster\clista.h(167): warning C4715: 'cLista<cPais>::AtacarVecino': not all control paths return a value
+  GameMaster.vcxproj -> C:\Users\leanc\Desktop\GameMaster\x64\Debug\GameMaster.exe

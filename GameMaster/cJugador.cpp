@@ -67,6 +67,8 @@ void cJugador::setTropaEnPais(void)
 
 
 		listaPropiaPaises->ListarV();
+		
+		opc = 0; 
 		cout << endl;
 		cout << "Seleccione el Pais que quiera agregar: ";
 		cin.clear();
@@ -75,7 +77,7 @@ void cJugador::setTropaEnPais(void)
 		if (opc == 0)
 		{
 			getchar();
-			opc = 0;
+			
 		}
 		else
 		{
