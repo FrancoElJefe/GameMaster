@@ -17,7 +17,7 @@ void cJugador::ImprimirMapa(void) // se imprime el mapuli
 		{
 			if (pais->getCodigo() == NomPaises[k])
 			{
-				Npais[k] = pais->getNjugador()+48;
+				Npais[k] = pais->getNjugador()+48;//codigo ASCII
 			}
 		}
 		
@@ -121,12 +121,7 @@ void cJugador::AgregarTropaMago(cTropaMago * ptr, int n)
 	ptr->AgregarUnidades(n);
 	ListaTropaMagos->AgregarItem(ptr);
 }
-/*
-cPais * cJugador::DevolverPais(int p)
-{
-	return listaPropiaPaises->getItem(p);
-}
-*/
+
 void cJugador::setTropaEnPais(void)
 {
 	unsigned int opc = 0;

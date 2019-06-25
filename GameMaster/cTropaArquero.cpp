@@ -6,14 +6,19 @@ string cTropaArquero::nombre = "ARQUERO";
 
 cTropaArquero::cTropaArquero()
 {
+	srand(time(NULL));//inicializo los numeros random
 	listaUnidades = new cLista<cUnidadArquero>;
 }
 
 void cTropaArquero::AgregarUnidades(int n)
 {
+	int HP = 0, AT = 0;
+
 	for (int k = 0; k < n; k++)
 	{
-		listaUnidades->AgregarItem(new cUnidadArquero);
+		HP = 60 + rand() % (81 - 60);
+		AT = 20 + rand() % (31 - 20);
+		listaUnidades->AgregarItem(new cUnidadArquero(HP,AT));
 	}
 }
 int cTropaArquero::Ataque()

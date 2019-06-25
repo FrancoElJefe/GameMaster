@@ -6,14 +6,19 @@ string cTropaMago::nombre = "MAGO";
 
 cTropaMago::cTropaMago()
 {
+	srand(time(NULL));//inicializo los numeros random
 	listaUnidades = new cLista<cUnidadMago>;
 }
 
 void cTropaMago::AgregarUnidades(int n)
 {
+	int HP = 0, AT = 0;
+
 	for (int k = 0; k < n; k++)
 	{
-		listaUnidades->AgregarItem(new cUnidadMago);
+		HP = 40 + rand() % (61 - 40);
+		AT = 10 + rand() % (21 - 10);
+		listaUnidades->AgregarItem(new cUnidadMago(HP,AT));
 	}
 }
 

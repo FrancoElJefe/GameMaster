@@ -8,6 +8,8 @@ cUnidadArquero::cUnidadArquero():cClases(80,30)
 
 cUnidadArquero::cUnidadArquero(int hp, int at) : cClases(hp, at)
 {
+
+
 }
 
 int cUnidadArquero::Ataque()

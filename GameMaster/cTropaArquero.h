@@ -5,6 +5,7 @@
 #include <iostream>
 #include <windows.h>
 #include <ostream>
+#include <time.h>
 #include "cUnidadArquero.h"
 #include "cLista.h"
 

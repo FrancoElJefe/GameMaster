@@ -6,14 +6,19 @@ string cTropaCaballero::nombre = "CABALLERO";
 
 cTropaCaballero::cTropaCaballero()
 {
+	srand(time(NULL));//inicializo los numeros random
 	listaUnidades = new cLista<cUnidadCaballero>;
 }
 
 void cTropaCaballero::AgregarUnidades(int N)
 {
+	int HP = 0 ,AT = 0;
+
 	for (int k = 0; k < N; k++)
 	{
-		listaUnidades->AgregarItem(new cUnidadCaballero);
+		HP = 80 + rand() % (101 - 80);
+		AT = 30 + rand() % (41 - 30);
+		listaUnidades->AgregarItem(new cUnidadCaballero(HP,AT));
 	}
 	
 }

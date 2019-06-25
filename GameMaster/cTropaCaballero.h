@@ -5,6 +5,7 @@
 #include <iostream>
 #include <ostream>
 #include <windows.h>
+#include <time.h>
 #include "cUnidadCaballero.h"
 #include "cLista.h"
 

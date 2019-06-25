@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <ostream>
+#include <time.h>
 #include <windows.h>
 #include "cUnidadMago.h"
 #include "cLista.h"
