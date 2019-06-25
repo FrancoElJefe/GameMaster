@@ -439,6 +439,7 @@ void ImprimirMapa(void)
 		pais = Continente->BuscarPais(i);
 		Npais[i] = pais->getNjugador();
 	}
+
 	cout << "\t\t	                                                                                _________________" << endl;
 	cout << "\t\t	                           ____________                                        |                 |" << endl;
 	cout << "\t\t	                      ____/            |                                       |                 |" << endl;
@@ -483,9 +484,9 @@ void ImprimirMapa(void)
 	cout << "\t\t	                                                      |           |                     |            /" << endl;
 	cout << "\t\t	                                                      |   (" << Npais[1] << ")      |                    |           /" << endl;
 	cout << "\t\t	                                                      |    C      /                      |_________|" << endl;
-	cout << "\t\t	                                                      |    H      |                            |" << endl<<endl;
-	cout << "------------------------------------------------------------------------------|    I      |                            |" << endl<<endl;
-	cout << "\t\t	                                                      |    L      |    ARGENTINA("<<Npais[0]<<")          _/" << endl;
+	cout << "\t\t	                                                      |    H      |                            |" << endl << endl;
+	cout << "------------------------------------------------------------------------------|    I      |                            |" << endl << endl;
+	cout << "\t\t                                                              |    L      |    ARGENTINA(" << Npais[0] << ")          _/" << endl;
 	cout << "\t\t	                                                      |    E      /                         /" << endl;
 	cout << "\t\t	                                                      |          /                       /" << endl;
 	cout << "\t\t	                                                       |        /                      /" << endl;
@@ -502,6 +503,7 @@ void ImprimirMapa(void)
 	cout << "\t\t	                                                              |_|_/" << endl;
 
 	cout << endl;
+
 
 }
 

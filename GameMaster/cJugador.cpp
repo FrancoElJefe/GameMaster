@@ -69,7 +69,7 @@ void cJugador::ImprimirMapa(void) // se imprime el mapuli
 	cout << "\t\t	                                                      |    C      /                      |_________|" << endl;
 	cout << "\t\t	                                                      |    H      |                            |" << endl << endl;
 	cout << "------------------------------------------------------------------------------|    I      |                            |" << endl << endl;
-	cout << "\t\t	                                                      |    L      |    ARGENTINA(" << Npais[0] << ")          _/" << endl;
+	cout << "\t\t                                                              |    L      |    ARGENTINA(" << Npais[0] << ")          _/" << endl;
 	cout << "\t\t	                                                      |    E      /                         /" << endl;
 	cout << "\t\t	                                                      |          /                       /" << endl;
 	cout << "\t\t	                                                       |        /                      /" << endl;
