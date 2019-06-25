@@ -124,7 +124,9 @@ void EleccionDeUnidades(cJugador * jugadorX)
 				{
 					suma = 0;
 					cout << "Cantidad de Caballeros: ";
+					cin.clear();
 					cin >> suma;
+					if(suma==0)getchar();
 					suma = suma + aux;
 					sobrecarga = MaxUnidades + suma - aux;
 					if (sobrecarga > 50)suma = 30;
@@ -149,7 +151,9 @@ void EleccionDeUnidades(cJugador * jugadorX)
 				{
 					suma = 0;
 					cout << "Cantidad de Arqueros: ";
+					cin.clear();
 					cin >> suma;
+					if (suma == 0)getchar();
 					suma = suma + aux;
 					sobrecarga = MaxUnidades + suma - aux;
 					if (sobrecarga > 50)suma = 40;
@@ -171,7 +175,9 @@ void EleccionDeUnidades(cJugador * jugadorX)
 			{
 				suma = 0;
 				cout << "Cantidad de Magos: ";
+				cin.clear();
 				cin >> suma;
+				if (suma == 0)getchar();
 				suma = suma + aux;
 				sobrecarga = MaxUnidades + suma - aux;
 				if (sobrecarga > 50)suma = 70;
@@ -249,18 +255,23 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros
 			{
 				do
 				{
+					numero = 0;
 					cout << "Caballeros: " << endl;
 					cout << "Tropa Nr " << i + 1 << ":";
+					cin.clear();
 					cin >> numero;
 					if (numero == 0) {
 						getchar();
+						
 					}
-					else
+					else if(numero !=0)
 					{
 						Tropas[i] = numero;
 					}
-
-					if (caballeros - Tropas[i] < 0)Tropas[i] = -1;
+					else
+					{
+						if (caballeros - Tropas[i] < 0)Tropas[i] = -1;
+					}
 					
 				} while (Tropas[i] <= 0);
 				NrTropa++;
@@ -271,19 +282,23 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros
 			{
 				do
 				{
+					numero = 0;
 					cout << "Arqueros: " << endl;
 					cout << "Tropa Nr " << i + 1 << ":";
+					cin.clear();
 					cin >> numero;
 					if (numero == 0) {
 						getchar();
 					}
-					else
+					else if(numero!=0)
 					{
 						Tropas[i] = numero;
 					}
-
-					if (arqueros - Tropas[i] < 0)Tropas[i] = -1;
-
+					else
+					{
+						if (arqueros - Tropas[i] < 0)Tropas[i] = -1;
+					}
+					
 				} while (Tropas[i] <= 0);
 				NrTropa++;
 				Tarqueros++;
@@ -293,21 +308,22 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros
 			{
 				do
 				{
+					numero = 0;
 					cout << "Magos: " << endl;
 					cout << "Tropa Nr " << i + 1 << ":";
+					cin.clear();
 					cin >> numero;
 					if (numero == 0) {
 						getchar();
 					}
-					else
+					else if(numero!=0)
 					{
 						Tropas[i] = numero;
 					}
-
-					if (magos - Tropas[i] < 0) {
-						Tropas[i] = -1;
-					}
-
+					else
+					{
+						if (magos - Tropas[i] < 0)Tropas[i] = -1;
+					}							
 				} while (Tropas[i] <= 0);
 				NrTropa++;
 				Tmagos++;
