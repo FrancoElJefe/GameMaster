@@ -2,6 +2,94 @@
 
 HANDLE cJugador::consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
+void cJugador::ImprimirMapa(void) // se imprime el mapuli
+{
+	string NomPaises[16] = { "Argentina", "Chile", "Uruguay" , "Brasil", "Peru", "Colombia", "Mexico", "California", "Oregon" , "Alaska", "Yukon", "Canada", "Nueva York", "Terranova", "Labrador", "Groenlandia" };
+
+	cPais * pais = NULL;
+	char Npais[16] = {' '};
+
+	for (int i = 0; i < 8; i++)
+	{
+		pais = listaPropiaPaises->getItem(i);
+
+		for (int k = 0; k < 16; k++)
+		{
+			if (pais->getCodigo() == NomPaises[k])
+			{
+				Npais[k] = pais->getNjugador()+48;
+			}
+		}
+		
+	}
+
+	cout << "\t\t	                                                                                _________________" << endl;
+	cout << "\t\t	                           ____________                                        |                 |" << endl;
+	cout << "\t\t	                      ____/            |                                       |                 |" << endl;
+	cout << "\t\t	 ____________________/    |            |                                       |                 |" << endl;
+	cout << "\t\t	|            /            | CANADA(" << Npais[11] << ")  |              ___________              |  GROENLANDIA(" << Npais[15] << ") |" << endl;
+	cout << "\t\t	| ALASKA(" << Npais[9] << ") /  YUKON(" << Npais[10] << ")   |            |             |           |             |                 |" << endl;
+	cout << "\t\t\t|__________/______________|____________|______       |LABRADOR(" << Npais[14] << ")|-------------|                 |" << endl;
+	cout << "\t\t	|                         |                   |______|___________|             |_________________|" << endl;
+	cout << "\t\t	|                          |                                    |                  /" << endl;
+	cout << "\t\t	|                           |__         TERRANOVA(" << Npais[13] << ")            |                 /" << endl;
+	cout << "\t\t	 |          OREGON(" << Npais[8] << ")          |________________________________|                /" << endl;
+	cout << "\t\t	  |                               |__                           |               /" << endl;
+	cout << "\t\t	   |                                 |__    NUEVA YORK(" << Npais[12] << ")       /--------------/" << endl;
+	cout << "\t\t	    |___________________________________|______________________/" << endl;
+	cout << "\t\t	     |                                                        /" << endl;
+	cout << "\t\t	      |                CALIFORNIA(" << Npais[7] << ")                         /" << endl;
+	cout << "\t\t	       |____________________________________________________/" << endl;
+	cout << "\t\t	                         |_                                /" << endl;
+	cout << "\t\t	                           |__                            /" << endl;
+	cout << "\t\t	                              |___                       /" << endl;
+	cout << "\t\t	                                  |       MEXICO(" << Npais[6] << ")     |" << endl;
+	cout << "\t\t	                                   | ___                | " << endl;
+	cout << "\t\t	                                        |___            | " << endl;
+	cout << "\t\t	                                            |           |" << endl;
+	cout << "\t\t	                                             |__        |" << endl;
+	cout << "\t\t	                                                |__     | " << endl;
+	cout << "\t\t	                                                   |___ |" << endl;
+	cout << "\t\t	                                                       ||__________________________________________" << endl;
+	cout << "\t\t	                                                       /                 |                         |_" << endl;
+	cout << "\t\t	                                                      /                  |                           |_" << endl;
+	cout << "\t\t	                                                      |    COLOMBIA(" << Npais[5] << ")   |                             |_" << endl;
+	cout << "\t\t	                                                      |__________________|                               |_" << endl;
+	cout << "\t\t	                                                      |                   |_                               |_" << endl;
+	cout << "\t\t	                                                      |                     |_        BRASIL(" << Npais[3] << ")              |" << endl;
+	cout << "\t\t	                                                      |                       |_                            /" << endl;
+	cout << "\t\t	                                                      |        PERU(" << Npais[4] << ")          |                          /" << endl;
+	cout << "\t\t	                                                      |                         |                         /" << endl;
+	cout << "\t\t	                                                      |_________________________|________________________/" << endl;
+	cout << "\t\t	                                                      |            |                    |               /" << endl;
+	cout << "\t\t	                                                      |            /                    |              /" << endl;
+	cout << "\t\t	                                                      |           |                     | URUGUAY(" << Npais[2] << ")  |" << endl;
+	cout << "\t\t	                                                      |           |                     |            /" << endl;
+	cout << "\t\t	                                                      |   (" << Npais[1] << ")      |                    |           /" << endl;
+	cout << "\t\t	                                                      |    C      /                      |_________|" << endl;
+	cout << "\t\t	                                                      |    H      |                            |" << endl << endl;
+	cout << "------------------------------------------------------------------------------|    I      |                            |" << endl << endl;
+	cout << "\t\t	                                                      |    L      |    ARGENTINA(" << Npais[0] << ")          _/" << endl;
+	cout << "\t\t	                                                      |    E      /                         /" << endl;
+	cout << "\t\t	                                                      |          /                       /" << endl;
+	cout << "\t\t	                                                       |        /                      /" << endl;
+	cout << "\t\t	                                                        |      /                     /" << endl;
+	cout << "\t\t	                                                        |      |                   /" << endl;
+	cout << "\t\t	                                                        |      |                 /" << endl;
+	cout << "\t\t	                                                        |      |               /" << endl;
+	cout << "\t\t	                                                        |      |             /" << endl;
+	cout << "\t\t	                                                        |      |           /" << endl;
+	cout << "\t\t	                                                         |      |         /" << endl;
+	cout << "\t\t	                                                          |     |       /" << endl;
+	cout << "\t\t	                                                           |    |     /" << endl;
+	cout << "\t\t	                                                            |   |   /" << endl;
+	cout << "\t\t	                                                              |_|_/" << endl;
+
+	cout << endl;
+
+
+}
+
 cJugador::cJugador()
 {
 	nombre = "";
@@ -42,22 +130,28 @@ cPais * cJugador::DevolverPais(int p)
 void cJugador::setTropaEnPais(void)
 {
 	unsigned int opc = 0;
-	int opc3=0, Tropas,check=0;
+	int opc3 = 0, Tropas = 0, check = 0;
+	int memoriaTropas[8][3] = { 0 };
 	string opc2;
-	cPais * pais;
+	cPais * pais = NULL;
 
-	
+	Tropas = ListaTropaArqueros->getCA() + ListaTropaCaballeros->getCA() + ListaTropaMagos->getCA();
 
-	Tropas = ListaTropaArqueros->getCA() + ListaTropaCaballeros->getCA() + ListaTropaMagos->getCA();	
 	do
 	{
+
 		system("cls");
-		cout << "\t\tDISTRIBUYE LAS TROPAS EN TUS PAISES" << endl << endl;
+
+		ImprimirMapa();
+
+		cout << "\t\t***********************************" << endl;
+		cout << "\t\tDISTRIBUYE LAS TROPAS EN TUS PAISES" << endl;
+		cout << "\t\t***********************************" << endl << endl;
 		cout << "---------" << endl;
 		cout << nombre << endl;
 		cout << "---------" << endl << endl;
-		
-		cout << "Tropas: "<< endl;
+
+		cout << "Tropas: " << endl;
 		ListaTropaCaballeros->Listar();
 		cout << endl;
 		ListaTropaArqueros->Listar();
@@ -67,8 +161,6 @@ void cJugador::setTropaEnPais(void)
 
 
 		listaPropiaPaises->ListarV();
-		
-		opc = 0; 
 		cout << endl;
 		cout << "Seleccione el Pais que quiera agregar: ";
 		cin.clear();
@@ -77,11 +169,11 @@ void cJugador::setTropaEnPais(void)
 		if (opc == 0)
 		{
 			getchar();
-			
+			opc = 0;
 		}
 		else
 		{
-			if (opc <= listaPropiaPaises->getCA()) {
+			if (opc - 1 < listaPropiaPaises->getCA()) {
 
 				pais = listaPropiaPaises->getItem(opc - 1);
 				do
@@ -95,7 +187,7 @@ void cJugador::setTropaEnPais(void)
 					cout << endl;
 					if (check == 0)
 					{
-						cout << "Escriba la clase de tropa que desee: ";
+						cout << "Escriba la clase de tropa que desee, si quiere volver escriba ATRAS: ";
 						cin.clear();
 						cin >> opc2;
 					}
@@ -103,7 +195,7 @@ void cJugador::setTropaEnPais(void)
 					{
 						cout << "Escriba la clase de tropa que desee: " << opc2 << endl;
 					}
-					
+
 
 					if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero" || opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero" || opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago")
 					{
@@ -119,18 +211,28 @@ void cJugador::setTropaEnPais(void)
 								getchar();
 								opc3 = 0;
 							}
-
-							if (opc3 != 0 && opc3 > 0 && opc3-1 < ListaTropaCaballeros->getCA())
-							{
-								pais->AgregarTropaCaballero(ListaTropaCaballeros->getItem(opc3 - 1));
-								ListaTropaCaballeros->QuitarenPos(opc3 - 1);
-								opc = 1;
-							}
 							else
 							{
-								check = 1;
+								if (opc3 - 1 < ListaTropaCaballeros->getCA())
+								{
+									pais->AgregarTropaCaballero(ListaTropaCaballeros->getItem(opc3 - 1));
+									ListaTropaCaballeros->QuitarenPos(opc3 - 1);
+									opc3 = 0;
+									cout << endl;
+									cout << pais->getCodigo();
+									cout << endl;
+									pais->PrintTropas();
+									memoriaTropas[opc - 1][0]++;
+									opc = 1;
+									system("pause");
+								}
+								else
+								{
+									check = 1;
+								}
 							}
-														
+
+
 						}
 						else
 						{
@@ -146,18 +248,30 @@ void cJugador::setTropaEnPais(void)
 									getchar();
 									opc3 = 0;
 								}
-
-								if (opc3 != 0 && opc3 > 0 && opc3-1 < ListaTropaArqueros->getCA())
-								{
-									pais->AgregarTropaArquero(ListaTropaArqueros->getItem(opc3 - 1));
-									ListaTropaArqueros->QuitarenPos(opc3 - 1);
-									opc = 1;
-								}
 								else
 								{
-									check = 1;
+									if (opc3 - 1 < ListaTropaArqueros->getCA())
+									{
+										pais->AgregarTropaArquero(ListaTropaArqueros->getItem(opc3 - 1));
+										ListaTropaArqueros->QuitarenPos(opc3 - 1);
+										opc3 = 0;
+										cout << endl;
+										cout << pais->getCodigo();
+										cout << endl;
+										pais->PrintTropas();
+										memoriaTropas[opc - 1][1]++;
+										opc = 1;
+
+										system("pause");
+									}
+									else
+									{
+										check = 1;
+									}
+
 								}
-								
+
+
 							}
 							else
 							{
@@ -172,39 +286,126 @@ void cJugador::setTropaEnPais(void)
 										getchar();
 										opc3 = 0;
 									}
-
-									if (opc3 != 0 && opc3 > 0 && opc3-1 < ListaTropaMagos->getCA())
-									{
-										pais->AgregarTropaMago(ListaTropaMagos->getItem(opc3 - 1));
-										ListaTropaMagos->QuitarenPos(opc3 - 1);
-										opc = 1;
-									}
 									else
 									{
-										check = 1;
+										if (opc3 - 1 < ListaTropaMagos->getCA())
+										{
+											pais->AgregarTropaMago(ListaTropaMagos->getItem(opc3 - 1));
+											ListaTropaMagos->QuitarenPos(opc3 - 1);
+											opc3 = 0;
+											cout << endl;
+											cout << pais->getCodigo();
+											cout << endl;
+											pais->PrintTropas();
+											memoriaTropas[opc - 1][2]++;
+											opc = 1;
+
+											system("pause");
+										}
+										else
+										{
+											check = 1;
+										}
 									}
-									
+
+
+
 								}
 							}
 						}
-						
+
 					}
+					else if (opc2 == "atras" || opc2 == "ATRAS")
+					{
+						opc = 1;
+					}
+					else
+					{
+						opc = 0;
+					}
+
+
 
 				} while (opc != 1);
 
-				check = 0;
 				opc = 0;
+				check = 0;
+				Tropas = ListaTropaArqueros->getCA() + ListaTropaCaballeros->getCA() + ListaTropaMagos->getCA();
 
-				cout << endl;
-				cout << pais->getCodigo();
-				cout << endl;
-				pais->PrintTropas();
-				system("pause");
-				Tropas--;
 			}
 		}
 
 		system("cls");
+
+		//**************************** se evalua si se distribuyeron las tropas en los 8 paises *************************//
+		if (Tropas == 0)
+		{
+			for (int i = 0; i < listaPropiaPaises->getCA(); i++)
+			{
+				pais = listaPropiaPaises->getItem(i);
+
+				if (pais->getCantidadDeTropas() == 0) //si en algun pais no se pusieron tropas hay que resetearlas
+				{
+					SetConsoleTextAttribute(consoleHandle, FSCTL_GET_INTEGRITY_INFORMATION);
+					cout << endl << "Debe distribuir las tropas de modo que todos los paises posean una de cualquier clase por lo menos." << endl;
+					SetConsoleTextAttribute(consoleHandle, 7);
+					cout << "REINGRESAR." << endl;
+					system("Pause");
+					i = listaPropiaPaises->getCA();
+					Tropas = 1;
+
+				}
+
+			}
+
+			if (Tropas == 1)// despues de ver si algun pais quedo sin tropas, si la variable Tropas esta en 1 se quitan las tropas de los paises y se las agrega a la listas del jugador
+			{
+
+				for (int i = 0; i < 8; i++)
+				{
+					pais = listaPropiaPaises->getItem(i);
+
+					for (int k = 0; k < 3; k++)
+					{
+						if (memoriaTropas[i][k] >= 1)
+						{
+							for (int j = 0; j < memoriaTropas[i][k] + 1; j++)
+							{
+								if (j >= 1)
+									j = 0;
+
+								if (k == 0)//caballeo
+								{
+									ListaTropaCaballeros->AgregarItem(pais->quitarTcaballero(j));
+									memoriaTropas[i][k]--;
+									j = 0;
+								}
+								else if (k == 1)//arquero
+								{
+									ListaTropaArqueros->AgregarItem(pais->quitarTarquero(j));
+									memoriaTropas[i][k]--;
+									j = 0;
+								}
+								else //mago
+								{
+									ListaTropaMagos->AgregarItem(pais->quitarTmago(j));
+									memoriaTropas[i][k]--;
+									j = 0;
+								}
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+
+
+		}
+		//***************************************************************************************************************//
 
 	} while (Tropas != 0);
 

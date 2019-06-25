@@ -34,6 +34,9 @@ public:
 	void AgregarTropaCaballero(cTropaCaballero *ptr);
 	void AgregarTropaArquero(cTropaArquero *ptr);
 	void AgregarTropaMago(cTropaMago *ptr);
+	cTropaCaballero * quitarTcaballero(int N);
+	cTropaArquero * quitarTarquero(int N);
+	cTropaMago * quitarTmago(int N);
 
 	void AgregarVecinos(cPais * ptr);
 

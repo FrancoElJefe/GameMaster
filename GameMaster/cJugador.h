@@ -22,6 +22,8 @@ class cJugador
 	cLista<cPais> * listaPropiaPaises;
 	static HANDLE consoleHandle;
 
+	void ImprimirMapa(void);
+
 public:
 	cJugador();
 	cJugador(string nomb);
@@ -40,7 +42,7 @@ public:
 
 	string getNombre() { return nombre; }
 	int getNumeroDePaises() { return listaPropiaPaises->getCA(); }
-
+		
 	void listarSusPaises(); // funcion de prueba
 	void listarTropas(); //funcion de prueba
 	void setTropasEnPaisesPrueba(int caballeros, int arqueros, int magos);//funcion de prueba

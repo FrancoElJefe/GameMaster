@@ -36,6 +36,21 @@ void cPais::AgregarTropaMago(cTropaMago * ptr)
 	ListaTropasMago->AgregarItem(ptr);
 }
 
+cTropaCaballero * cPais::quitarTcaballero(int N)
+{
+	return ListaTropasCaballeros->QuitarenPos(N);
+}
+
+cTropaArquero * cPais::quitarTarquero(int N)
+{
+	return ListaTropasArquero->QuitarenPos(N);
+}
+
+cTropaMago * cPais::quitarTmago(int N)
+{
+	return ListaTropasMago->QuitarenPos(N);
+}
+
 void cPais::AgregarVecinos(cPais * ptr)
 {
 	vecinos->AgregarItem(ptr);
@@ -471,43 +486,63 @@ string cPais::AtacarOtroPais(string nomb)
 					if ((clase_tuya == "CABALLERO" || clase_tuya == "Caballero" || clase_tuya == "caballero") && ListaTropasCaballeros->getCA() != 0)
 					{
 						cout << endl << "Cual tropa desea pasar: ";
+						cin.clear();
 						cin >> OpcionTropaTuya;
+						if (OpcionTropaTuya == 0)getchar();
 
-						miTropaC = ListaTropasCaballeros->getItem(OpcionTropaTuya - 1);
-						PaisParaAtacar->AgregarTropaCaballero(miTropaC);
-						ListaTropasCaballeros->QuitarenPos(OpcionTropaTuya - 1);
+						if (OpcionTropaTuya - 1 < ListaTropasCaballeros->getCA())
+						{
+							miTropaC = ListaTropasCaballeros->getItem(OpcionTropaTuya - 1);
+							PaisParaAtacar->AgregarTropaCaballero(miTropaC);
+							ListaTropasCaballeros->QuitarenPos(OpcionTropaTuya - 1);
 
-						system("pause");
+							system("pause");
 
-						return(PaisParaAtacar->getCodigo());
+							return(PaisParaAtacar->getCodigo());
+						}
+				
 
 					}
 					else if (clase_tuya == "ARQUERO" || clase_tuya == "Arquero" || clase_tuya == "arquero" && ListaTropasArquero->getCA() != 0)
 					{
 						cout << endl << "Cual tropa desea pasar: ";
+						cin.clear();
 						cin >> OpcionTropaTuya;
+						if (OpcionTropaTuya == 0)getchar();
+						
 
-						miTropaA = ListaTropasArquero->getItem(OpcionTropaTuya - 1);
-						PaisParaAtacar->AgregarTropaArquero(miTropaA);
-						ListaTropasArquero->QuitarenPos(OpcionTropaTuya - 1);
+						if (OpcionTropaTuya-1 < ListaTropasArquero->getCA())
+						{
+							miTropaA = ListaTropasArquero->getItem(OpcionTropaTuya - 1);
+							PaisParaAtacar->AgregarTropaArquero(miTropaA);
+							ListaTropasArquero->QuitarenPos(OpcionTropaTuya - 1);
 
-						system("pause");
+							system("pause");
 
-						return(PaisParaAtacar->getCodigo());
+							return(PaisParaAtacar->getCodigo());
+						}
+						
 					}
 					else if (clase_tuya == "MAGO" || clase_tuya == "Mago" || clase_tuya == "mago" && ListaTropasMago->getCA() != 0)
 					{
 
 						cout << endl << "Cual tropa desea pasar: ";
+						cin.clear();
 						cin >> OpcionTropaTuya;
+						if (OpcionTropaTuya == 0)getchar();
 
-						miTropaM = ListaTropasMago->getItem(OpcionTropaTuya - 1);
-						PaisParaAtacar->AgregarTropaMago(miTropaM);
-						ListaTropasMago->QuitarenPos(OpcionTropaTuya - 1);
+						if (OpcionTropaTuya - 1 < ListaTropasMago->getCA())
+						{
+							miTropaM = ListaTropasMago->getItem(OpcionTropaTuya - 1);
+							PaisParaAtacar->AgregarTropaMago(miTropaM);
+							ListaTropasMago->QuitarenPos(OpcionTropaTuya - 1);
 
-						system("pause");
+							system("pause");
 
-						return(PaisParaAtacar->getCodigo());
+							return(PaisParaAtacar->getCodigo());
+						}
+
+						
 					}
 
 
