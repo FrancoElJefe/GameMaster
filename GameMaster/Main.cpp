@@ -36,7 +36,7 @@ void ataque();
 void cambio_de_ronda();
 void Resultados();
 
-void ocultarCursor();
+//void ocultarCursor();
 
 HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
