@@ -25,6 +25,7 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros
 void GeneradorDeTropasParaJugador(cJugador * jugadorX, int Tcaballeros, int Tarqueros, int Tmagos); // se generan las tropas y se las da al jugador
 
 void ImprimirMapa(void);
+void ReglasDelJuego(void);
 
 void AgregarTropasEnPais();
 void Inicio(void);
@@ -55,9 +56,9 @@ int main(void) {
 		
 	srand(time(NULL));
 
-	//Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
+	Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
 
-	inicioPrueba(); //se crean los paises en continente y luego se le asignana a cada jugador automaticamente, luego se crean tropas y se distribuyen en cada pais
+	//inicioPrueba(); //se crean los paises en continente y luego se le asignana a cada jugador automaticamente, luego se crean tropas y se distribuyen en cada pais
 					//es una funcion de prueba para poder probar los ataques, puede ser que con los paises que podes atacar no tengan vecino
 
 	do
@@ -507,6 +508,102 @@ void ImprimirMapa(void)
 
 }
 
+void ReglasDelJuego(void)
+{
+	cout << "---------------------------------------------" << endl;
+	cout << "El juego se desarrolla de la siguiente forma:" << endl;
+	cout << "---------------------------------------------" << endl << endl;
+	cout << "Se distribuyen los 16 paises de America de manera aleatoria entre los dos jugadores, recibiendo ocho cada uno." << endl;
+	cout << "Existen tres tipos de unidades : ";
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_BLUE);
+	cout << "caballeros ";
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << ", ";
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_GREEN);
+	cout << "arqueros ";
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << "y ";
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_RED);
+	cout << "magos";
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << ". Cada unidad tiene su propia vida(HP) y su propio ataque(AT)." << endl << "La asignacion inicial de vida y ataque es asignada de manera aleatoria teniendo en cuenta los siguientes rangos : " << endl << endl;
+	
+	cout << "-";
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_BLUE);
+	cout << "Caballeros:" << endl << endl;
+	SetConsoleTextAttribute(consoleHandle, 7);
+
+	cout << "\tVida entre 80 y 100" << endl;
+	cout << "\tAtaque entre 30 y 40" << endl << endl;
+
+	cout << "-";
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_GREEN);
+	cout << "Arqueros:" << endl << endl;
+	SetConsoleTextAttribute(consoleHandle, 7);
+
+	cout << "\tVida entre 60 y 80" << endl;
+	cout << "\tAtaque entre 20 y 30" << endl << endl;
+
+	cout << "-";
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_RED);
+	cout << "Magos:" << endl << endl;
+	SetConsoleTextAttribute(consoleHandle, 7);
+
+	cout << "\tVida entre 40 y 60" << endl;
+	cout << "\tAtaque entre 10 y 20" << endl << endl;
+
+	system("Pause"); 
+	system("cls");
+
+	cout << "Una vez asignados los paises, cada jugador debe seleccionar 50 unidades entre caballeros magos y arqueros." << endl;
+	SetConsoleTextAttribute(consoleHandle, FSCTL_GET_INTEGRITY_INFORMATION);
+	cout << "Es obligatorio tener unidades de los tres tipos.";
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << endl << "Luego se forman diez tropas no mixtas utilizando todas las unidades seleccionadas." << endl << endl;
+	cout << "Consideraciones para el armado de tropas :" << endl<<endl;
+	cout << "\t-Los ";
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_BLUE);
+	cout << "caballeros "; 
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << "son mas fuertes que los arqueros." << endl;
+	cout << "\t-Los ";
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_GREEN);
+	cout << "arqueros ";
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << "son mas fuertes que los magos." << endl;
+	cout << "\t-Los ";
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_RED);
+	cout << "magos ";
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << "son mas fuertes que los caballeros." << endl << endl;
+	cout << "[Cuando una clase fuerte ataca a una debil, el ataque aumenta en un 25 % . Al contrario, el ataque disminuye un 25 %]" << endl << endl;
+
+	SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
+	cout << "****Los arqueros pueden aleatoriamente atacar una segunda vez, con un 50 % de aumento de dano****" << endl;
+	cout << "****Los caballeros poseen un contraataque del 25 % cada vez que se los ataca****" << endl;
+	cout << "****Los magos atacan en zona, por lo que atacan a todas las unidades enemigas ubicadas en el pais****" << endl;
+	SetConsoleTextAttribute(consoleHandle, 7);
+	
+	system("Pause");
+	system("cls");
+
+	cout << "Por Ultimo" << endl << endl;
+	cout << "*Ataques:" << endl << endl;
+	SetConsoleTextAttribute(consoleHandle, EVENT_SYSTEM_FOREGROUND);
+	cout << "En cada turno, el jugador puede realizer hasta tres ataques." << endl;
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << "Para atacar, debe seleccionar a partir de una lista que pais vecino enemigo atacar, y desde que pais propio(debe tener dos tropas o mas)." << endl << "Se ataca primero a las unidades mas debiles(menor HP), absorbiendo parte del dano y pasando el resto del dano a las unidades siguientes." << endl << endl;
+	cout << "En pantalla se muestran cuantas unidades fueron eliminadas y si se elimino la ultima unidad de una tropa." << endl<<endl;
+	cout << "Al terminar cada ataque, se reasignan los paises ganados si fuera necesario,";
+	SetConsoleTextAttribute(consoleHandle, FSCTL_GET_INTEGRITY_INFORMATION);
+	cout << " y es obligatorio pasarle alguna tropa." << endl;
+	SetConsoleTextAttribute(consoleHandle, 7);
+	system("Pause");
+	system("cls");
+	
+		
+}
+
 void CrearContinenteConPaises()
 {
 	string NomPaises[16] = {"Argentina", "Chile", "Uruguay" , "Brasil", "Peru", "Colombia", "Mexico", "California", "Oregon" , "Alaska", "Yukon", "Canada", "Nueva York", "Terranova", "Labrador", "Groenlandia"};
@@ -624,6 +721,8 @@ void Inicio(void)
 	CrearContinenteConPaises(); //se le agregan los paises al continente
 	AsignarVecinos();//se le agregan los vecinos a cada pais
 	AsignarPaisesAJugadores(); // se le agregan los paises a cada jugador
+
+	ReglasDelJuego();//se explican las reglas
 
 	ModoDeJuego();//se elige jugar por rondas o hasta conquistar el continente
 	
