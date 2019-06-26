@@ -9,7 +9,7 @@ void cJugador::ImprimirMapa(void) // se imprime el mapuli
 	cPais * pais = NULL;
 	char Npais[16] = {' '};
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < listaPropiaPaises->getCA(); i++)
 	{
 		pais = listaPropiaPaises->getItem(i);
 
@@ -124,11 +124,12 @@ void cJugador::AgregarTropaMago(cTropaMago * ptr, int n)
 
 void cJugador::setTropaEnPais(void)
 {
-	unsigned int opc = 0;
-	int opc3 = 0, Tropas = 0, check = 0;
+	unsigned int opc = 0, combinacion=0, SeleccionDePais = 0;
+	int opc3 = 0, Tropas = 0, check = 0, checkTropasEnToPaises = 0;
 	int memoriaTropas[8][3] = { 0 };
-	string opc2;
+	string opc2, CTropa;
 	cPais * pais = NULL;
+	cPais * aux = NULL;
 
 	Tropas = ListaTropaArqueros->getCA() + ListaTropaCaballeros->getCA() + ListaTropaMagos->getCA();
 
@@ -159,20 +160,30 @@ void cJugador::setTropaEnPais(void)
 		cout << endl;
 		cout << "Seleccione el Pais que quiera agregar: ";
 		cin.clear();
-		cin >> opc;
+		cin >> SeleccionDePais;
 
-		if (opc == 0)
+		if (SeleccionDePais == 0)
 		{
 			getchar();
 			opc = 0;
 		}
 		else
 		{
-			if (opc - 1 < listaPropiaPaises->getCA()) {
+			if (SeleccionDePais - 1 < listaPropiaPaises->getCA()) {
 
-				pais = listaPropiaPaises->getItem(opc - 1);
+				pais = listaPropiaPaises->getItem(SeleccionDePais - 1);
+
 				do
 				{
+					for (int i = 0; i < listaPropiaPaises->getCA(); i++)
+					{
+						aux = listaPropiaPaises->getItem(i);
+						if (aux->getCantidadDeTropas() == 0)
+						{
+							checkTropasEnToPaises = 1;//si entra por lo menos una vez, quiere decir que hay algun pais sin tropas
+						}
+					}
+
 					system("cls");
 					ListaTropaCaballeros->Listar();
 					cout << endl;
@@ -190,127 +201,233 @@ void cJugador::setTropaEnPais(void)
 					{
 						cout << "Escriba la clase de tropa que desee: " << opc2 << endl;
 					}
+									   					
 
-
-					if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero" || opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero" || opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago")
+					if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero")//se agregan caballeros
 					{
-
-						if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero")
+						ListaTropaCaballeros->Listar();
+						cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
+						cin.clear();
+						cin >> opc3;
+						if (opc3 == 0)
 						{
-							ListaTropaCaballeros->Listar();
-							cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
-							cin.clear();
-							cin >> opc3;
-							if (opc3 == 0)
-							{
-								getchar();
-								opc3 = 0;
-							}
-							else
-							{
-								if (opc3 - 1 < ListaTropaCaballeros->getCA())
-								{
-									pais->AgregarTropaCaballero(ListaTropaCaballeros->getItem(opc3 - 1));
-									ListaTropaCaballeros->QuitarenPos(opc3 - 1);
-									opc3 = 0;
-									cout << endl;
-									cout << pais->getCodigo();
-									cout << endl;
-									pais->PrintTropas();
-									memoriaTropas[opc - 1][0]++;
-									opc = 1;
-									system("pause");
-								}
-								else
-								{
-									check = 1;
-								}
-							}
-
-
+							getchar();
+							opc3 = 0;
 						}
 						else
 						{
-
-							if (opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero")
+							if (opc3 - 1 < ListaTropaCaballeros->getCA())
 							{
-								ListaTropaArqueros->Listar();
-								cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
-								cin.clear();
-								cin >> opc3;
-								if (opc3 == 0)
+
+								if (pais->getCantTcaballero() != 0 && checkTropasEnToPaises == 0) // para combinar tropas de caballeros
 								{
-									getchar();
-									opc3 = 0;
-								}
-								else
-								{
-									if (opc3 - 1 < ListaTropaArqueros->getCA())
-									{
-										pais->AgregarTropaArquero(ListaTropaArqueros->getItem(opc3 - 1));
-										ListaTropaArqueros->QuitarenPos(opc3 - 1);
-										opc3 = 0;
-										cout << endl;
-										cout << pais->getCodigo();
-										cout << endl;
-										pais->PrintTropas();
-										memoriaTropas[opc - 1][1]++;
-										opc = 1;
+									cout << "Quiere combinar tropas, escriba si o no:";
+									cin >> CTropa;
 
-										system("pause");
-									}
-									else
+									if (CTropa == "si")
 									{
-										check = 1;
-									}
+										pais->PrintTropasCaballero();
+										cout << "Tropa a combinar:";
+										cin >> combinacion;
 
-								}
+										if (opc3 - 1 < pais->getCantTcaballero()) {
 
-
-							}
-							else
-							{
-								if (opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago")
-								{
-									ListaTropaMagos->Listar();
-									cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
-									cin.clear();
-									cin >> opc3;
-									if (opc3 == 0)
-									{
-										getchar();
-										opc3 = 0;
-									}
-									else
-									{
-										if (opc3 - 1 < ListaTropaMagos->getCA())
-										{
-											pais->AgregarTropaMago(ListaTropaMagos->getItem(opc3 - 1));
-											ListaTropaMagos->QuitarenPos(opc3 - 1);
+											pais->combinarTCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1), combinacion-1);											
 											opc3 = 0;
 											cout << endl;
 											cout << pais->getCodigo();
 											cout << endl;
 											pais->PrintTropas();
-											memoriaTropas[opc - 1][2]++;
 											opc = 1;
-
 											system("pause");
 										}
-										else
-										{
-											check = 1;
-										}
+
 									}
-
-
-
+									else
+									{
+										pais->AgregarTropaCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1));										
+										opc3 = 0;
+										cout << endl;
+										cout << pais->getCodigo();
+										cout << endl;
+										pais->PrintTropas();
+										memoriaTropas[SeleccionDePais - 1][0]++;
+										opc = 1;
+										system("pause");
+									}
+																	   
 								}
+								else
+								{
+									pais->AgregarTropaCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1));
+									opc3 = 0;
+									cout << endl;
+									cout << pais->getCodigo();
+									cout << endl;
+									pais->PrintTropas();
+									memoriaTropas[SeleccionDePais - 1][0]++;
+									opc = 1;
+									system("pause");
+								}
+								
+							}
+							else
+							{
+								check = 1;
 							}
 						}
 
+
 					}
-					else if (opc2 == "atras" || opc2 == "ATRAS")
+					else if (opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero")//se agregan arqueros
+					{
+						ListaTropaArqueros->Listar();
+						cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
+						cin.clear();
+						cin >> opc3;
+						if (opc3 == 0)
+						{
+							getchar();
+							opc3 = 0;
+						}
+						else
+						{
+							if (opc3 - 1 < ListaTropaArqueros->getCA())
+							{
+								if (pais->getCantTarquro() != 0 && checkTropasEnToPaises == 0) // para combinar tropa de arqueros
+								{
+									cout << endl << "Quiere combinar tropas, escriba si o no:";
+									cin >> CTropa;
+
+									if (CTropa == "si")
+									{
+										pais->PrintTropasArquero();
+										cout << "Tropa a combinar:";
+										cin >> combinacion;
+
+										if (opc3 - 1 < pais->getCantTarquro()) {
+
+											pais->combinarTarquero(ListaTropaArqueros->QuitarenPos(opc3 - 1), combinacion - 1);
+											opc3 = 0;
+											cout << endl;
+											cout << pais->getCodigo();
+											cout << endl;
+											pais->PrintTropas();											
+											opc = 1;
+											system("pause");
+										}
+
+									}
+									else
+									{
+										pais->AgregarTropaArquero(ListaTropaArqueros->QuitarenPos(opc3 - 1));
+										opc3 = 0;
+										cout << endl;
+										cout << pais->getCodigo();
+										cout << endl;
+										pais->PrintTropas();
+										memoriaTropas[SeleccionDePais - 1][1]++;
+										opc = 1;
+
+										system("pause");
+									}
+								}
+								else
+								{
+									pais->AgregarTropaArquero(ListaTropaArqueros->QuitarenPos(opc3 - 1));
+									opc3 = 0;
+									cout << endl;
+									cout << pais->getCodigo();
+									cout << endl;
+									pais->PrintTropas();
+									memoriaTropas[SeleccionDePais - 1][1]++;
+									opc = 1;
+
+									system("pause");
+								}
+							}
+							else
+							{
+								check = 1;
+							}
+
+						}
+					}
+					else if (opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago")//se agregan magos
+					{
+						ListaTropaMagos->Listar();
+						cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
+						cin.clear();
+						cin >> opc3;
+						if (opc3 == 0)
+						{
+							getchar();
+							opc3 = 0;
+						}
+						else
+						{
+							if (opc3 - 1 < ListaTropaMagos->getCA())
+							{
+								if (pais->getCantTMago() != 0 && checkTropasEnToPaises == 0) // para combinar tropa de magos
+								{
+									cout << endl << "Quiere combinar tropas, escriba si o no:";
+									cin >> CTropa;
+
+									if (CTropa == "si")
+									{
+										pais->PrintTropasMago();
+										cout << "Tropa a combinar:";
+										cin >> combinacion;
+
+										if (opc3 - 1 < pais->getCantTMago()) {
+
+											pais->combinarTmago(ListaTropaMagos->QuitarenPos(opc3 - 1), combinacion - 1);
+											opc3 = 0;
+											cout << endl;
+											cout << pais->getCodigo();
+											cout << endl;
+											pais->PrintTropas();
+											opc = 1;
+											system("pause");
+										}
+										
+									}
+									else
+									{
+										pais->AgregarTropaMago(ListaTropaMagos->QuitarenPos(opc3 - 1));
+										opc3 = 0;
+										cout << endl;
+										cout << pais->getCodigo();
+										cout << endl;
+										pais->PrintTropas();
+										memoriaTropas[SeleccionDePais - 1][2]++;
+										opc = 1;
+
+										system("pause");
+									}
+								
+								}
+								else
+								{
+									pais->AgregarTropaMago(ListaTropaMagos->QuitarenPos(opc3 - 1));
+									opc3 = 0;
+									cout << endl;
+									cout << pais->getCodigo();
+									cout << endl;
+									pais->PrintTropas();
+									memoriaTropas[SeleccionDePais - 1][2]++;
+									opc = 1;
+
+									system("pause");
+								}
+							}
+							else
+							{
+								check = 1;
+							}
+						}
+
+					}else if (opc2 == "atras" || opc2 == "ATRAS")
 					{
 						opc = 1;
 					}
@@ -323,6 +440,7 @@ void cJugador::setTropaEnPais(void)
 
 				} while (opc != 1);
 
+				checkTropasEnToPaises = 0;
 				opc = 0;
 				check = 0;
 				Tropas = ListaTropaArqueros->getCA() + ListaTropaCaballeros->getCA() + ListaTropaMagos->getCA();
@@ -364,28 +482,20 @@ void cJugador::setTropaEnPais(void)
 					{
 						if (memoriaTropas[i][k] >= 1)
 						{
-							for (int j = 0; j < memoriaTropas[i][k] + 1; j++)
-							{
-								if (j >= 1)
-									j = 0;
+							for (int j = 0; j < memoriaTropas[i][k]; j++)
+							{								
 
 								if (k == 0)//caballeo
 								{
-									ListaTropaCaballeros->AgregarItem(pais->quitarTcaballero(j));
-									memoriaTropas[i][k]--;
-									j = 0;
+									ListaTropaCaballeros->AgregarItem(pais->quitarTcaballero());																		
 								}
 								else if (k == 1)//arquero
 								{
-									ListaTropaArqueros->AgregarItem(pais->quitarTarquero(j));
-									memoriaTropas[i][k]--;
-									j = 0;
+									ListaTropaArqueros->AgregarItem(pais->quitarTarquero());
 								}
 								else //mago
 								{
-									ListaTropaMagos->AgregarItem(pais->quitarTmago(j));
-									memoriaTropas[i][k]--;
-									j = 0;
+									ListaTropaMagos->AgregarItem(pais->quitarTmago());
 								}
 							}
 

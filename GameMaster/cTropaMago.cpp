@@ -22,6 +22,11 @@ void cTropaMago::AgregarUnidades(int n)
 	}
 }
 
+void cTropaMago::AgregarUnidades(cUnidadMago * ptr)
+{
+	listaUnidades->AgregarItem(ptr);
+}
+
 int cTropaMago::Ataque()
 {
 	int ATtotal = 0;
@@ -89,6 +94,11 @@ int cTropaMago::RecibirAtaqueTropa(int dano, string clase)
 	}
 }
 
+
+cUnidadMago * cTropaMago::CombinacionDeTropas()
+{
+	return listaUnidades->QuitarenPos(0);
+}
 
 void cTropaMago::PrintA()
 {

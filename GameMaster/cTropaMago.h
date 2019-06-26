@@ -22,9 +22,14 @@ public:
 	cTropaMago();
 
 	void AgregarUnidades(int n);
+	void AgregarUnidades(cUnidadMago * ptr);
+
 	int Ataque();
 	int RecibirAtaqueTropa(int dano, string clase);
 
+	int getCUnidades() { return listaUnidades->getCA(); }
+
+	cUnidadMago * CombinacionDeTropas();
 
 	void PrintA();//funcion de prueba
 

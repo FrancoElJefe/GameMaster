@@ -22,8 +22,14 @@ public:
 	cTropaCaballero();
 
 	void AgregarUnidades(int N);
+	void AgregarUnidades(cUnidadCaballero * ptr);
 	int Ataque();
 	int RecibirAtaqueTropa(int dano, string clase);
+
+	int getCUnidades() { return listaUnidades->getCA(); }
+
+	cUnidadCaballero * CombinacionDeTropas();
+	
 
 
 	void PrintA();//funcion de prueba

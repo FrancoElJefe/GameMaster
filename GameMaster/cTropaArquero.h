@@ -21,10 +21,15 @@ class cTropaArquero
 public:
 	cTropaArquero();
 
-	void AgregarUnidades(int n);
+	void AgregarUnidades(int n); 
+	void AgregarUnidades(cUnidadArquero *ptr);
 
 	int Ataque();
 	int RecibirAtaqueTropa(int dano, string clase);
+
+	int getCUnidades() { return listaUnidades->getCA(); }
+
+	cUnidadArquero * CombinacionDeTropas();
 	
 	void PrintA();//funcion de prueba
 

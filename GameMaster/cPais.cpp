@@ -36,19 +36,65 @@ void cPais::AgregarTropaMago(cTropaMago * ptr)
 	ListaTropasMago->AgregarItem(ptr);
 }
 
-cTropaCaballero * cPais::quitarTcaballero(int N)
+cTropaCaballero * cPais::quitarTcaballero()
 {
-	return ListaTropasCaballeros->QuitarenPos(N);
+	return ListaTropasCaballeros->QuitarenPos(0);
 }
 
-cTropaArquero * cPais::quitarTarquero(int N)
+cTropaArquero * cPais::quitarTarquero()
 {
-	return ListaTropasArquero->QuitarenPos(N);
+	return ListaTropasArquero->QuitarenPos(0);
 }
 
-cTropaMago * cPais::quitarTmago(int N)
+cTropaMago * cPais::quitarTmago()
 {
-	return ListaTropasMago->QuitarenPos(N);
+	return ListaTropasMago->QuitarenPos(0);
+}
+
+void cPais::combinarTCaballero(cTropaCaballero * ptr, int Nt)
+{
+	cTropaCaballero * tropaC = NULL;
+
+	tropaC = ListaTropasCaballeros->getItem(Nt);
+
+	int p = ptr->getCUnidades();
+	
+	for (int i = 0; i < p; i++)
+	{			
+		tropaC->AgregarUnidades(ptr->CombinacionDeTropas());		
+	}
+
+	delete ptr;
+
+}
+
+void cPais::combinarTarquero(cTropaArquero * ptr, int Nt)
+{
+	cTropaArquero * tropaA = NULL;
+
+	tropaA = ListaTropasArquero->getItem(Nt);
+	int p = ptr->getCUnidades();
+	for (int i = 0; i < p; i++)
+	{
+		tropaA->AgregarUnidades(ptr->CombinacionDeTropas());
+	}
+
+	delete ptr;
+}
+
+void cPais::combinarTmago(cTropaMago * ptr, int Nt)
+{
+	cTropaMago * tropaM = NULL;
+
+	tropaM = ListaTropasMago->getItem(Nt);
+	int p = ptr->getCUnidades();
+
+	for (int i = 0; i < p; i++)
+	{
+		tropaM->AgregarUnidades(ptr->CombinacionDeTropas());
+	}
+
+	delete ptr;
 }
 
 void cPais::AgregarVecinos(cPais * ptr)
@@ -492,10 +538,8 @@ string cPais::AtacarOtroPais(string nomb)
 
 						if (OpcionTropaTuya - 1 < ListaTropasCaballeros->getCA())
 						{
-							miTropaC = ListaTropasCaballeros->getItem(OpcionTropaTuya - 1);
-							PaisParaAtacar->AgregarTropaCaballero(miTropaC);
-							ListaTropasCaballeros->QuitarenPos(OpcionTropaTuya - 1);
-
+							PaisParaAtacar->AgregarTropaCaballero(ListaTropasCaballeros->QuitarenPos(OpcionTropaTuya - 1));
+							
 							system("pause");
 
 							return(PaisParaAtacar->getCodigo());
@@ -512,10 +556,8 @@ string cPais::AtacarOtroPais(string nomb)
 						
 
 						if (OpcionTropaTuya-1 < ListaTropasArquero->getCA())
-						{
-							miTropaA = ListaTropasArquero->getItem(OpcionTropaTuya - 1);
-							PaisParaAtacar->AgregarTropaArquero(miTropaA);
-							ListaTropasArquero->QuitarenPos(OpcionTropaTuya - 1);
+						{							
+							PaisParaAtacar->AgregarTropaArquero(ListaTropasArquero->QuitarenPos(OpcionTropaTuya - 1));							
 
 							system("pause");
 
@@ -533,10 +575,8 @@ string cPais::AtacarOtroPais(string nomb)
 
 						if (OpcionTropaTuya - 1 < ListaTropasMago->getCA())
 						{
-							miTropaM = ListaTropasMago->getItem(OpcionTropaTuya - 1);
-							PaisParaAtacar->AgregarTropaMago(miTropaM);
-							ListaTropasMago->QuitarenPos(OpcionTropaTuya - 1);
-
+							PaisParaAtacar->AgregarTropaMago(ListaTropasMago->QuitarenPos(OpcionTropaTuya - 1));
+							
 							system("pause");
 
 							return(PaisParaAtacar->getCodigo());

@@ -23,6 +23,11 @@ void cTropaCaballero::AgregarUnidades(int N)
 	
 }
 
+void cTropaCaballero::AgregarUnidades(cUnidadCaballero * ptr)
+{
+	listaUnidades->AgregarItem(ptr);
+}
+
 int cTropaCaballero::Ataque()
 {
 	int ATtotal = 0;
@@ -90,6 +95,11 @@ int cTropaCaballero::RecibirAtaqueTropa(int dano, string clase)
 		return(1);
 		
 	}
+}
+
+cUnidadCaballero * cTropaCaballero::CombinacionDeTropas()
+{
+	return listaUnidades->QuitarenPos(0);
 }
 
 void cTropaCaballero::PrintA()

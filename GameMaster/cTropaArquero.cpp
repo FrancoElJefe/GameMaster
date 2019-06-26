@@ -21,6 +21,10 @@ void cTropaArquero::AgregarUnidades(int n)
 		listaUnidades->AgregarItem(new cUnidadArquero(HP,AT));
 	}
 }
+void cTropaArquero::AgregarUnidades(cUnidadArquero * ptr)
+{
+	listaUnidades->AgregarItem(ptr);
+}
 int cTropaArquero::Ataque()
 {
 	int ATtotal=0;
@@ -88,6 +92,11 @@ int cTropaArquero::RecibirAtaqueTropa(int dano, string clase)
 
 }
 
+
+cUnidadArquero * cTropaArquero::CombinacionDeTropas()
+{
+	return listaUnidades->QuitarenPos(0);
+}
 
 void cTropaArquero::PrintA()
 {
