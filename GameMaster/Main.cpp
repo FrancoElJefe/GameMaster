@@ -82,9 +82,7 @@ int main(void) {
 		
 
 	Resultados();
-	
-
-	
+		
 	
 	delete Continente;
 	delete Jugador1;
@@ -104,10 +102,38 @@ void EleccionDeUnidades(cJugador * jugadorX)
 		cout << jugadorX->getNombre() << endl;
 		cout << "---------" << endl << endl;
 		cout << "Eleccion de Unidades: (MaxUnidades 50) // Unidades ACTUALES: " << MaxUnidades << endl << endl;
-		cout << "1) 10-20 unidades si son caballeros" << endl << "2) 15 - 30 si son arqueros" << endl << "3) 20 - 40 si son magos" << endl << endl;
-		cout << "Caballeros : " << caballeros << endl;
-		cout << "Arqueros : " << arqueros << endl;
-		cout << "Magos : " << magos << endl << endl;
+		cout << "1) 10-20 unidades si son"; 
+
+		SetConsoleTextAttribute(consoleHandle, FOREGROUND_BLUE);
+		cout << " caballeros";
+		SetConsoleTextAttribute(consoleHandle, 7);
+
+		cout << endl << "2) 15 - 30 unidades si son";
+		SetConsoleTextAttribute(consoleHandle, FOREGROUND_GREEN);
+		cout << " arqueros";
+		SetConsoleTextAttribute(consoleHandle, 7);
+		
+		cout << endl << "3) 20 - 40 unidades si son";
+		SetConsoleTextAttribute(consoleHandle, FOREGROUND_RED);
+		cout << " magos";
+		SetConsoleTextAttribute(consoleHandle, 7);
+
+		cout << endl << endl;
+
+		SetConsoleTextAttribute(consoleHandle, FOREGROUND_BLUE);
+		cout << "Caballeros ";
+		SetConsoleTextAttribute(consoleHandle, 7);
+		cout << ": " << caballeros << endl;
+
+		SetConsoleTextAttribute(consoleHandle, FOREGROUND_GREEN);
+		cout << "Arqueros ";
+		SetConsoleTextAttribute(consoleHandle, 7);
+		cout << ": " << arqueros << endl;
+
+		SetConsoleTextAttribute(consoleHandle, FOREGROUND_RED);
+		cout << "Magos ";
+		SetConsoleTextAttribute(consoleHandle, 7);
+		cout << ": " << magos << endl << endl;
 		
 		cout << "Opcion: ";
 		cin.clear();
@@ -128,18 +154,24 @@ void EleccionDeUnidades(cJugador * jugadorX)
 					cin.clear();
 					cin >> suma;
 					if(suma==0)getchar();
+
 					suma = suma + aux;
 					sobrecarga = MaxUnidades + suma - aux;
 					if (sobrecarga > 50)suma = 30;
-
-					
+										
 				} while (suma > 20 );
-				MaxUnidades = MaxUnidades + suma - aux;
-				caballeros = caballeros + suma - aux;
+
+				if (suma > 0)
+				{
+					MaxUnidades = MaxUnidades + suma - aux;
+					caballeros = caballeros + suma - aux;
+				}
+				
 			}
 			else
 			{
 				cout << "Maxima unidades de Caballeros" << endl;
+				getchar();
 			}
 
 		}
@@ -160,32 +192,50 @@ void EleccionDeUnidades(cJugador * jugadorX)
 					if (sobrecarga > 50)suma = 40;
 				} while (suma > 30);
 
-				MaxUnidades = MaxUnidades + suma - aux;
-				arqueros = arqueros + suma - aux;
+				if (suma > 0)
+				{
+					MaxUnidades = MaxUnidades + suma - aux;
+					arqueros = arqueros + suma - aux;
+				}
+				
 			}
 			else
 			{
 				cout << "Maxima unidades de Arqueros" << endl;
+				getchar();
 			}
 
 		}
-		else if (opcion == 3 && magos != 40)
+		else if (opcion == 3)			
 		{
-			aux = magos;
-			do
+			if (magos != 40)
 			{
-				suma = 0;
-				cout << "Cantidad de Magos: ";
-				cin.clear();
-				cin >> suma;
-				if (suma == 0)getchar();
-				suma = suma + aux;
-				sobrecarga = MaxUnidades + suma - aux;
-				if (sobrecarga > 50)suma = 70;
-								
-			} while (suma > 40);
-			MaxUnidades = MaxUnidades + suma - aux;
-			magos = magos + suma - aux;
+				aux = magos;
+				do
+				{
+					suma = 0;
+					cout << "Cantidad de Magos: ";
+					cin.clear();
+					cin >> suma;
+					if (suma == 0)getchar();
+					suma = suma + aux;
+					sobrecarga = MaxUnidades + suma - aux;
+					if (sobrecarga > 50)suma = 70;
+
+				} while (suma > 40);
+
+				if (suma > 0)
+				{
+					MaxUnidades = MaxUnidades + suma - aux;
+					magos = magos + suma - aux;
+				}
+			}
+			else
+			{
+				cout << "Maxima unidades de Magos" << endl;
+				getchar();
+			}			
+			
 		}
 
 		system("cls");
@@ -248,16 +298,28 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros
 			cout << jugadorX->getNombre() << endl;
 			cout << "---------" << endl << endl;
 
-			cout << "Caballeros : " << caballeros << endl;
-			cout << "Arqueros : " << arqueros << endl;
-			cout << "Magos : " << magos << endl << endl;
+			SetConsoleTextAttribute(consoleHandle, FOREGROUND_BLUE);
+			cout << "Caballeros";
+			SetConsoleTextAttribute(consoleHandle, 7);
+			cout << ": " << caballeros << endl;
+			SetConsoleTextAttribute(consoleHandle, FOREGROUND_GREEN);
+			cout << "Arqueros";
+			SetConsoleTextAttribute(consoleHandle, 7);
+			cout << ": " << arqueros << endl;
+			SetConsoleTextAttribute(consoleHandle, FOREGROUND_RED);
+			cout << "Magos";
+			SetConsoleTextAttribute(consoleHandle, 7);
+			cout << ": " << magos << endl << endl;
 
 			if (caballeros != 0)
 			{
 				do
 				{
 					numero = 0;
-					cout << "Caballeros: " << endl;
+					SetConsoleTextAttribute(consoleHandle, FOREGROUND_BLUE);
+					cout << "Caballeros";
+					SetConsoleTextAttribute(consoleHandle, 7);
+					cout << ": " << endl;
 					cout << "Tropa Nr " << i + 1 << ":";
 					cin.clear();
 					cin >> numero;
@@ -265,7 +327,7 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros
 						getchar();
 						
 					}
-					else if(numero !=0)
+					else if(numero !=0 && numero <= caballeros)
 					{
 						Tropas[i] = numero;
 					}
@@ -284,14 +346,17 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros
 				do
 				{
 					numero = 0;
-					cout << "Arqueros: " << endl;
+					SetConsoleTextAttribute(consoleHandle, FOREGROUND_GREEN);
+					cout << "Arqueros";
+					SetConsoleTextAttribute(consoleHandle, 7);
+					cout << ": " << endl;
 					cout << "Tropa Nr " << i + 1 << ":";
 					cin.clear();
 					cin >> numero;
 					if (numero == 0) {
 						getchar();
 					}
-					else if(numero!=0)
+					else if(numero!=0 && numero <= arqueros)
 					{
 						Tropas[i] = numero;
 					}
@@ -310,14 +375,17 @@ void AgruparUnidadesEnTropas(cJugador * jugadorX, int Tcaballeros, int Tarqueros
 				do
 				{
 					numero = 0;
-					cout << "Magos: " << endl;
+					SetConsoleTextAttribute(consoleHandle, FOREGROUND_RED);
+					cout << "Magos";
+					SetConsoleTextAttribute(consoleHandle, 7);
+					cout << ": " << endl;
 					cout << "Tropa Nr " << i + 1 << ":";
 					cin.clear();
 					cin >> numero;
 					if (numero == 0) {
 						getchar();
 					}
-					else if(numero!=0)
+					else if(numero!=0 && numero <= magos)
 					{
 						Tropas[i] = numero;
 					}
@@ -404,15 +472,20 @@ void GeneradorDeTropasParaJugador(cJugador * jugadorX, int Tcaballeros, int Tarq
 		}
 	}
 	
-
-	cout << "Caballeros: " << endl;
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_BLUE);
+	cout << "Caballeros";
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << ": " << endl;
 	for (int i = 0; i < Tcaballeros; i++)
 	{   
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
 		jugadorX->AgregarTropaCaballero(new cTropaCaballero, Tropas[i]);
 	}
 	cout << endl;
-	cout << "Arqueros: " << endl;
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_GREEN);
+	cout << "Arqueros";
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << ": " << endl;
 	for (int i = Tcaballeros; i < Tarqueros + Tcaballeros; i++)
 	{
 		
@@ -420,7 +493,11 @@ void GeneradorDeTropasParaJugador(cJugador * jugadorX, int Tcaballeros, int Tarq
 		jugadorX->AgregarTropaArquero(new cTropaArquero, Tropas[i]);
 	}
 	cout << endl;
-	cout << "Magos: " << endl;
+	
+	SetConsoleTextAttribute(consoleHandle, FOREGROUND_RED);
+	cout << "Magos";
+	SetConsoleTextAttribute(consoleHandle, 7);
+	cout << ": " << endl;
 	for (int i = Tarqueros + Tcaballeros; i < Tmagos + Tcaballeros + Tarqueros; i++)
 	{	
 		cout << "Tropa Nr " << i + 1 << ": " << Tropas[i] << " Unidades" << endl;
@@ -749,7 +826,7 @@ void ModoDeJuego(void)
 		system("cls");
 		if (check == 0)
 		{
-			cout << "Si quiere jugar a cierto numero de rondas escriba RONDAS, de lo contrario, si quiere jugar hasta conquistar el continente escriba COMBATE A MUERTE" << endl<< endl;
+			cout << "Si quiere jugar a cierto numero de rondas escriba RONDAS, de lo contrario, si quiere jugar hasta conquistar el continente escriba CONQUISTAR" << endl<< endl;
 			cout << ": ";
 			cin >> opcion;
 		}
@@ -919,69 +996,98 @@ void ataque()
 void cambio_de_ronda()
 {
 
-	int NPaises = 0, N=0;
+	int NPaises = 0, N=0, PaisesADar = 0;
 
-	NPaises = Jugador1->getNumeroDePaises();
-
-	if (NPaises != 0)
+	if (Turnos == 0)
 	{
 
-		if (NPaises != 16)
+		NPaises = Jugador1->getNumeroDePaises();
+
+		if (NPaises != 0)
 		{
-			for (int i = 0; i < NPaises / 2; i++)
+
+			if (NPaises != 16)
 			{
-				N = rand() % 3;
 
-				if (N == 0) //caballero
+				PaisesADar = NPaises / 2;
+
+				if (PaisesADar == 0)
 				{
-					Jugador1->AgregarTropaCaballero(new cTropaCaballero, TropasJugador1[rand() % Tcaballeros1]);
+					PaisesADar = 2;
 				}
-				else if (N == 1)//arquero
+				else if (PaisesADar > 12)
 				{
-					Jugador1->AgregarTropaArquero(new cTropaArquero, TropasJugador1[Tcaballeros1 + rand() % (Tarqueros1)]);
-				}
-				else if (N == 2)//mago
-				{
-					Jugador1->AgregarTropaMago(new cTropaMago, TropasJugador1[(Tcaballeros1 + Tarqueros1) + rand() % (Tmagos1)]);
+					PaisesADar = 6;
 				}
 
+				for (int i = 0; i < PaisesADar; i++)
+				{
+					N = rand() % 3;
+
+					if (N == 0) //caballero
+					{
+						Jugador1->AgregarTropaCaballero(new cTropaCaballero, TropasJugador1[rand() % Tcaballeros1]);
+					}
+					else if (N == 1)//arquero
+					{
+						Jugador1->AgregarTropaArquero(new cTropaArquero, TropasJugador1[Tcaballeros1 + rand() % (Tarqueros1)]);
+					}
+					else if (N == 2)//mago
+					{
+						Jugador1->AgregarTropaMago(new cTropaMago, TropasJugador1[(Tcaballeros1 + Tarqueros1) + rand() % (Tmagos1)]);
+					}
+
+				}
+
+				NPaises = Jugador2->getNumeroDePaises();
+
+				PaisesADar = NPaises / 2;
+
+				if (PaisesADar == 0)
+				{
+					PaisesADar = 2;
+				}
+				else if (PaisesADar > 12)
+				{
+					PaisesADar = 6;
+				}
+
+
+				for (int i = 0; i < PaisesADar; i++)
+				{
+					N = rand() % 3;
+
+					if (N == 0) //caballero
+					{
+						Jugador2->AgregarTropaCaballero(new cTropaCaballero, TropasJugador2[rand() % Tcaballeros2 + 1]);
+					}
+					else if (N == 1)//arquero
+					{
+						Jugador2->AgregarTropaArquero(new cTropaArquero, TropasJugador2[Tcaballeros2 + rand() % (Tarqueros2 + 1)]);
+					}
+					else if (N == 2)//mago
+					{
+						Jugador2->AgregarTropaMago(new cTropaMago, TropasJugador2[(Tcaballeros2 + Tarqueros2) + rand() % (Tmagos2 + 1)]);
+					}
+
+				}
+
+				AgregarTropasEnPais();
+			}
+			else
+			{
+				Turnos = 1;
 			}
 
-			NPaises = Jugador2->getNumeroDePaises();
-
-			for (int i = 0; i < NPaises / 2; i++)
-			{
-				N = rand() % 3;
-
-				if (N == 0) //caballero
-				{
-					Jugador2->AgregarTropaCaballero(new cTropaCaballero, TropasJugador2[rand() % Tcaballeros2 + 1]);
-				}
-				else if (N == 1)//arquero
-				{
-					Jugador2->AgregarTropaArquero(new cTropaArquero, TropasJugador2[Tcaballeros2 + rand() % (Tarqueros2 + 1)]);
-				}
-				else if (N == 2)//mago
-				{
-					Jugador2->AgregarTropaMago(new cTropaMago, TropasJugador2[(Tcaballeros2 + Tarqueros2) + rand() % (Tmagos2 + 1)]);
-				}
-
-			}
-
-			AgregarTropasEnPais();
 		}
 		else
 		{
 			Turnos = 1;
 		}
-		
+
+
 	}
-	else
-	{
-		Turnos = 1;
-	}
-	
-	
+
 	
 }
 

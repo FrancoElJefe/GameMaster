@@ -116,7 +116,8 @@ void cPais::setJugador(string jug)
 
 string cPais::AtacarOtroPais(string nomb)
 {
-	int opcion = 0, OpcionTropaTuya = 0, fin = 0, sinTROPA = 0, sinTROPAmia = 0, Otropas = 0, estado = 0, i = 1, cVecinos = 0, eliminar = 0;
+	unsigned int opcion = 0;
+	int OpcionTropaTuya = 0, fin = 0, sinTROPA = 0, sinTROPAmia = 0, Otropas = 0, estado = 0, i = 1, cVecinos = 0, eliminar = 0;
 	string salir, clase_slc, clase_tuya;
 	char atras;
 	cPais * PaisParaAtacar = NULL;
@@ -162,8 +163,9 @@ string cPais::AtacarOtroPais(string nomb)
 				cout << endl << "Pais a Atacar: ";
 				cin.clear();
 				cin >> opcion;
+				if (opcion == 0)getchar();				
 
-				if (opcion - 1 <= cVecinos && opcion != 0) 
+				if (opcion - 1 < cVecinos && opcion != 0) 
 				estado = 1;
 				
 			}
@@ -280,8 +282,9 @@ string cPais::AtacarOtroPais(string nomb)
 					PaisParaAtacar->PrintTropasCaballero();
 				
 					cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
+					cin.clear();
 					cin >> Otropas;
-					if (Otropas == 0) getchar();
+					if (Otropas == 0)getchar();
 
 					if (Otropas - 1 < PaisParaAtacar->getCantTcaballero() && Otropas != 0)
 					{
@@ -336,8 +339,9 @@ string cPais::AtacarOtroPais(string nomb)
 					PaisParaAtacar->PrintTropasArquero();
 					
 					cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
+					cin.clear();
 					cin >> Otropas;
-					if (Otropas == 0) getchar();
+					if (Otropas == 0)getchar();
 					
 
 					if (Otropas - 1 < PaisParaAtacar->getCantTarquro() && Otropas != 0)
@@ -377,8 +381,9 @@ string cPais::AtacarOtroPais(string nomb)
 					PaisParaAtacar->PrintTropasMago();
 
 					cout << endl << "Elija la tropa que quiere atacar:"; // elegis la tropa enemigo de la clase caballero para atacar
+					cin.clear();
 					cin >> Otropas;
-					if (Otropas == 0) getchar();
+					if (Otropas == 0)getchar();
 
 					if (Otropas - 1 < PaisParaAtacar->getCantTMago() && Otropas != 0)
 					{

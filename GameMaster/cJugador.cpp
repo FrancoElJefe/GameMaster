@@ -127,7 +127,7 @@ void cJugador::setTropaEnPais(void)
 	unsigned int opc = 0, combinacion=0, SeleccionDePais = 0;
 	int opc3 = 0, Tropas = 0, check = 0, checkTropasEnToPaises = 0;
 	int memoriaTropas[8][3] = { 0 };
-	string opc2, CTropa;
+	string opc2 = "", CTropa;
 	cPais * pais = NULL;
 	cPais * aux = NULL;
 
@@ -203,7 +203,7 @@ void cJugador::setTropaEnPais(void)
 					}
 									   					
 
-					if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero")//se agregan caballeros
+					if (opc2 == "CABALLERO" || opc2 == "Caballero" || opc2 == "caballero" && ListaTropaCaballeros->getCA() != 0)//se agregan caballeros
 					{
 						ListaTropaCaballeros->Listar();
 						cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
@@ -228,9 +228,12 @@ void cJugador::setTropaEnPais(void)
 									{
 										pais->PrintTropasCaballero();
 										cout << "Tropa a combinar:";
+										cin.clear();
 										cin >> combinacion;
 
-										if (opc3 - 1 < pais->getCantTcaballero()) {
+										if (combinacion == 0)getchar();
+
+										if (opc3 - 1 < pais->getCantTcaballero() && combinacion <= pais->getCantTcaballero() && combinacion != 0) {
 
 											pais->combinarTCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1), combinacion-1);											
 											opc3 = 0;
@@ -240,6 +243,10 @@ void cJugador::setTropaEnPais(void)
 											pais->PrintTropas();
 											opc = 1;
 											system("pause");
+										}
+										else
+										{
+											check = 0;
 										}
 
 									}
@@ -279,7 +286,7 @@ void cJugador::setTropaEnPais(void)
 
 
 					}
-					else if (opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero")//se agregan arqueros
+					else if (opc2 == "ARQUERO" || opc2 == "Arquero" || opc2 == "arquero" && ListaTropaArqueros->getCA() != 0)//se agregan arqueros
 					{
 						ListaTropaArqueros->Listar();
 						cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
@@ -303,9 +310,12 @@ void cJugador::setTropaEnPais(void)
 									{
 										pais->PrintTropasArquero();
 										cout << "Tropa a combinar:";
+										cin.clear();
 										cin >> combinacion;
 
-										if (opc3 - 1 < pais->getCantTarquro()) {
+										if (combinacion == 0)getchar();
+
+										if (opc3 - 1 < pais->getCantTarquro() && combinacion <= pais->getCantTarquro() && combinacion != 0) {
 
 											pais->combinarTarquero(ListaTropaArqueros->QuitarenPos(opc3 - 1), combinacion - 1);
 											opc3 = 0;
@@ -315,6 +325,10 @@ void cJugador::setTropaEnPais(void)
 											pais->PrintTropas();											
 											opc = 1;
 											system("pause");
+										}
+										else
+										{
+											check = 0;
 										}
 
 									}
@@ -353,7 +367,7 @@ void cJugador::setTropaEnPais(void)
 
 						}
 					}
-					else if (opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago")//se agregan magos
+					else if (opc2 == "MAGO" || opc2 == "Mago" || opc2 == "mago" && ListaTropaMagos->getCA() != 0)//se agregan magos
 					{
 						ListaTropaMagos->Listar();
 						cout << "Seleccione la tropa que desea agregar en " << pais->getCodigo() << ": ";
@@ -377,9 +391,13 @@ void cJugador::setTropaEnPais(void)
 									{
 										pais->PrintTropasMago();
 										cout << "Tropa a combinar:";
+										cin.clear();
 										cin >> combinacion;
 
-										if (opc3 - 1 < pais->getCantTMago()) {
+										if (combinacion == 0)getchar();
+
+
+										if (opc3 - 1 < pais->getCantTMago() && combinacion <= pais->getCantTMago() && combinacion != 0) {
 
 											pais->combinarTmago(ListaTropaMagos->QuitarenPos(opc3 - 1), combinacion - 1);
 											opc3 = 0;
@@ -389,6 +407,10 @@ void cJugador::setTropaEnPais(void)
 											pais->PrintTropas();
 											opc = 1;
 											system("pause");
+										}
+										else
+										{
+											check = 0;
 										}
 										
 									}
@@ -511,8 +533,10 @@ void cJugador::setTropaEnPais(void)
 
 		}
 		//***************************************************************************************************************//
-
+		opc2 = "";
 	} while (Tropas != 0);
+
+	
 
 }
 
@@ -523,7 +547,7 @@ cPais* cJugador::quitarPais(string pais)
 
 string cJugador::AtacarPais()
 {
-	int opcion = 0,check = 0;
+	unsigned int opcion = 0,check = 0;
 	string opcion2;
 	string resultado;
 	cPais * pais=NULL;
