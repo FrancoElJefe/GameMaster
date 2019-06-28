@@ -19,6 +19,10 @@ void cJugador::ImprimirMapa(void) // se imprime el mapuli
 			{
 				Npais[k] = pais->getNjugador()+48;//codigo ASCII
 			}
+			else
+			{
+				Npais[k] = 50;
+			}
 		}
 		
 	}
@@ -216,43 +220,58 @@ void cJugador::setTropaEnPais(void)
 						}
 						else
 						{
-							if (opc3 - 1 < ListaTropaCaballeros->getCA())
+
+							if (opc3 - 1 < ListaTropaCaballeros->getCA() && opc3 > 0)
 							{
 
-								if (pais->getCantTcaballero() != 0 && checkTropasEnToPaises == 0) // para combinar tropas de caballeros
-								{
-									cout << "Quiere combinar tropas, escriba si o no:";
-									cin >> CTropa;
-
-									if (CTropa == "si")
+									if (pais->getCantTcaballero() != 0 && checkTropasEnToPaises == 0) // para combinar tropas de caballeros
 									{
-										pais->PrintTropasCaballero();
-										cout << "Tropa a combinar:";
-										cin.clear();
-										cin >> combinacion;
+										cout << "Quiere combinar tropas, escriba si o no:";
+										cin >> CTropa;
 
-										if (combinacion == 0)getchar();
+										if (CTropa == "si")
+										{
+											pais->PrintTropasCaballero();
+											cout << "Tropa a combinar:";
+											cin.clear();
+											cin >> combinacion;
 
-										if (opc3 - 1 < pais->getCantTcaballero() && combinacion <= pais->getCantTcaballero() && combinacion != 0) {
+											if (combinacion == 0)getchar();
 
-											pais->combinarTCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1), combinacion-1);											
+											if (opc3 - 1 < pais->getCantTcaballero() && combinacion <= pais->getCantTcaballero() && combinacion != 0) {
+
+												pais->combinarTCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1), combinacion - 1);
+												opc3 = 0;
+												cout << endl;
+												cout << pais->getCodigo();
+												cout << endl;
+												pais->PrintTropas();
+												opc = 1;
+												system("pause");
+											}
+											else
+											{
+												check = 0;
+											}
+
+										}
+										else
+										{
+											pais->AgregarTropaCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1));
 											opc3 = 0;
 											cout << endl;
 											cout << pais->getCodigo();
 											cout << endl;
 											pais->PrintTropas();
+											memoriaTropas[SeleccionDePais - 1][0]++;
 											opc = 1;
 											system("pause");
-										}
-										else
-										{
-											check = 0;
 										}
 
 									}
 									else
 									{
-										pais->AgregarTropaCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1));										
+										pais->AgregarTropaCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1));
 										opc3 = 0;
 										cout << endl;
 										cout << pais->getCodigo();
@@ -262,26 +281,14 @@ void cJugador::setTropaEnPais(void)
 										opc = 1;
 										system("pause");
 									}
-																	   
+
 								}
 								else
 								{
-									pais->AgregarTropaCaballero(ListaTropaCaballeros->QuitarenPos(opc3 - 1));
-									opc3 = 0;
-									cout << endl;
-									cout << pais->getCodigo();
-									cout << endl;
-									pais->PrintTropas();
-									memoriaTropas[SeleccionDePais - 1][0]++;
-									opc = 1;
-									system("pause");
+									check = 1;
 								}
-								
-							}
-							else
-							{
-								check = 1;
-							}
+							
+							
 						}
 
 
@@ -299,7 +306,7 @@ void cJugador::setTropaEnPais(void)
 						}
 						else
 						{
-							if (opc3 - 1 < ListaTropaArqueros->getCA())
+							if (opc3 - 1 < ListaTropaArqueros->getCA() && opc3 > 0)
 							{
 								if (pais->getCantTarquro() != 0 && checkTropasEnToPaises == 0) // para combinar tropa de arqueros
 								{
@@ -380,7 +387,7 @@ void cJugador::setTropaEnPais(void)
 						}
 						else
 						{
-							if (opc3 - 1 < ListaTropaMagos->getCA())
+							if (opc3 - 1 < ListaTropaMagos->getCA() && opc3 > 0)
 							{
 								if (pais->getCantTMago() != 0 && checkTropasEnToPaises == 0) // para combinar tropa de magos
 								{
@@ -536,6 +543,13 @@ void cJugador::setTropaEnPais(void)
 		opc2 = "";
 	} while (Tropas != 0);
 
+	for (int i = 0; i < 8; i++)
+	{
+		for (int k = 0; k < 3; k++)
+		{
+			memoriaTropas[i][k] = 0;
+		}
+	}
 	
 
 }
@@ -552,8 +566,12 @@ string cJugador::AtacarPais()
 	string resultado;
 	cPais * pais=NULL;
 
+	system("cls");
+
 	do
 	{
+
+	ImprimirMapa();
 
 	cout << "---------" << endl;
 	cout << nombre << endl;

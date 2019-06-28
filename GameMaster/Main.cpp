@@ -56,9 +56,9 @@ int main(void) {
 		
 	srand(time(NULL));
 
-	Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
+	//Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
 
-	//inicioPrueba(); //se crean los paises en continente y luego se le asignana a cada jugador automaticamente, luego se crean tropas y se distribuyen en cada pais
+	inicioPrueba(); //se crean los paises en continente y luego se le asignana a cada jugador automaticamente, luego se crean tropas y se distribuyen en cada pais
 					//es una funcion de prueba para poder probar los ataques
 
 	do
@@ -957,7 +957,7 @@ void ataque()
 	for (int i = 0; i < 3; i++)
 	{
 		system("cls");
-		ImprimirMapa();
+		//ImprimirMapa();
 		pais = Jugador1->AtacarPais();
 		if (pais == "atras")
 		{
@@ -975,7 +975,7 @@ void ataque()
 	for (int i = 0; i < 3; i++)
 	{
 		system("cls");
-		ImprimirMapa();
+		//ImprimirMapa();
 		pais = Jugador2->AtacarPais();
 		if (pais == "atras")
 		{
