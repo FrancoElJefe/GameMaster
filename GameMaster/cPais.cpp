@@ -1,6 +1,7 @@
 #include "cPais.h"
 
 cLista<cPais> *cPais::listaPaises = new cLista<cPais>(16);
+int cPais::Np = 0;
 HANDLE cPais::consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
 typedef enum MyEnum {PLimitrofes=0, EPaisParaAtacar, EdeMiTropas, ETropaEnemiga, MagoContraArquero, MagoContraCaballero, MagoContraMago, ConquistasteElPais};
@@ -19,6 +20,7 @@ cPais::cPais(string nomb) : nombre(nomb)
 	jugador = 0;
 	listaPaises->AgregarItem(this);
 	srand(time(NULL));//inicializo los numeros random
+	Np++;
 }
 
 void cPais::AgregarTropaCaballero(cTropaCaballero * ptr)
@@ -890,9 +892,57 @@ void cPais::PrintTropasMago()
 }
 cPais::~cPais()
 {
-	delete ListaTropasCaballeros;
-	delete ListaTropasArquero;
-	delete ListaTropasMago;
+	int n = 0;
+
+	if (ListaTropasCaballeros != NULL)
+	{
+		delete ListaTropasCaballeros;
+	}
+
+	if (ListaTropasArquero != NULL)
+	{
+		delete ListaTropasArquero;
+	}
+	
+	if (ListaTropasMago != NULL)
+	{
+		delete ListaTropasMago;
+	}
+		
+	if (vecinos != NULL)
+	{
+		n = vecinos->getCA();
+
+		if (n != 0)
+		{
+			for (int i = 0; i < n; i++)
+			{
+				vecinos->QuitarenPos(0); //quita los paises para eliminar la lista dinamica, depues continente se encarga de eliminar los paises
+			}
+			delete vecinos;
+			Np--;
+		}		
+		
+	}
+	
+
+	if (listaPaises != NULL)
+	{
+		n = listaPaises->getCA();
+		for (int i = 0; i < n; i++)
+		{
+			listaPaises->QuitarenPos(0); //quita los paises para eliminar la lista dinamica, depues continente se encarga de eliminar los paises y adeas
+		}								//lo pongo en NULL porque como es una lista estatica el ultimo pais en la lista la debe eliminar
+		listaPaises = NULL;
+	}	
+
+	
+	if (Np == 0)
+	{
+
+		delete listaPaises;
+	}
+
 }
 
 

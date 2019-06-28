@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class cContinente
+class cContinente 
 {
 	const int CantPaises;
 	cLista<cPais> * listaPaises;

@@ -703,19 +703,33 @@ void cJugador::setTropasEnPaisesPrueba(int caballeros, int arqueros, int magos)
 
 cJugador::~cJugador()
 {
-	if (ListaTropaCaballeros->getCA() !=0)
+	
+	if (ListaTropaCaballeros != NULL)
 	{
 		delete ListaTropaCaballeros;
-	}
+	}	
 
-	if (ListaTropaArqueros->getCA() != 0)
+	if (ListaTropaArqueros != NULL)
 	{
 		delete ListaTropaArqueros;
 	}
 
-	if (ListaTropaMagos->getCA() != 0)
+	if (ListaTropaMagos != NULL)
 	{
 		delete ListaTropaMagos;
+	}
+
+	if (listaPropiaPaises != NULL)
+	{
+		if (listaPropiaPaises->getCA() != 0)
+		{
+			int n = listaPropiaPaises->getCA();
+			for (int i = 0; i < n; i++)
+			{
+				listaPropiaPaises->QuitarenPos(0);				
+			}
+		}		
+		delete listaPropiaPaises;
 	}
 
 	}

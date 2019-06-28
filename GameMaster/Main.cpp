@@ -59,7 +59,7 @@ int main(void) {
 	Inicio(); //se crean el continente con los paises y los dos jugadores eligen las unidades y distribuyen las tropas
 
 	//inicioPrueba(); //se crean los paises en continente y luego se le asignana a cada jugador automaticamente, luego se crean tropas y se distribuyen en cada pais
-					//es una funcion de prueba para poder probar los ataques, puede ser que con los paises que podes atacar no tengan vecino
+					//es una funcion de prueba para poder probar los ataques
 
 	do
 	{
@@ -83,10 +83,11 @@ int main(void) {
 
 	Resultados();
 		
-	
-	delete Continente;
+
 	delete Jugador1;
 	delete Jugador2;
+	delete Continente;
+	
 
 	return 0;
 }

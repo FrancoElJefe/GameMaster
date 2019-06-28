@@ -51,6 +51,6 @@ void cContinente::ListarPaises()
 
 
 cContinente::~cContinente()
-{
+{	
 	delete listaPaises;
 }

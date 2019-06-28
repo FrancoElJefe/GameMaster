@@ -46,6 +46,7 @@ public:
 
 	int getCA() { return CA; }
 
+
 };
 
 template<class tipodato>
@@ -302,4 +303,5 @@ inline void cLista<tipodato>::OrdenarPorHp() //ordena del menor a mayor
 
 	}
 }
+
 #pragma once

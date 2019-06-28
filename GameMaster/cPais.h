@@ -23,11 +23,13 @@ class cPais
 	cLista<cTropaArquero> * ListaTropasArquero;
 	cLista<cTropaMago> * ListaTropasMago;
 	static cLista<cPais> * listaPaises;
+	static int Np;
 	cLista<cPais> * vecinos;
 	static HANDLE consoleHandle;
 
-public:
-	
+public:	
+
+
 	cPais();
 	cPais(string nomb);
 
@@ -67,27 +69,26 @@ public:
 	void PrintTropasMago();
 	void titulo(cPais * paisParaATACAR, int estado, string nombre, int jugador, HANDLE consoleHandle);
 	~cPais();
-	//friend cJugador;
 };
 
 /*
 paises:
 
--argentina : chile, uruguay, brasil y peru
--brasil : uruguay, argentina, peru y colombia
--peru : colombia, brasil, argintina, chile
--colombia : peru, brasil y mexico 
--chile : peru, argentina y groenlandia
--uruguay : argentina y brasil
--canada : terranova , nueva york, oregon y yukon
-- nueva york : terranova, canada , oregon y california
--yukon : alaska, canada y oregon
--alaska : yukon y oregon
--groenlandia : labrador, nueva york y chile
--oregon : yukon, alaska, canada, nueva york y california
--california : nueva york, oregon y mexico
--mexico : california y colombia
--teranova : labrador, canada y nueva york
--labrador : groenlandia y terranova
+-argentina : chile, uruguay, brasil y peru (4)
+-brasil : uruguay, argentina, peru y colombia (4)
+-peru : colombia, brasil, argintina, chile (4)
+-colombia : peru, brasil y mexico  (3)
+-chile : peru, argentina y groenlandia (3)
+-uruguay : argentina y brasil (2)
+-canada : terranova , nueva york, oregon y yukon  (4)
+- nueva york : terranova, canada , oregon y california (4)
+-yukon : alaska, canada y oregon (3)
+-alaska : yukon y oregon (2)
+-groenlandia : labrador, nueva york y chile (3)
+-oregon : yukon, alaska, canada, nueva york y california (5)
+-california : nueva york, oregon y mexico (3)
+-mexico : california y colombia (2)
+-teranova : labrador, canada y nueva york (3)
+-labrador : groenlandia y terranova (2)
 
 */

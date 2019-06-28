@@ -32,4 +32,5 @@ int cUnidadArquero::RecibirAtaque(int Dano)
 
 cUnidadArquero::~cUnidadArquero()
 {
+	
 }
