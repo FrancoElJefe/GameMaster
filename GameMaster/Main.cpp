@@ -589,7 +589,7 @@ void ImprimirMapa(void)
 void ReglasDelJuego(void)
 {
 	cout << "---------------------------------------------" << endl;
-	cout << "El juego se desarrolla de la siguiente forma:" << endl;
+	cout << "El juego se desarrolla de la siguiente forma:                               Felippelli - Pizarro - Chocano" << endl;
 	cout << "---------------------------------------------" << endl << endl;
 	cout << "Se distribuyen los 16 paises de America de manera aleatoria entre los dos jugadores, recibiendo ocho cada uno." << endl;
 	cout << "Existen tres tipos de unidades : ";
